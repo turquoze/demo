@@ -22,21 +22,17 @@ export default function Product(props: PageProps) {
       <div class={tw`bg-white`}>
         <div class={tw`pt-6`}>
           <BreadCrumbs
-            first={{ href: "#", name: "home" }}
-            links={[{ href: "#", name: props.params.slug }]}
+            first={{ href: "/", name: "Home" }}
+            links={[{ href: "/products", name: "Products" }, {
+              href: "#",
+              name: props.params.slug,
+            }]}
           />
           <div
-            class={tw`
-          mt-6
-          max-w-2xl
-          mx-auto
-          sm:px-6
-          lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8
-        `}
+            class={tw
+              `mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8`}
           >
-            <div
-              class={tw`sm:rounded-lg sm:overflow-hidden`}
-            >
+            <div class={tw`sm:rounded-lg sm:overflow-hidden`}>
               <img
                 src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
                 alt="product image"
@@ -47,13 +43,7 @@ export default function Product(props: PageProps) {
             <div class={tw`lg:mt-24 max-w-2xl mx-auto pt-10 pb-2 px-4 sm:px-6`}>
               <div class={tw`lg:col-span-2 lg:border-gray-200 lg:pr-8`}>
                 <h1
-                  class={tw`
-                text-2xl
-                font-extrabold
-                tracking-tight
-                text-gray-900
-                sm:text-3xl
-              `}
+                  class={tw`text-2xl tracking-tight text-gray-900 sm:text-3xl`}
                 >
                   {props.params.slug}
                 </h1>
@@ -76,23 +66,8 @@ export default function Product(props: PageProps) {
                 <form class={tw`mt-10 mb-10`}>
                   <button
                     type="submit"
-                    class={tw`
-                  mt-10
-                  w-full
-                  bg-black
-                  rounded-md
-                  py-3
-                  px-8
-                  flex
-                  items-center
-                  justify-center
-                  text-base
-                  font-medium
-                  text-white
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-offset-2
-                `}
+                    class={tw
+                      `mt-10 w-full bg-black rounded-md py-3 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2`}
                   >
                     Add to bag
                   </button>
@@ -100,15 +75,8 @@ export default function Product(props: PageProps) {
               </div>
 
               <div
-                class={tw`
-              py-10
-              lg:pt-6
-              lg:pb-5
-              lg:col-start-1
-              lg:col-span-2
-              lg:border-gray-200
-              lg:pr-8
-            `}
+                class={tw
+                  `py-10 lg:pt-6 lg:pb-5 lg:col-start-1 lg:col-span-2 lg:border-gray-200 lg:pr-8`}
               >
                 <div>
                   <h3 class={tw`sr-only`}>Description</h3>
