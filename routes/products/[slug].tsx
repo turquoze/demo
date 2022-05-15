@@ -3,11 +3,29 @@
 
 import { Fragment, h, Head, PageProps, tw } from "../../client_deps.ts";
 import BreadCrumbs from "../../components/BreadCrumbs.tsx";
+import Footer from "../../components/Footer.tsx";
+import { Handlers } from "../../server_deps.ts";
+import { Get, Product } from "../../services/ProductService.ts";
 
 const title = "🛍 Turquoze | Product";
 const description = "e-commerce page for you";
 
-export default function Product(props: PageProps) {
+export const handler: Handlers<Product | null> = {
+  async GET(_, ctx) {
+    const { slug } = ctx.params;
+    const product = await Get(slug);
+    if (product === undefined) {
+      return ctx.render(null);
+    }
+    return ctx.render(product);
+  },
+};
+
+export default function ProductPage({ data }: PageProps<Product | null>) {
+  if (!data) {
+    return <h1>Product not found</h1>;
+  }
+
   return (
     <>
       <Head>
@@ -25,7 +43,7 @@ export default function Product(props: PageProps) {
             first={{ href: "/", name: "Home" }}
             links={[{ href: "/products", name: "Products" }, {
               href: "#",
-              name: props.params.slug,
+              name: data.name,
             }]}
           />
           <div
@@ -34,7 +52,7 @@ export default function Product(props: PageProps) {
           >
             <div class={tw`sm:rounded-lg sm:overflow-hidden`}>
               <img
-                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+                src={data.img}
                 alt="product image"
                 class={tw`w-full h-full object-center object-cover`}
               />
@@ -45,13 +63,13 @@ export default function Product(props: PageProps) {
                 <h1
                   class={tw`text-2xl tracking-tight text-gray-900 sm:text-3xl`}
                 >
-                  {props.params.slug}
+                  {data.name}
                 </h1>
               </div>
 
               <div class={tw`mt-4 lg:mt-0 lg:row-span-3`}>
                 <h2 class={tw`sr-only`}>Product information</h2>
-                <p class={tw`text-3xl text-gray-900`}>$10.00</p>
+                <p class={tw`text-3xl text-gray-900`}>${data.price}</p>
 
                 <div class={tw`mt-6`}>
                   <h3 class={tw`sr-only`}>Reviews</h3>
@@ -82,17 +100,7 @@ export default function Product(props: PageProps) {
                   <h3 class={tw`sr-only`}>Description</h3>
                   <div class={tw`space-y-6`}>
                     <p class={tw`text-base text-gray-900`}>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book. It has survived not only five
-                      centuries, but also the leap into electronic typesetting,
-                      remaining essentially unchanged. It was popularised in the
-                      1960s with the release of Letraset sheets containing Lorem
-                      Ipsum passages, and more recently with desktop publishing
-                      software like Aldus PageMaker including versions of Lorem
-                      Ipsum.
+                      {data.description}
                     </p>
                   </div>
                 </div>
@@ -101,6 +109,7 @@ export default function Product(props: PageProps) {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

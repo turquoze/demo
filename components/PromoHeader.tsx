@@ -11,8 +11,7 @@ export default function PromoHeader() {
         >
           <div class={tw`sm:max-w-lg`}>
             <h1
-              class={tw
-                `text-4xl tracking-tight text-gray-900 sm:text-5xl`}
+              class={tw`text-4xl tracking-tight text-gray-900 sm:text-5xl`}
             >
               New Products in stock
             </h1>

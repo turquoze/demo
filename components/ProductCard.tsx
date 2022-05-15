@@ -1,15 +1,10 @@
 /** @jsx h */
-/** @jsxFrag Fragment */
 
-import { Fragment, h, tw } from "../client_deps.ts";
+import { h, tw } from "../client_deps.ts";
+import { Product } from "../services/ProductService.ts";
 
 interface ProductCardProps {
-  product: {
-    name: string;
-    img: string;
-    href: string;
-    price: number;
-  };
+  product: Product;
 }
 
 export default function ProductCard(props: ProductCardProps) {
@@ -34,7 +29,7 @@ export default function ProductCard(props: ProductCardProps) {
         {props.product.name}
       </h3>
       <p class={tw`mt-1 text-lg text-gray-900`}>
-        {props.product.price}
+        ${props.product.price}
       </p>
     </a>
   );

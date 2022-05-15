@@ -1,45 +1,31 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import { Fragment, h, Head, tw } from "../../client_deps.ts";
+import { Fragment, h, Head, PageProps, tw } from "../../client_deps.ts";
 import ProductCard from "../../components/ProductCard.tsx";
 import BreadCrumbs from "../../components/BreadCrumbs.tsx";
+import Footer from "../../components/Footer.tsx";
+import { Handlers } from "../../server_deps.ts";
+import { GetAll, Product } from "../../services/ProductService.ts";
 
-const products = [
-  {
-    name: "Test1",
-    img:
-      "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80",
-    href: "products/test1",
-    price: 20.00,
+export const handler: Handlers<Array<Product> | null> = {
+  async GET(_, ctx) {
+    const products = await GetAll();
+    if (products === undefined) {
+      return ctx.render(null);
+    }
+    return ctx.render(products);
   },
-  {
-    name: "Test2",
-    img:
-      "https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-    href: "products/test2",
-    price: 34.95,
-  },
-  {
-    name: "Test3",
-    img:
-      "https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzF8fHByb2R1Y3RzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
-    href: "products/test3",
-    price: 56.49,
-  },
-  {
-    name: "Test4",
-    img:
-      "https://images.unsplash.com/photo-1598662957563-ee4965d4d72c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHByb2R1Y3RzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
-    href: "products/test4",
-    price: 109.95,
-  },
-];
+};
 
 const title = "🛍 Turquoze | Products";
 const description = "e-commerce page for you";
 
-export default function Products() {
+export default function Products({ data }: PageProps<Array<Product> | null>) {
+  if (!data) {
+    return <h1>Products not found</h1>;
+  }
+
   return (
     <>
       <Head>
@@ -70,11 +56,12 @@ export default function Products() {
           class={tw
             `grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}
         >
-          {products.map((product) => {
+          {data.map((product) => {
             return <ProductCard product={product} />;
           })}
         </div>
       </div>
+      <Footer />
     </>
   );
 }
