@@ -7,6 +7,9 @@ interface FooterProps {}
 export default function Footer(props: FooterProps) {
   return (
     <footer class={tw`p-4 bg-white sm:p-6`}>
+      <hr
+        class={tw`my-4 border-gray-200 sm:mx-auto lg:my-8`}
+      />
       <div class={tw`md:flex md:justify-between`}>
         <div class={tw`mb-6 md:mb-0`}>
           <a href="" class={tw`flex items-center`}>

@@ -6,6 +6,7 @@ import BreadCrumbs from "../../components/BreadCrumbs.tsx";
 import Footer from "../../components/Footer.tsx";
 import { Handlers } from "../../server_deps.ts";
 import { Get, Product } from "../../services/ProductService.ts";
+import BuyButton from "../../islands/BuyButton.tsx";
 
 const title = "🛍 Turquoze | Product";
 const description = "e-commerce page for you";
@@ -81,15 +82,7 @@ export default function ProductPage({ data }: PageProps<Product | null>) {
                   </div>
                 </div>
 
-                <form class={tw`mt-10 mb-10`}>
-                  <button
-                    type="submit"
-                    class={tw
-                      `mt-10 w-full bg-black rounded-md py-3 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2`}
-                  >
-                    Add to bag
-                  </button>
-                </form>
+                <BuyButton productId={data.slug} loading={false} showOptions={true} options={[]} />
               </div>
 
               <div
