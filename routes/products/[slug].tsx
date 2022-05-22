@@ -5,7 +5,7 @@ import { Fragment, h, Head, PageProps, tw } from "../../client_deps.ts";
 import BreadCrumbs from "../../components/BreadCrumbs.tsx";
 import Footer from "../../components/Footer.tsx";
 import { Handlers } from "../../server_deps.ts";
-import { Get, Product } from "../../services/ProductService.ts";
+import { GetProduct, Product } from "../../services/ShopService.ts";
 import BuyButton from "../../islands/BuyButton.tsx";
 
 const title = "🛍 Turquoze | Product";
@@ -14,7 +14,7 @@ const description = "e-commerce page for you";
 export const handler: Handlers<Product | null> = {
   async GET(_, ctx) {
     const { slug } = ctx.params;
-    const product = await Get(slug);
+    const product = await GetProduct(slug);
     if (product === undefined) {
       return ctx.render(null);
     }

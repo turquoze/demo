@@ -1,7 +1,7 @@
 /** @jsx h */
 
 import { h, tw } from "../client_deps.ts";
-import { Product } from "../services/ProductService.ts";
+import { Product } from "../services/ShopService.ts";
 
 interface ProductCardProps {
   product: Product;

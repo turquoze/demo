@@ -10,6 +10,20 @@ export interface Product {
   slug: string;
 }
 
+export interface CartProduct {
+  id: number;
+  name: string;
+  quantity: number;
+  image: string;
+  imageAlt?: "product image";
+  slug: string;
+  price: number;
+}
+
+export interface Cart {
+  products: Array<CartProduct>;
+}
+
 const products: Array<Product> = [
   {
     slug: "test1",
@@ -114,7 +128,7 @@ const products: Array<Product> = [
 const host = `https://turquoze-backend.deno.dev/api/`;
 const token = `3970f509-38bb-426b-9e3d-38e767a4e5f6`;
 
-export async function Get(slug: string): Promise<Product | undefined> {
+export async function GetProduct(slug: string): Promise<Product | undefined> {
   try {
     const response = await fetch(
       `${host}products/26b7157f-8c4b-4520-9e27-43500b668e8f`,
@@ -132,7 +146,7 @@ export async function Get(slug: string): Promise<Product | undefined> {
   }
 }
 
-export async function GetAll(): Promise<Array<Product> | undefined> {
+export async function GetAllProducts(): Promise<Array<Product> | undefined> {
   try {
     const response = await fetch(`${host}products`, {
       headers: new Headers({
@@ -145,4 +159,45 @@ export async function GetAll(): Promise<Array<Product> | undefined> {
   } catch (_error) {
     return undefined;
   }
+}
+
+export async function GetCart(): Promise<Cart | undefined> {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  return {
+    products: [
+      {
+        id: 1,
+        image: products[0].images[0],
+        name: products[0].name,
+        price: products[0].price.value,
+        quantity: 1,
+        slug: products[0].slug,
+      },
+      {
+        id: 2,
+        image: products[1].images[0],
+        name: products[1].name,
+        price: products[1].price.value,
+        quantity: 4,
+        slug: products[1].slug,
+      },
+      {
+        id: 3,
+        image: products[2].images[0],
+        name: products[2].name,
+        price: products[2].price.value,
+        quantity: 1,
+        slug: products[2].slug,
+      },
+      {
+        id: 4,
+        image: products[3].images[0],
+        name: products[3].name,
+        price: products[3].price.value,
+        quantity: 2,
+        slug: products[3].slug,
+      },
+    ],
+  };
 }
