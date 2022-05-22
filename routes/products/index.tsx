@@ -6,11 +6,11 @@ import ProductCard from "../../components/ProductCard.tsx";
 import BreadCrumbs from "../../components/BreadCrumbs.tsx";
 import Footer from "../../components/Footer.tsx";
 import { Handlers } from "../../server_deps.ts";
-import { GetAll, Product } from "../../services/ProductService.ts";
+import { GetAllProducts, Product } from "../../services/ShopService.ts";
 
 export const handler: Handlers<Array<Product> | null> = {
   async GET(_, ctx) {
-    const products = await GetAll();
+    const products = await GetAllProducts();
     if (products === undefined) {
       return ctx.render(null);
     }
