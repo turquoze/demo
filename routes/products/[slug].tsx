@@ -53,7 +53,7 @@ export default function ProductPage({ data }: PageProps<Product | null>) {
           >
             <div class={tw`sm:rounded-lg sm:overflow-hidden`}>
               <img
-                src={data.img}
+                src={data.images[0]}
                 alt="product image"
                 class={tw`w-full h-full object-center object-cover`}
               />
@@ -70,7 +70,7 @@ export default function ProductPage({ data }: PageProps<Product | null>) {
 
               <div class={tw`mt-4 lg:mt-0 lg:row-span-3`}>
                 <h2 class={tw`sr-only`}>Product information</h2>
-                <p class={tw`text-3xl text-gray-900`}>${data.price}</p>
+                <p class={tw`text-3xl text-gray-900`}>${data.price.value}</p>
 
                 <div class={tw`mt-6`}>
                   <h3 class={tw`sr-only`}>Reviews</h3>
@@ -82,7 +82,12 @@ export default function ProductPage({ data }: PageProps<Product | null>) {
                   </div>
                 </div>
 
-                <BuyButton productId={data.slug} loading={false} showOptions={true} options={[]} />
+                <BuyButton
+                  productId={data.slug}
+                  loading={false}
+                  showOptions={true}
+                  options={[]}
+                />
               </div>
 
               <div

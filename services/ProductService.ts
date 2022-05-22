@@ -1,9 +1,12 @@
 export interface Product {
-  href: string;
   name: string;
-  img: string;
+  images: Array<string>;
+  short_description: string;
   description: string;
-  price: number;
+  price: {
+    value: number;
+    currency: string;
+  };
   slug: string;
 }
 
@@ -11,10 +14,13 @@ const products: Array<Product> = [
   {
     slug: "test1",
     name: "Test1",
-    img:
+    images: [
       "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80",
-    href: "products/test1",
-    price: 20.00,
+    ],
+    price: {
+      currency: "USD",
+      value: 20.00,
+    },
     description: `Lorem Ipsum is simply dummy text of the printing and
     typesetting industry. Lorem Ipsum has been the industry's
     standard dummy text ever since the 1500s, when an unknown
@@ -26,14 +32,20 @@ const products: Array<Product> = [
     Ipsum passages, and more recently with desktop publishing
     software like Aldus PageMaker including versions of Lorem
     Ipsum.`,
+    short_description: `Lorem Ipsum is simply dummy text of the printing and
+    typesetting industry. Lorem Ipsum has been the industry's
+    standard dummy text ever since the 1500s.`,
   },
   {
     slug: "test2",
     name: "Test2",
-    img:
+    images: [
       "https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-    href: "products/test2",
-    price: 34.95,
+    ],
+    price: {
+      value: 34.95,
+      currency: "USD",
+    },
     description: `Lorem Ipsum is simply dummy text of the printing and
     typesetting industry. Lorem Ipsum has been the industry's
     standard dummy text ever since the 1500s, when an unknown
@@ -45,14 +57,19 @@ const products: Array<Product> = [
     Ipsum passages, and more recently with desktop publishing
     software like Aldus PageMaker including versions of Lorem
     Ipsum.`,
+    short_description: `Lorem Ipsum is simply dummy text of the printing and
+    typesetting industry. Lorem Ipsum has been the industry's`,
   },
   {
     slug: "test3",
     name: "Test3",
-    img:
+    images: [
       "https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzF8fHByb2R1Y3RzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
-    href: "products/test3",
-    price: 56.49,
+    ],
+    price: {
+      value: 56.49,
+      currency: "USD",
+    },
     description: `Lorem Ipsum is simply dummy text of the printing and
     typesetting industry. Lorem Ipsum has been the industry's
     standard dummy text ever since the 1500s, when an unknown
@@ -64,14 +81,20 @@ const products: Array<Product> = [
     Ipsum passages, and more recently with desktop publishing
     software like Aldus PageMaker including versions of Lorem
     Ipsum.`,
+    short_description: `Lorem Ipsum is simply dummy text of the printing and
+    typesetting industry. Lorem Ipsum has been the industry's
+    standard dummy text ever since the 1500s, when an unknown`,
   },
   {
     slug: "test4",
     name: "Test4",
-    img:
+    images: [
       "https://images.unsplash.com/photo-1598662957563-ee4965d4d72c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHByb2R1Y3RzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
-    href: "products/test4",
-    price: 109.95,
+    ],
+    price: {
+      value: 109.95,
+      currency: "USD",
+    },
     description: `Lorem Ipsum is simply dummy text of the printing and
     typesetting industry. Lorem Ipsum has been the industry's
     standard dummy text ever since the 1500s, when an unknown
@@ -83,15 +106,43 @@ const products: Array<Product> = [
     Ipsum passages, and more recently with desktop publishing
     software like Aldus PageMaker including versions of Lorem
     Ipsum.`,
+    short_description: `Lorem Ipsum is simply dummy text of the printing and
+    typesetting industry. Lorem Ipsum has been the industry's`,
   },
 ];
 
+const host = `https://turquoze-backend.deno.dev/api/`;
+const token = `3970f509-38bb-426b-9e3d-38e767a4e5f6`;
+
 export async function Get(slug: string): Promise<Product | undefined> {
-  await new Promise((resolve) => setTimeout(resolve, 100));
-  return products.find((p) => p.slug == slug);
+  try {
+    const response = await fetch(
+      `${host}products/26b7157f-8c4b-4520-9e27-43500b668e8f`,
+      {
+        headers: new Headers({
+          "x-turquoze-key": token,
+        }),
+      },
+    );
+    const body = await response.json();
+
+    return products.find((p) => p.slug == slug);
+  } catch (_error) {
+    return undefined;
+  }
 }
 
 export async function GetAll(): Promise<Array<Product> | undefined> {
-  await new Promise((resolve) => setTimeout(resolve, 100));
-  return products;
+  try {
+    const response = await fetch(`${host}products`, {
+      headers: new Headers({
+        "x-turquoze-key": token,
+      }),
+    });
+    const body = await response.json();
+
+    return products;
+  } catch (_error) {
+    return undefined;
+  }
 }

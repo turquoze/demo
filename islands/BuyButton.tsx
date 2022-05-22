@@ -31,8 +31,8 @@ export default function BuyButton(props: BuyButtonProps) {
 
   // @ts-expect-error no type
   function onValueChange(e) {
-    const { value } = e.target
-    setValue(value)
+    const { value } = e.target;
+    setValue(value);
   }
 
   if (loading) {

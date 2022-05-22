@@ -9,7 +9,7 @@ interface ProductCardProps {
 
 export default function ProductCard(props: ProductCardProps) {
   return (
-    <a href={props.product.href}>
+    <a href={`/products/${props.product.slug}`}>
       <div
         class={tw`
         w-full
@@ -19,7 +19,7 @@ export default function ProductCard(props: ProductCardProps) {
       `}
       >
         <img
-          src={props.product.img}
+          src={props.product.images[0]}
           alt="product image"
           class={tw
             `w-full h-full object-center object-cover group-hover:opacity-75`}
@@ -29,7 +29,7 @@ export default function ProductCard(props: ProductCardProps) {
         {props.product.name}
       </h3>
       <p class={tw`mt-1 text-lg text-gray-900`}>
-        ${props.product.price}
+        ${props.product.price.value}
       </p>
     </a>
   );
