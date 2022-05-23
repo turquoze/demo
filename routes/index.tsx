@@ -7,6 +7,7 @@ import PromoHeader from "../components/PromoHeader.tsx";
 import Footer from "../components/Footer.tsx";
 import { Handlers } from "../server_deps.ts";
 import { GetAllProducts, Product } from "../services/ShopService.ts";
+import Navigation from "../islands/Navigation.tsx";
 
 const title = "🛍 Turquoze | Home";
 const description = "e-commerce page for you";
@@ -38,6 +39,7 @@ export default function Home({ data }: PageProps<Array<Product> | null>) {
         <meta name="description" content={description} />
       </Head>
       <div>
+        <Navigation />
         <PromoHeader />
         <div
           class={tw

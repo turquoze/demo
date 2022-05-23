@@ -7,6 +7,7 @@ import BreadCrumbs from "../../components/BreadCrumbs.tsx";
 import Footer from "../../components/Footer.tsx";
 import { Handlers } from "../../server_deps.ts";
 import { GetAllProducts, Product } from "../../services/ShopService.ts";
+import Navigation from "../../islands/Navigation.tsx";
 
 export const handler: Handlers<Array<Product> | null> = {
   async GET(_, ctx) {
@@ -37,6 +38,7 @@ export default function Products({ data }: PageProps<Array<Product> | null>) {
         <meta property="og:type" content="website" />
         <meta name="description" content={description} />
       </Head>
+      <Navigation />
       <div class={tw`pt-6`}>
         <BreadCrumbs
           first={{ href: "/", name: "Home" }}

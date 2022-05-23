@@ -11,6 +11,7 @@ export const theme = {
     green: colors.green,
     white: colors.white,
     yellow: colors.yellow,
+    turquoise: "#40E0D0",
   },
 };
 if (IS_BROWSER) {

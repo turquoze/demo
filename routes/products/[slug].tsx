@@ -7,6 +7,7 @@ import Footer from "../../components/Footer.tsx";
 import { Handlers } from "../../server_deps.ts";
 import { GetProduct, Product } from "../../services/ShopService.ts";
 import BuyButton from "../../islands/BuyButton.tsx";
+import Navigation from "../../islands/Navigation.tsx";
 
 const title = "🛍 Turquoze | Product";
 const description = "e-commerce page for you";
@@ -38,6 +39,7 @@ export default function ProductPage({ data }: PageProps<Product | null>) {
         <meta property="og:type" content="website" />
         <meta name="description" content={description} />
       </Head>
+      <Navigation />
       <div class={tw`bg-white`}>
         <div class={tw`pt-6`}>
           <BreadCrumbs
