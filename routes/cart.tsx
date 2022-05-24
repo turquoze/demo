@@ -30,12 +30,14 @@ export default function CartPage({ data }: PageProps<Cart | null>) {
           })}
         </ul>
 
-        <div class={tw`mt-6 border-t border-gray-200 py-6`}>
+        <div
+          class={tw`border-t border-gray-200 py-6`}
+        >
           <div
             class={tw`flex justify-between text-base font-medium text-gray-900`}
           >
             <p>Subtotal</p>
-            <p>$262.00</p>
+            <p>${data?.cost.subtotal ?? 0}</p>
           </div>
           <p class={tw`mt-0.5 text-sm text-gray-500`}>
             Shipping and taxes calculated at checkout.
@@ -44,7 +46,7 @@ export default function CartPage({ data }: PageProps<Cart | null>) {
             <a
               href="#"
               class={tw
-                `flex items-center justify-center rounded-md px-6 py-3 text-base font-medium text-white shadow-sm bg-black`}
+                `flex items-center justify-center rounded-md border border-transparent bg-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700`}
             >
               Checkout
             </a>
@@ -58,9 +60,11 @@ export default function CartPage({ data }: PageProps<Cart | null>) {
               <a
                 href="/"
                 type="button"
-                class={tw`font-medium`}
+                class={tw`font-medium text-indigo-600 hover:text-indigo-500`}
               >
-                Continue Shopping<span aria-hidden="true">&rarr;</span>
+                Continue Shopping<span aria-hidden="true">
+                  &rarr;
+                </span>
               </a>
             </p>
           </div>
