@@ -10,11 +10,17 @@ import {
   useEffect,
   useState,
 } from "../client_deps.ts";
+import CartProduct from "../components/CartProduct.tsx";
+
+import { Cart, GetCart } from "../services/ShopService.ts";
 
 interface CounterProps {}
 
 export default function Navigation(props: CounterProps) {
   const [open, setOpen] = useState(false);
+  const [cartIsOpen, setCartIsOpen] = useState(false);
+  const [cart, setCart] = useState<Cart>();
+  const [loading, setLoading] = useState(false);
 
   const mobileNav = () => {
     const isOpen = !open;
@@ -26,6 +32,18 @@ export default function Navigation(props: CounterProps) {
       setOpen(false);
     }
   };
+
+  const handleCartClick = async (e: Event) => {
+    e.preventDefault();
+    setCartIsOpen(true);
+    setLoading(true);
+    const cart = await GetCart();
+    if (cart !== undefined) {
+      setCart(cart);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
     window.addEventListener("resize", handleResize, false);
   }, []);
@@ -101,12 +119,170 @@ export default function Navigation(props: CounterProps) {
                   </a>
                 </div>
               </div>
+
               <div class={tw`ml-auto flex items-center`}>
                 <div class={tw`ml-4 flow-root lg:ml-6`}>
+                  {IS_BROWSER && cartIsOpen
+                    ? (
+                      <div
+                        class={tw`relative z-10`}
+                        aria-labelledby="slide-over-title"
+                        role="dialog"
+                        aria-modal="true"
+                      >
+                        <div
+                          class={tw
+                            `fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity`}
+                        >
+                        </div>
+
+                        <div class={tw`fixed inset-0 overflow-hidden`}>
+                          <div class={tw`absolute inset-0 overflow-hidden`}>
+                            <div
+                              class={tw
+                                `pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10`}
+                            >
+                              <div
+                                class={tw
+                                  `pointer-events-auto w-screen max-w-md`}
+                              >
+                                <div
+                                  class={tw
+                                    `flex h-full flex-col overflow-y-scroll bg-white shadow-xl`}
+                                >
+                                  <div
+                                    class={tw
+                                      `flex-1 overflow-y-auto py-6 px-4 sm:px-6`}
+                                  >
+                                    <div
+                                      class={tw
+                                        `flex items-start justify-between`}
+                                    >
+                                      <h2
+                                        class={tw
+                                          `text-lg font-medium text-gray-900`}
+                                        id="slide-over-title"
+                                      >
+                                        Shopping cart
+                                      </h2>
+                                      <div
+                                        class={tw`ml-3 flex h-7 items-center`}
+                                      >
+                                        <button
+                                          type="button"
+                                          class={tw
+                                            `-m-2 p-2 text-gray-400 hover:text-gray-500`}
+                                          onClick={() => setCartIsOpen(false)}
+                                        >
+                                          <span class={tw`sr-only`}>
+                                            Close panel
+                                          </span>
+                                          <svg
+                                            class={tw`h-6 w-6`}
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="2"
+                                            stroke="currentColor"
+                                            aria-hidden="true"
+                                          >
+                                            <path
+                                              stroke-linecap="round"
+                                              stroke-linejoin="round"
+                                              d="M6 18L18 6M6 6l12 12"
+                                            />
+                                          </svg>
+                                        </button>
+                                      </div>
+                                    </div>
+
+                                    <div class={tw`mt-8`}>
+                                      <div class={tw`flow-root`}>
+                                        <ul
+                                          role="list"
+                                          class={tw
+                                            `-my-6 divide-y divide-gray-200`}
+                                        >
+                                          {loading
+                                            ? (
+                                              <h3 class={tw`mt-4`}>
+                                                Loading...
+                                              </h3>
+                                            )
+                                            : cart == undefined ||
+                                                cart.products.length <= 0
+                                            ? (
+                                              <h3 class={tw`mt-4`}>
+                                                No Product
+                                              </h3>
+                                            )
+                                            : null}
+                                          {cart?.products.map((product) => {
+                                            return (
+                                              <CartProduct product={product} />
+                                            );
+                                          })}
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    class={tw
+                                      `border-t border-gray-200 py-6 px-4 sm:px-6`}
+                                  >
+                                    <div
+                                      class={tw
+                                        `flex justify-between text-base font-medium text-gray-900`}
+                                    >
+                                      <p>Subtotal</p>
+                                      <p>${cart?.cost.subtotal ?? 0}</p>
+                                    </div>
+                                    <p class={tw`mt-0.5 text-sm text-gray-500`}>
+                                      Shipping and taxes calculated at checkout.
+                                    </p>
+                                    <div class={tw`mt-6`}>
+                                      <a
+                                        href="#"
+                                        class={tw
+                                          `flex items-center justify-center bg-black rounded-md px-6 py-3 text-base font-medium text-white shadow-sm`}
+                                      >
+                                        Checkout
+                                      </a>
+                                    </div>
+                                    <div
+                                      class={tw
+                                        `mt-6 flex justify-center text-center text-sm text-gray-500`}
+                                    >
+                                      <p>
+                                        or{" "}
+                                        <button
+                                          type="button"
+                                          class={tw
+                                            `font-medium text-indigo-600`}
+                                          onClick={() => setCartIsOpen(false)}
+                                        >
+                                          Continue
+                                          Shopping<span aria-hidden="true">
+                                            &rarr;
+                                          </span>
+                                        </button>
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                    : null}
                   <a
                     href="/cart"
                     type={"button"}
                     class={tw`group -m-2 p-2 flex items-center`}
+                    onClick={handleCartClick}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

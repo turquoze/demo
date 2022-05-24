@@ -22,6 +22,9 @@ export interface CartProduct {
 
 export interface Cart {
   products: Array<CartProduct>;
+  cost: {
+    subtotal: number;
+  };
 }
 
 const products: Array<Product> = [
@@ -165,6 +168,9 @@ export async function GetCart(): Promise<Cart | undefined> {
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   return {
+    cost: {
+      subtotal: 262.00,
+    },
     products: [
       {
         id: 1,
