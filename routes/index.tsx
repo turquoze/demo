@@ -1,11 +1,12 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import { Fragment, h, Head, PageProps, tw } from "../client_deps.ts";
+import { Fragment, h, Head, PageProps } from "$fresh/runtime.ts";
+import { tw } from "../utils/twind.ts";
 import ProductCard from "../components/ProductCard.tsx";
 import PromoHeader from "../components/PromoHeader.tsx";
 import Footer from "../components/Footer.tsx";
-import { Handlers } from "../server_deps.ts";
+import { Handlers } from "$fresh/server.ts";
 import { GetAllProducts, Product } from "../services/ShopService.ts";
 import Navigation from "../islands/Navigation.tsx";
 

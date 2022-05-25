@@ -1,5 +1,6 @@
 /** @jsx h */
-import { h, tw, useState } from "../client_deps.ts";
+import { h, useState } from "$fresh/runtime.ts";
+import { tw } from "../utils/twind.ts";
 
 interface BuyButtonProps {
   productId: string;

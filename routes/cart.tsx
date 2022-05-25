@@ -1,7 +1,8 @@
 /** @jsx h */
-import { h, PageProps, tw } from "../client_deps.ts";
+import { h, PageProps } from "$fresh/runtime.ts";
+import { tw } from "../utils/twind.ts";
 import CartProduct from "../components/CartProduct.tsx";
-import { Handlers } from "../server_deps.ts";
+import { Handlers } from "$fresh/server.ts";
 import { Cart, GetCart } from "../services/ShopService.ts";
 
 export const handler: Handlers<Cart | null> = {

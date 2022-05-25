@@ -5,11 +5,10 @@ import {
   Fragment,
   h,
   IS_BROWSER,
-  theme,
-  tw,
   useEffect,
   useState,
-} from "../client_deps.ts";
+} from "$fresh/runtime.ts";
+import { theme, tw } from "../utils/twind.ts";
 import CartProduct from "../components/CartProduct.tsx";
 
 import { Cart, GetCart } from "../services/ShopService.ts";
