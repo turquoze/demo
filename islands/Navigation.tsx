@@ -50,6 +50,22 @@ export default function Navigation(props: CounterProps) {
   return (
     <>
       <header class={tw`relative bg-white`}>
+        <noscript>
+          <p
+            class={tw
+              `bg-black h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8`}
+          >
+            For full functionality of this site it is necessary to enable
+            JavaScript. Here are the{" "}
+            <a
+              href="https://enable-javascript.com/"
+              class={tw`ml-1 hover:text-gray-400`}
+              target="_blank"
+            >
+              instructions how to enable JavaScript in your web browser
+            </a>
+          </p>
+        </noscript>
         <p
           class={tw
             `bg-black h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8`}
@@ -317,7 +333,7 @@ export default function Navigation(props: CounterProps) {
       {open
         ? (
           <div
-            class={tw`relative z-10`}
+            class={tw`relative z-6`}
             aria-labelledby="slide-over-title"
             role="dialog"
             aria-modal="true"
