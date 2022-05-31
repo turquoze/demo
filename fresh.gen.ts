@@ -3,20 +3,22 @@
 // To update this file, run `fresh manifest`.
 
 import * as $0 from "./routes/_render.ts";
-import * as $1 from "./routes/cart.tsx";
-import * as $2 from "./routes/index.tsx";
-import * as $3 from "./routes/products/[slug].tsx";
-import * as $4 from "./routes/products/index.tsx";
+import * as $1 from "./routes/about.tsx";
+import * as $2 from "./routes/cart.tsx";
+import * as $3 from "./routes/index.tsx";
+import * as $4 from "./routes/products/[slug].tsx";
+import * as $5 from "./routes/products/index.tsx";
 import * as $$0 from "./islands/BuyButton.tsx";
 import * as $$1 from "./islands/Navigation.tsx";
 
 const manifest = {
   routes: {
     "./routes/_render.ts": $0,
-    "./routes/cart.tsx": $1,
-    "./routes/index.tsx": $2,
-    "./routes/products/[slug].tsx": $3,
-    "./routes/products/index.tsx": $4,
+    "./routes/about.tsx": $1,
+    "./routes/cart.tsx": $2,
+    "./routes/index.tsx": $3,
+    "./routes/products/[slug].tsx": $4,
+    "./routes/products/index.tsx": $5,
   },
   islands: {
     "./islands/BuyButton.tsx": $$0,

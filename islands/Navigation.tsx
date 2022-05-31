@@ -85,28 +85,32 @@ export default function Navigation(props: CounterProps) {
         >
           <div class={tw`border-b border-gray-200`}>
             <div class={tw`h-16 flex items-center`}>
-              <button
-                type="button"
-                class={tw`bg-white p-2 rounded-md text-gray-400 lg:hidden`}
-                onClick={mobileNav}
-              >
-                <span class={tw`sr-only`}>Open menu</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  class="h-6 w-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M4 6h16M4 12h16M4 18h16"
+              {IS_BROWSER
+                ? (
+                  <button
+                    type="button"
+                    class={tw`bg-white p-2 rounded-md text-gray-400 lg:hidden`}
+                    onClick={mobileNav}
                   >
-                  </path>
-                </svg>
-              </button>
+                    <span class={tw`sr-only`}>Open menu</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      class="h-6 w-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      >
+                      </path>
+                    </svg>
+                  </button>
+                )
+                : null}
               <div class={tw`ml-2 flex lg:ml-0`}>
                 <a href="/">
                   <div
@@ -330,10 +334,10 @@ export default function Navigation(props: CounterProps) {
         </nav>
       </header>
 
-      {open
+      {open || !IS_BROWSER
         ? (
           <div
-            class={tw`relative z-6`}
+            class={tw`relative z-6 lg:hidden`}
             aria-labelledby="slide-over-title"
             role="dialog"
             aria-modal="true"

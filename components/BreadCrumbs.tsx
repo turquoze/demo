@@ -16,7 +16,7 @@ interface BreadCrumbsProps {
 
 export default function BreadCrumbs(props: BreadCrumbsProps) {
   return (
-    <nav class={tw`flex ml-4`} aria-label="Breadcrumb">
+    <nav class={tw`flex ml-4 md:ml-8 lg:ml-8 xl:ml-10`} aria-label="Breadcrumb">
       <ol class={tw`inline-flex items-center space-x-1 md:space-x-3`}>
         <li class={tw`inline-flex items-center`}>
           <svg
