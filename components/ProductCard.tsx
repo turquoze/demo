@@ -27,10 +27,10 @@ export default function ProductCard(props: ProductCardProps) {
         />
       </div>
       <h3 class={tw`mt-4 text-sm text-gray-700`}>
-        {props.product.name}
+        {props.product.title}
       </h3>
       <p class={tw`mt-1 text-lg text-gray-900`}>
-        ${props.product.price.value}
+        ${props.product.price}
       </p>
     </a>
   );
