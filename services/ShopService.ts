@@ -1,15 +1,3 @@
-export interface Product {
-  name: string;
-  images: Array<string>;
-  short_description: string;
-  description: string;
-  price: {
-    value: number;
-    currency: string;
-  };
-  slug: string;
-}
-
 export interface CartProduct {
   id: number;
   name: string;
@@ -27,7 +15,7 @@ export interface Cart {
   };
 }
 
-const products: Array<Product> = [
+const products = [
   {
     slug: "test1",
     name: "Test1",
@@ -128,22 +116,42 @@ const products: Array<Product> = [
   },
 ];
 
+export interface Product {
+  id: number;
+  public_id: string;
+  created_at?: string;
+  slug: string;
+  active: boolean;
+  parent?: string;
+  title: string;
+  short_description: string;
+  long_description: string;
+  images: Array<string>;
+  price: number;
+  shop: string;
+}
+
 const host = `https://turquoze-backend.deno.dev/api/`;
-const token = `3970f509-38bb-426b-9e3d-38e767a4e5f6`;
+const token = `1562452e-d4fe-4a00-a242-4fa1e069584d`;
 
 export async function GetProduct(slug: string): Promise<Product | undefined> {
   try {
     const response = await fetch(
-      `${host}products/26b7157f-8c4b-4520-9e27-43500b668e8f`,
+      `${host}products/byslug/${slug}`,
       {
         headers: new Headers({
           "x-turquoze-key": token,
         }),
       },
     );
-    const body = await response.json();
 
-    return products.find((p) => p.slug == slug);
+    if (!response.ok) {
+      throw new Error("Not Ok");
+    }
+
+    const body: { products: Product } = await response.json();
+
+    return body.products;
   } catch (_error) {
     return undefined;
   }
@@ -151,14 +159,39 @@ export async function GetProduct(slug: string): Promise<Product | undefined> {
 
 export async function GetAllProducts(): Promise<Array<Product> | undefined> {
   try {
-    const response = await fetch(`${host}products`, {
+    const response = await fetch(`${host}products?limit=20`, {
       headers: new Headers({
         "x-turquoze-key": token,
       }),
     });
-    const body = await response.json();
 
-    return products;
+    if (!response.ok) {
+      throw new Error("Not Ok");
+    }
+
+    const body: { products: Array<Product> } = await response.json();
+
+    return body.products
+  } catch (_error) {
+    return undefined;
+  }
+}
+
+export async function GetFeaturedProducts(): Promise<Array<Product> | undefined> {
+  try {
+    const response = await fetch(`${host}products?limit=6`, {
+      headers: new Headers({
+        "x-turquoze-key": token,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Not Ok");
+    }
+
+    const body: { products: Array<Product> } = await response.json();
+
+    return body.products.slice(0, 4)
   } catch (_error) {
     return undefined;
   }

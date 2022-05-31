@@ -18,7 +18,9 @@ export const handler: Handlers<Product | null> = {
     const { slug } = ctx.params;
     const product = await GetProduct(slug);
     if (product === undefined) {
-      return ctx.render(null);
+      return new Response("404 Page not found", {
+        status: 404,
+      });
     }
     return ctx.render(product);
   },
@@ -47,7 +49,7 @@ export default function ProductPage({ data }: PageProps<Product | null>) {
             first={{ href: "/", name: "Home" }}
             links={[{ href: "/products", name: "Products" }, {
               href: "#",
-              name: data.name,
+              name: data.title,
             }]}
           />
           <div
@@ -67,13 +69,13 @@ export default function ProductPage({ data }: PageProps<Product | null>) {
                 <h1
                   class={tw`text-2xl tracking-tight text-gray-900 sm:text-3xl`}
                 >
-                  {data.name}
+                  {data.title}
                 </h1>
               </div>
 
               <div class={tw`mt-4 lg:mt-0 lg:row-span-3`}>
                 <h2 class={tw`sr-only`}>Product information</h2>
-                <p class={tw`text-3xl text-gray-900`}>${data.price.value}</p>
+                <p class={tw`text-3xl text-gray-900`}>${data.price}</p>
 
                 <div class={tw`mt-6`}>
                   <h3 class={tw`sr-only`}>Reviews</h3>
@@ -101,7 +103,7 @@ export default function ProductPage({ data }: PageProps<Product | null>) {
                   <h3 class={tw`sr-only`}>Description</h3>
                   <div class={tw`space-y-6`}>
                     <p class={tw`text-base text-gray-900`}>
-                      {data.description}
+                      {data.long_description}
                     </p>
                   </div>
                 </div>

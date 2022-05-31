@@ -7,7 +7,7 @@ import ProductCard from "../components/ProductCard.tsx";
 import PromoHeader from "../components/PromoHeader.tsx";
 import Footer from "../components/Footer.tsx";
 import { Handlers } from "$fresh/server.ts";
-import { GetAllProducts, Product } from "../services/ShopService.ts";
+import { GetFeaturedProducts, Product } from "../services/ShopService.ts";
 import Navigation from "../islands/Navigation.tsx";
 
 const title = "🛍 Turquoze | Home";
@@ -15,7 +15,7 @@ const description = "e-commerce page for you";
 
 export const handler: Handlers<Array<Product> | null> = {
   async GET(_, ctx) {
-    const products = await GetAllProducts();
+    const products = await GetFeaturedProducts();
     if (products === undefined) {
       return ctx.render(null);
     }
