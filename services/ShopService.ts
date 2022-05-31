@@ -171,13 +171,15 @@ export async function GetAllProducts(): Promise<Array<Product> | undefined> {
 
     const body: { products: Array<Product> } = await response.json();
 
-    return body.products
+    return body.products;
   } catch (_error) {
     return undefined;
   }
 }
 
-export async function GetFeaturedProducts(): Promise<Array<Product> | undefined> {
+export async function GetFeaturedProducts(): Promise<
+  Array<Product> | undefined
+> {
   try {
     const response = await fetch(`${host}products?limit=6`, {
       headers: new Headers({
@@ -191,7 +193,7 @@ export async function GetFeaturedProducts(): Promise<Array<Product> | undefined>
 
     const body: { products: Array<Product> } = await response.json();
 
-    return body.products.slice(0, 4)
+    return body.products.slice(0, 4);
   } catch (_error) {
     return undefined;
   }
