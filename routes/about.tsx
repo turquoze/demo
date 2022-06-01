@@ -1,7 +1,7 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import { Fragment, h, Head, PageProps } from "$fresh/runtime.ts";
+import { asset, Fragment, h, Head, PageProps } from "$fresh/runtime.ts";
 import { tw } from "../utils/twind.ts";
 import Footer from "../components/Footer.tsx";
 import Navigation from "../islands/Navigation.tsx";
@@ -10,7 +10,9 @@ import BreadCrumbs from "../components/BreadCrumbs.tsx";
 const title = "🛍 Turquoze | About";
 const description = "e-commerce page for you";
 
-export default function About() {
+export default function About(props: PageProps) {
+  const favicon = new URL(asset("/favicon.svg"), props.url).href;
+
   return (
     <>
       <Head>
@@ -21,6 +23,7 @@ export default function About() {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta name="description" content={description} />
+        <link rel="icon" type="image/svg" href={favicon}></link>
       </Head>
       <div>
         <Navigation />
