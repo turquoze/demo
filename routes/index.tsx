@@ -1,7 +1,7 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import { Fragment, h, Head, PageProps } from "$fresh/runtime.ts";
+import { asset, Fragment, h, Head, PageProps } from "$fresh/runtime.ts";
 import { tw } from "../utils/twind.ts";
 import ProductCard from "../components/ProductCard.tsx";
 import PromoHeader from "../components/PromoHeader.tsx";
@@ -23,8 +23,10 @@ export const handler: Handlers<Array<Product> | null> = {
   },
 };
 
-export default function Home({ data }: PageProps<Array<Product> | null>) {
-  if (!data) {
+export default function Home(props: PageProps<Array<Product> | null>) {
+  const favicon = new URL(asset("/favicon.svg"), props.url).href;
+
+  if (!props.data) {
     return <h1>Products not found</h1>;
   }
 
@@ -38,6 +40,7 @@ export default function Home({ data }: PageProps<Array<Product> | null>) {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta name="description" content={description} />
+        <link rel="icon" type="image/svg" href={favicon}></link>
       </Head>
       <div>
         <Navigation />
@@ -55,7 +58,7 @@ export default function Home({ data }: PageProps<Array<Product> | null>) {
             class={tw
               `grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}
           >
-            {data.map((product) => {
+            {props.data.map((product) => {
               return <ProductCard product={product} />;
             })}
           </div>
