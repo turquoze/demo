@@ -5,13 +5,9 @@ import { asset, Fragment, h, Head, PageProps } from "$fresh/runtime.ts";
 import { tw } from "../utils/twind.ts";
 import Footer from "../components/Footer.tsx";
 import { Handlers } from "$fresh/server.ts";
-import { Product } from "../services/ShopService.ts";
+import { Product, Search } from "../services/ShopService.ts";
 import Navigation from "../islands/Navigation.tsx";
-
-import { MeiliSearch } from "https://esm.sh/meilisearch";
 import SearchForm from "../islands/SearchForm.tsx";
-
-const client = new MeiliSearch({ host: "http://46.246.39.209:2016/" });
 
 const title = "🛍 Turquoze | Home";
 const description = "e-commerce page for you";
@@ -21,13 +17,9 @@ export const handler: Handlers<SearchProps | null> = {
     const url = new URL(req.url);
     const urlParams = new URLSearchParams(url.search);
 
-    const response = await client.index("products").search<Product>(
-      urlParams.get("q"),
-    );
+    const response = await Search(urlParams.get("q"));
 
-    const products = response.hits;
-
-    products.forEach((product) => {
+    response.products.forEach((product) => {
       // @ts-expect-error not on type
       product.title = product.name;
       product.images = [
@@ -35,7 +27,7 @@ export const handler: Handlers<SearchProps | null> = {
       ];
     });
 
-    if (products === undefined) {
+    if (response.products === undefined) {
       return ctx.render({
         hits: 0,
         products: [],
@@ -47,7 +39,7 @@ export const handler: Handlers<SearchProps | null> = {
       return new Response(
         JSON.stringify({
           hits: response.nbHits,
-          products: products,
+          products: response.products,
           query: response.query,
         }),
         {
@@ -60,7 +52,7 @@ export const handler: Handlers<SearchProps | null> = {
     } else {
       return ctx.render({
         hits: response.nbHits,
-        products: products,
+        products: response.products,
         query: response.query,
       });
     }
@@ -73,7 +65,7 @@ interface SearchProps {
   hits: number;
 }
 
-export default function Search(props: PageProps<SearchProps>) {
+export default function SearchPage(props: PageProps<SearchProps>) {
   const favicon = new URL(asset("/favicon.svg"), props.url).href;
 
   return (

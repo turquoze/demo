@@ -14,6 +14,7 @@ interface SearchProps {
 }
 
 export default function SearchForm(props: SearchProps) {
+  const [products, setProducts] = useState(props.products);
   const [query, setQuery] = useState(props.query);
 
   async function onSubmit(e: Event) {
@@ -29,42 +30,49 @@ export default function SearchForm(props: SearchProps) {
       },
     });
 
-    const data = await response.json();
+    const data: SearchProps = await response.json();
     console.log(data);
+    setProducts(data.products);
   }
 
   // @ts-expect-error no type
   async function onValueChange(e) {
     const { value } = e.target;
     setQuery(value);
+    console.log(`search: ${value}`);
     await search();
   }
 
   return (
     <>
-      <div class={tw`my-8 grid justify-items-center`}>
+      <div class={tw`my-8 flex justify-center`}>
         <form
-          class={tw`w-4/5 md:w-1/3`}
           onSubmit={onSubmit}
           method="GET"
           action="/search"
         >
-          <label
-            for="search"
-            class={tw`text-sm font-medium text-gray-700`}
-          >
-            Search
-          </label>
-          <div class={tw`mt-1 relative rounded-md shadow-md`}>
-            <input
-              type="text"
-              name="q"
-              class={tw
-                `h-10 block w-full pl-7 text-sm pr-12 md:text-md border-gray-300 rounded-md`}
-              placeholder="search"
-              value={query}
-              onInput={onValueChange}
-            />
+          <div class={tw`grid grid-cols-3 justify-items-center`}>
+            <div class={tw`col-span-2`}>
+              <input
+                type="text"
+                name="q"
+                class={tw
+                  `h-10 block w-full pl-7 text-sm pr-12 border-gray-300 rounded-md shadow-md border`}
+                placeholder="search"
+                value={query}
+                onInput={onValueChange}
+              />
+            </div>
+
+            <div class={tw`col-span-1`}>
+              <button
+                class={tw
+                  `w-28 bg-black rounded-md h-full ml-2 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2`}
+                type="submit"
+              >
+                Search
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -72,10 +80,10 @@ export default function SearchForm(props: SearchProps) {
         class={tw
           `grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}
       >
-        {props.products?.map((product) => {
+        {products?.map((product) => {
           return <ProductCard product={product} />;
         })}
-        {props.hits == 0 && props.products.length == 0
+        {props.hits == 0 && products.length == 0
           ? (
             <h2 class={tw`text-4xl tracking-tight text-gray-900 mb-2`}>
               No search hits
