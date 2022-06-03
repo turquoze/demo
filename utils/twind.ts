@@ -1,7 +1,9 @@
 import { IS_BROWSER } from "$fresh/runtime.ts";
 import { apply, setup, tw } from "$twind";
 import * as colors from "$twind/colors";
-export { apply, setup, tw };
+import { forms } from "https://esm.sh/@twind/forms";
+
+export { apply, forms, setup, tw };
 export const theme = {
   colors: {
     blue: colors.blue,
@@ -15,5 +17,5 @@ export const theme = {
   },
 };
 if (IS_BROWSER) {
-  setup({ theme: { colors } });
+  setup({ theme: { colors }, plugins: { forms } });
 }

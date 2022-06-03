@@ -2,13 +2,15 @@
 /** @jsxFrag Fragment */
 
 import { asset, Fragment, h, Head, PageProps } from "$fresh/runtime.ts";
-import { tw } from "../../utils/twind.ts";
-import BreadCrumbs from "../../components/BreadCrumbs.tsx";
-import Footer from "../../components/Footer.tsx";
+import { tw } from "../utils/twind.ts";
+import Footer from "../components/Footer.tsx";
 import { Handlers } from "$fresh/server.ts";
-import { Search, SearchProps } from "../../services/ShopService.ts";
-import Navigation from "../../islands/Navigation.tsx";
-import SearchForm from "../../islands/SearchForm.tsx";
+import { Search, SearchProps } from "../services/ShopService.ts";
+import Navigation from "../islands/Navigation.tsx";
+import SearchForm from "../islands/SearchForm.tsx";
+
+const title = "🛍 Turquoze | Home";
+const description = "e-commerce page for you";
 
 export const handler: Handlers<SearchProps | null> = {
   async GET(req, ctx) {
@@ -66,15 +68,8 @@ export const handler: Handlers<SearchProps | null> = {
   },
 };
 
-const title = "🛍 Turquoze | Products";
-const description = "e-commerce page for you";
-
-export default function Products(props: PageProps<SearchProps | null>) {
+export default function SearchPage(props: PageProps<SearchProps>) {
   const favicon = new URL(asset("/favicon.svg"), props.url).href;
-
-  if (!props.data) {
-    return <h1>Products not found</h1>;
-  }
 
   return (
     <>
@@ -88,22 +83,18 @@ export default function Products(props: PageProps<SearchProps | null>) {
         <meta name="description" content={description} />
         <link rel="icon" type="image/svg" href={favicon}></link>
       </Head>
-      <Navigation />
-      <div class={tw`pt-6`}>
-        <BreadCrumbs
-          first={{ href: "/", name: "Home" }}
-          links={[{ href: "/products", name: "Products" }]}
-        />
-      </div>
-      <div
-        class={tw
-          `max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8`}
-      >
-        <SearchForm
-          query={props.data.query}
-          hits={props.data.hits}
-          products={props.data.products}
-        />
+      <div>
+        <Navigation />
+        <div
+          class={tw
+            `max-w-2xl mx-auto py-4 px-8 sm:py-4 sm:px-6 lg:max-w-7xl lg:px-8`}
+        >
+          <SearchForm
+            query={props.data.query}
+            hits={props.data.hits}
+            products={props.data.products}
+          />
+        </div>
       </div>
       <Footer />
     </>

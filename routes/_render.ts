@@ -1,10 +1,10 @@
 import { RenderContext, RenderFn } from "$fresh/server.ts";
-import { setup, theme } from "../utils/twind.ts";
+import { forms, setup, theme } from "../utils/twind.ts";
 import { virtualSheet } from "$twind/sheets";
 
 const sheet = virtualSheet();
 sheet.reset();
-setup({ sheet, theme });
+setup({ sheet, theme, plugins: { forms } });
 
 export function render(ctx: RenderContext, render: RenderFn) {
   const snapshot = ctx.state.get("twindSnapshot") as unknown[] | null;

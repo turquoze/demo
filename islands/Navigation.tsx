@@ -337,7 +337,7 @@ export default function Navigation(props: CounterProps) {
       {open
         ? (
           <div
-            class={tw`relative z-6 lg:hidden`}
+            class={tw`relative lg:hidden`}
             aria-labelledby="slide-over-title"
             role="dialog"
             aria-modal="true"
@@ -369,7 +369,7 @@ export default function Navigation(props: CounterProps) {
 
       <noscript>
         <div
-          class={tw`relative z-6 lg:hidden`}
+          class={tw`relative lg:hidden`}
           aria-labelledby="slide-over-title"
           role="dialog"
           aria-modal="true"

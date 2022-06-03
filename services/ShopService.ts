@@ -1,3 +1,5 @@
+import { MeiliSearch } from "https://esm.sh/meilisearch";
+
 export interface CartProduct {
   id: number;
   name: string;
@@ -131,8 +133,16 @@ export interface Product {
   shop: string;
 }
 
+export interface SearchProps {
+  products: Array<Product>;
+  query: string;
+  hits: number;
+}
+
 const host = `https://turquoze-backend.deno.dev/api/`;
 const token = `1562452e-d4fe-4a00-a242-4fa1e069584d`;
+
+const client = new MeiliSearch({ host: "http://46.246.39.209:2016/" });
 
 export async function GetProduct(slug: string): Promise<Product | undefined> {
   try {
@@ -240,5 +250,27 @@ export async function GetCart(): Promise<Cart | undefined> {
         slug: products[3].slug,
       },
     ],
+  };
+}
+
+export async function Search(params: {
+  query: string | null;
+  limit: number;
+  offset: number;
+}) {
+  const response = await client.index("products-demo").search<Product>(
+    params.query,
+    {
+      limit: params.limit,
+      offset: params.offset,
+    },
+  );
+
+  const products = response.hits;
+
+  return {
+    products: products,
+    nbHits: response.nbHits,
+    query: response.query,
   };
 }
