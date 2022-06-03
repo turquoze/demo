@@ -133,6 +133,12 @@ export interface Product {
   shop: string;
 }
 
+export interface SearchProps {
+  products: Array<Product>;
+  query: string;
+  hits: number;
+}
+
 const host = `https://turquoze-backend.deno.dev/api/`;
 const token = `1562452e-d4fe-4a00-a242-4fa1e069584d`;
 
@@ -247,9 +253,17 @@ export async function GetCart(): Promise<Cart | undefined> {
   };
 }
 
-export async function Search(query: string | null) {
+export async function Search(params: {
+  query: string | null;
+  limit: number;
+  offset: number;
+}) {
   const response = await client.index("products-demo").search<Product>(
-    query,
+    params.query,
+    {
+      limit: params.limit,
+      offset: params.offset,
+    },
   );
 
   const products = response.hits;

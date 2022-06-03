@@ -3,27 +3,73 @@
 
 import { asset, Fragment, h, Head, PageProps } from "$fresh/runtime.ts";
 import { tw } from "../../utils/twind.ts";
-import ProductCard from "../../components/ProductCard.tsx";
 import BreadCrumbs from "../../components/BreadCrumbs.tsx";
 import Footer from "../../components/Footer.tsx";
 import { Handlers } from "$fresh/server.ts";
-import { GetAllProducts, Product } from "../../services/ShopService.ts";
+import { Search, SearchProps } from "../../services/ShopService.ts";
 import Navigation from "../../islands/Navigation.tsx";
+import SearchForm from "../../islands/SearchForm.tsx";
 
-export const handler: Handlers<Array<Product> | null> = {
-  async GET(_, ctx) {
-    const products = await GetAllProducts();
-    if (products === undefined) {
-      return ctx.render(null);
+export const handler: Handlers<SearchProps | null> = {
+  async GET(req, ctx) {
+    const url = new URL(req.url);
+    const urlParams = new URLSearchParams(url.search);
+    const limit = urlParams.get("limit");
+    const offset = urlParams.get("offset");
+
+    let limitInt = 20;
+    let offsetInt = 0;
+
+    if (limit != null) {
+      limitInt = parseInt(limit);
     }
-    return ctx.render(products);
+
+    if (offset != null) {
+      offsetInt = parseInt(offset);
+    }
+
+    const response = await Search({
+      query: urlParams.get("q"),
+      limit: limitInt,
+      offset: offsetInt,
+    });
+
+    if (response.products === undefined) {
+      return ctx.render({
+        hits: 0,
+        products: [],
+        query: "",
+      });
+    }
+
+    if (req.headers.get("Accept") === "application/json") {
+      return new Response(
+        JSON.stringify({
+          hits: response.nbHits,
+          products: response.products,
+          query: response.query,
+        }),
+        {
+          status: 200,
+          headers: {
+            "content-type": "application/json",
+          },
+        },
+      );
+    } else {
+      return ctx.render({
+        hits: response.nbHits,
+        products: response.products,
+        query: response.query,
+      });
+    }
   },
 };
 
 const title = "🛍 Turquoze | Products";
 const description = "e-commerce page for you";
 
-export default function Products(props: PageProps<Array<Product> | null>) {
+export default function Products(props: PageProps<SearchProps | null>) {
   const favicon = new URL(asset("/favicon.svg"), props.url).href;
 
   if (!props.data) {
@@ -53,19 +99,11 @@ export default function Products(props: PageProps<Array<Product> | null>) {
         class={tw
           `max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8`}
       >
-        <h2
-          class={tw`text-2xl tracking-tight text-gray-900 mb-2`}
-        >
-          All Products
-        </h2>
-        <div
-          class={tw
-            `grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}
-        >
-          {props.data.map((product) => {
-            return <ProductCard product={product} />;
-          })}
-        </div>
+        <SearchForm
+          query={props.data.query}
+          hits={props.data.hits}
+          products={props.data.products}
+        />
       </div>
       <Footer />
     </>

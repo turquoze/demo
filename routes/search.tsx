@@ -5,7 +5,7 @@ import { asset, Fragment, h, Head, PageProps } from "$fresh/runtime.ts";
 import { tw } from "../utils/twind.ts";
 import Footer from "../components/Footer.tsx";
 import { Handlers } from "$fresh/server.ts";
-import { Product, Search } from "../services/ShopService.ts";
+import { Search, SearchProps } from "../services/ShopService.ts";
 import Navigation from "../islands/Navigation.tsx";
 import SearchForm from "../islands/SearchForm.tsx";
 
@@ -16,8 +16,25 @@ export const handler: Handlers<SearchProps | null> = {
   async GET(req, ctx) {
     const url = new URL(req.url);
     const urlParams = new URLSearchParams(url.search);
+    const limit = urlParams.get("limit");
+    const offset = urlParams.get("offset");
 
-    const response = await Search(urlParams.get("q"));
+    let limitInt = 20;
+    let offsetInt = 0;
+
+    if (limit != null) {
+      limitInt = parseInt(limit);
+    }
+
+    if (offset != null) {
+      offsetInt = parseInt(offset);
+    }
+
+    const response = await Search({
+      query: urlParams.get("q"),
+      limit: limitInt,
+      offset: offsetInt,
+    });
 
     if (response.products === undefined) {
       return ctx.render({
@@ -50,12 +67,6 @@ export const handler: Handlers<SearchProps | null> = {
     }
   },
 };
-
-interface SearchProps {
-  products: Array<Product>;
-  query: string;
-  hits: number;
-}
 
 export default function SearchPage(props: PageProps<SearchProps>) {
   const favicon = new URL(asset("/favicon.svg"), props.url).href;
