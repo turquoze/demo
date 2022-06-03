@@ -20,6 +20,8 @@ export default function SearchForm(props: SearchProps) {
   async function onSubmit(e: Event) {
     e.preventDefault();
 
+    console.log("searching");
+
     await search();
   }
 

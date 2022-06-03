@@ -19,14 +19,6 @@ export const handler: Handlers<SearchProps | null> = {
 
     const response = await Search(urlParams.get("q"));
 
-    response.products.forEach((product) => {
-      // @ts-expect-error not on type
-      product.title = product.name;
-      product.images = [
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80",
-      ];
-    });
-
     if (response.products === undefined) {
       return ctx.render({
         hits: 0,

@@ -248,7 +248,7 @@ export async function GetCart(): Promise<Cart | undefined> {
 }
 
 export async function Search(query: string | null) {
-  const response = await client.index("products").search<Product>(
+  const response = await client.index("products-demo").search<Product>(
     query,
   );
 
