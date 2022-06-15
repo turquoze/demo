@@ -323,7 +323,7 @@ export default function Navigation(props: CounterProps) {
                       class={tw
                         `ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800`}
                     >
-                      0
+                      {cart?.products.length}
                     </span>
                     <span class={tw`sr-only`}>items in cart, view bag</span>
                   </a>

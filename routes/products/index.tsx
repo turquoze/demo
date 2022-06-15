@@ -29,7 +29,7 @@ export const handler: Handlers<SearchProps | null> = {
     }
 
     const response = await Search({
-      query: urlParams.get("q"),
+      query: urlParams.get("q") ?? "",
       limit: limitInt,
       offset: offsetInt,
     });
@@ -60,7 +60,7 @@ export const handler: Handlers<SearchProps | null> = {
       return ctx.render({
         hits: response.nbHits,
         products: response.products,
-        query: response.query,
+        query: response.query ?? "",
       });
     }
   },

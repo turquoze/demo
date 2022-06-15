@@ -62,7 +62,7 @@ export const handler: Handlers<SearchProps | null> = {
       return ctx.render({
         hits: response.nbHits,
         products: response.products,
-        query: response.query,
+        query: response.query ?? "",
       });
     }
   },
