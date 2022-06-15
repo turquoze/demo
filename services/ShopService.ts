@@ -1,5 +1,3 @@
-import { MeiliSearch } from "https://esm.sh/meilisearch";
-
 export interface CartProduct {
   id: number;
   name: string;
@@ -16,107 +14,6 @@ export interface Cart {
     subtotal: number;
   };
 }
-
-const products = [
-  {
-    slug: "test1",
-    name: "Test1",
-    images: [
-      "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80",
-    ],
-    price: {
-      currency: "USD",
-      value: 20.00,
-    },
-    description: `Lorem Ipsum is simply dummy text of the printing and
-    typesetting industry. Lorem Ipsum has been the industry's
-    standard dummy text ever since the 1500s, when an unknown
-    printer took a galley of type and scrambled it to make a
-    type specimen book. It has survived not only five
-    centuries, but also the leap into electronic typesetting,
-    remaining essentially unchanged. It was popularised in the
-    1960s with the release of Letraset sheets containing Lorem
-    Ipsum passages, and more recently with desktop publishing
-    software like Aldus PageMaker including versions of Lorem
-    Ipsum.`,
-    short_description: `Lorem Ipsum is simply dummy text of the printing and
-    typesetting industry. Lorem Ipsum has been the industry's
-    standard dummy text ever since the 1500s.`,
-  },
-  {
-    slug: "test2",
-    name: "Test2",
-    images: [
-      "https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-    ],
-    price: {
-      value: 34.95,
-      currency: "USD",
-    },
-    description: `Lorem Ipsum is simply dummy text of the printing and
-    typesetting industry. Lorem Ipsum has been the industry's
-    standard dummy text ever since the 1500s, when an unknown
-    printer took a galley of type and scrambled it to make a
-    type specimen book. It has survived not only five
-    centuries, but also the leap into electronic typesetting,
-    remaining essentially unchanged. It was popularised in the
-    1960s with the release of Letraset sheets containing Lorem
-    Ipsum passages, and more recently with desktop publishing
-    software like Aldus PageMaker including versions of Lorem
-    Ipsum.`,
-    short_description: `Lorem Ipsum is simply dummy text of the printing and
-    typesetting industry. Lorem Ipsum has been the industry's`,
-  },
-  {
-    slug: "test3",
-    name: "Test3",
-    images: [
-      "https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzF8fHByb2R1Y3RzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
-    ],
-    price: {
-      value: 56.49,
-      currency: "USD",
-    },
-    description: `Lorem Ipsum is simply dummy text of the printing and
-    typesetting industry. Lorem Ipsum has been the industry's
-    standard dummy text ever since the 1500s, when an unknown
-    printer took a galley of type and scrambled it to make a
-    type specimen book. It has survived not only five
-    centuries, but also the leap into electronic typesetting,
-    remaining essentially unchanged. It was popularised in the
-    1960s with the release of Letraset sheets containing Lorem
-    Ipsum passages, and more recently with desktop publishing
-    software like Aldus PageMaker including versions of Lorem
-    Ipsum.`,
-    short_description: `Lorem Ipsum is simply dummy text of the printing and
-    typesetting industry. Lorem Ipsum has been the industry's
-    standard dummy text ever since the 1500s, when an unknown`,
-  },
-  {
-    slug: "test4",
-    name: "Test4",
-    images: [
-      "https://images.unsplash.com/photo-1598662957563-ee4965d4d72c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHByb2R1Y3RzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
-    ],
-    price: {
-      value: 109.95,
-      currency: "USD",
-    },
-    description: `Lorem Ipsum is simply dummy text of the printing and
-    typesetting industry. Lorem Ipsum has been the industry's
-    standard dummy text ever since the 1500s, when an unknown
-    printer took a galley of type and scrambled it to make a
-    type specimen book. It has survived not only five
-    centuries, but also the leap into electronic typesetting,
-    remaining essentially unchanged. It was popularised in the
-    1960s with the release of Letraset sheets containing Lorem
-    Ipsum passages, and more recently with desktop publishing
-    software like Aldus PageMaker including versions of Lorem
-    Ipsum.`,
-    short_description: `Lorem Ipsum is simply dummy text of the printing and
-    typesetting industry. Lorem Ipsum has been the industry's`,
-  },
-];
 
 export interface Product {
   id: number;
@@ -139,15 +36,53 @@ export interface SearchProps {
   hits: number;
 }
 
+export interface CartItem {
+  id: number;
+  cart_id: string;
+  product_id: string;
+  price: number;
+  quantity: number;
+}
+
+export interface SearchInfo {
+  hits: number;
+  offset: number;
+  limit: number;
+  facetsDistribution: unknown | undefined;
+  exhaustiveNbHits: boolean;
+  exhaustiveFacetsCount: boolean | undefined;
+}
+
 const host = `https://turquoze-backend.deno.dev/api/`;
 const token = `1562452e-d4fe-4a00-a242-4fa1e069584d`;
-
-const client = new MeiliSearch({ host: "http://46.246.39.209:2016/" });
 
 export async function GetProduct(slug: string): Promise<Product | undefined> {
   try {
     const response = await fetch(
       `${host}products/byslug/${slug}`,
+      {
+        headers: new Headers({
+          "x-turquoze-key": token,
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Not Ok");
+    }
+
+    const body: { products: Product } = await response.json();
+
+    return body.products;
+  } catch (_error) {
+    return undefined;
+  }
+}
+
+export async function GetProductById(id: string): Promise<Product | undefined> {
+  try {
+    const response = await fetch(
+      `${host}products/${id}`,
       {
         headers: new Headers({
           "x-turquoze-key": token,
@@ -210,47 +145,64 @@ export async function GetFeaturedProducts(): Promise<
 }
 
 export async function GetCart(): Promise<Cart | undefined> {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  try {
+    const id = "f3231621-3ccd-4d65-a4d3-e2dba8477bfd";
+    const response = await fetch(`${host}carts/${id}/items`, {
+      headers: new Headers({
+        "x-turquoze-key": token,
+      }),
+    });
 
-  return {
-    cost: {
-      subtotal: 262.00,
-    },
-    products: [
-      {
-        id: 1,
-        image: products[0].images[0],
-        name: products[0].name,
-        price: products[0].price.value,
-        quantity: 1,
-        slug: products[0].slug,
+    if (!response.ok) {
+      throw new Error("Not Ok");
+    }
+
+    const body: { carts: Array<CartItem> } = await response.json();
+
+    console.log(body);
+
+    const cart: Cart = {
+      products: [],
+      cost: {
+        subtotal: 0,
       },
-      {
-        id: 2,
-        image: products[1].images[0],
-        name: products[1].name,
-        price: products[1].price.value,
-        quantity: 4,
-        slug: products[1].slug,
+    };
+
+    const cartItems = await Promise.all(
+      body.carts.map(async (item) => {
+        const product = await GetProductById(item.product_id);
+
+        if (product != undefined) {
+          const price = (item.price * item.quantity);
+
+          cart.cost.subtotal += price;
+
+          return {
+            id: item.id,
+            image: product.images[0] ?? "",
+            imageAlt: "product image",
+            name: product.title,
+            price: item.price,
+            quantity: item.quantity,
+            slug: product.slug,
+          };
+        }
+      }),
+    );
+
+    // @ts-expect-error not on type
+    cart.products = cartItems;
+
+    return cart;
+  } catch (error) {
+    console.log(error);
+    return {
+      cost: {
+        subtotal: 0,
       },
-      {
-        id: 3,
-        image: products[2].images[0],
-        name: products[2].name,
-        price: products[2].price.value,
-        quantity: 1,
-        slug: products[2].slug,
-      },
-      {
-        id: 4,
-        image: products[3].images[0],
-        name: products[3].name,
-        price: products[3].price.value,
-        quantity: 2,
-        slug: products[3].slug,
-      },
-    ],
-  };
+      products: [],
+    };
+  }
 }
 
 export async function Search(params: {
@@ -258,19 +210,35 @@ export async function Search(params: {
   limit: number;
   offset: number;
 }) {
-  const response = await client.index("products-demo").search<Product>(
-    params.query,
-    {
+  try {
+    const data = JSON.stringify({
+      query: params.query,
       limit: params.limit,
       offset: params.offset,
-    },
-  );
+    });
 
-  const products = response.hits;
+    const response = await fetch(`${host}products/search`, {
+      method: "POST",
+      headers: new Headers({
+        "x-turquoze-key": token,
+        "Content-Type": "application/json",
+      }),
+      body: data,
+    });
 
-  return {
-    products: products,
-    nbHits: response.nbHits,
-    query: response.query,
-  };
+    const body: { products: Array<Product>; info: SearchInfo } = await response
+      .json();
+
+    return {
+      products: body.products,
+      nbHits: 0,
+      query: params.query,
+    };
+  } catch {
+    return {
+      products: [],
+      nbHits: 0,
+      query: params.query,
+    };
+  }
 }

@@ -47,6 +47,9 @@ export default function CartPage(props: PageProps<Cart | null>) {
           >
             Shopping Cart
           </h3>
+          {props.data.products.length == 0
+            ? <h5 class={tw`mt-24 mb-36`}>No Products</h5>
+            : null}
           <ul role="list" class={tw`mt-12 -my-6 divide-y divide-gray-200`}>
             {props.data?.products.map((product) => {
               return <CartProduct product={product} />;
@@ -66,32 +69,55 @@ export default function CartPage(props: PageProps<Cart | null>) {
             <p class={tw`mt-0.5 text-sm text-gray-500`}>
               Shipping and taxes calculated at checkout.
             </p>
-            <div class={tw`mt-6`}>
-              <a
-                href="#"
-                class={tw
-                  `flex items-center justify-center rounded-md border border-transparent bg-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700`}
-              >
-                Checkout
-              </a>
-            </div>
-            <div
-              class={tw
-                `mt-6 flex justify-center text-center text-sm text-gray-500`}
-            >
-              <p>
-                or{" "}
-                <a
-                  href="/"
-                  type="button"
-                  class={tw`font-medium text-indigo-600 hover:text-indigo-500`}
+            {props.data.products.length > 0
+              ? (
+                <>
+                  <div class={tw`mt-6`}>
+                    <a
+                      href="#"
+                      class={tw
+                        `flex items-center justify-center rounded-md border border-transparent bg-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700`}
+                    >
+                      Checkout
+                    </a>
+                  </div>
+                  <div
+                    class={tw
+                      `mt-6 flex justify-center text-center text-sm text-gray-500`}
+                  >
+                    <p>
+                      or{" "}
+                      <a
+                        href="/"
+                        type="button"
+                        class={tw
+                          `font-medium text-indigo-600 hover:text-indigo-500`}
+                      >
+                        Continue Shopping<span aria-hidden="true">
+                          &rarr;
+                        </span>
+                      </a>
+                    </p>
+                  </div>
+                </>
+              )
+              : (
+                <div
+                  class={tw
+                    `mt-6 flex justify-center text-center text-sm text-gray-500`}
                 >
-                  Continue Shopping<span aria-hidden="true">
-                    &rarr;
-                  </span>
-                </a>
-              </p>
-            </div>
+                  <a
+                    href="/"
+                    type="button"
+                    class={tw
+                      `font-medium text-indigo-600 hover:text-indigo-500`}
+                  >
+                    Continue Shopping<span aria-hidden="true">
+                      &rarr;
+                    </span>
+                  </a>
+                </div>
+              )}
           </div>
         </div>
       </div>
