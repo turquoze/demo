@@ -144,7 +144,7 @@ export default function Navigation() {
 
               <div class={tw`ml-auto flex items-center`}>
                 <div class={tw`ml-4 flow-root lg:ml-6`}>
-                  { IS_BROWSER && cartIsOpen
+                  {IS_BROWSER && cartIsOpen
                     ? (
                       <div
                         class={tw`relative z-10`}

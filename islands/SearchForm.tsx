@@ -19,6 +19,8 @@ export default function SearchForm(props: SearchProps) {
 
   async function onSubmit(e: Event) {
     e.preventDefault();
+    // @ts-expect-error no type
+    setQuery(document.getElementById("search-input")?.value ?? "");
     await search();
   }
 
@@ -61,6 +63,7 @@ export default function SearchForm(props: SearchProps) {
                 placeholder="search"
                 value={query}
                 onInput={onValueChange}
+                id="search-input"
               />
             </div>
 
