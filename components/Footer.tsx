@@ -3,9 +3,7 @@
 import { h } from "$fresh/runtime.ts";
 import { tw } from "../utils/twind.ts";
 
-interface FooterProps {}
-
-export default function Footer(props: FooterProps) {
+export default function Footer() {
   return (
     <footer class={tw`p-4 bg-white sm:p-6`}>
       <hr
