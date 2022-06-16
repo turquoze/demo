@@ -4,11 +4,12 @@
 
 import * as $0 from "./routes/_render.ts";
 import * as $1 from "./routes/about.tsx";
-import * as $2 from "./routes/cart.tsx";
-import * as $3 from "./routes/index.tsx";
-import * as $4 from "./routes/products/[slug].tsx";
-import * as $5 from "./routes/products/index.tsx";
-import * as $6 from "./routes/search.tsx";
+import * as $2 from "./routes/api/cart/index.ts";
+import * as $3 from "./routes/cart.tsx";
+import * as $4 from "./routes/index.tsx";
+import * as $5 from "./routes/products/[slug].tsx";
+import * as $6 from "./routes/products/index.tsx";
+import * as $7 from "./routes/search.tsx";
 import * as $$0 from "./islands/BuyButton.tsx";
 import * as $$1 from "./islands/Navigation.tsx";
 import * as $$2 from "./islands/SearchForm.tsx";
@@ -17,11 +18,12 @@ const manifest = {
   routes: {
     "./routes/_render.ts": $0,
     "./routes/about.tsx": $1,
-    "./routes/cart.tsx": $2,
-    "./routes/index.tsx": $3,
-    "./routes/products/[slug].tsx": $4,
-    "./routes/products/index.tsx": $5,
-    "./routes/search.tsx": $6,
+    "./routes/api/cart/index.ts": $2,
+    "./routes/cart.tsx": $3,
+    "./routes/index.tsx": $4,
+    "./routes/products/[slug].tsx": $5,
+    "./routes/products/index.tsx": $6,
+    "./routes/search.tsx": $7,
   },
   islands: {
     "./islands/BuyButton.tsx": $$0,

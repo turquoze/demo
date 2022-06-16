@@ -33,14 +33,19 @@ export default function Navigation(props: CounterProps) {
   };
 
   const handleCartClick = async (e: Event) => {
-    e.preventDefault();
-    setCartIsOpen(true);
-    setLoading(true);
-    const cart = await GetCart();
-    if (cart !== undefined) {
-      setCart(cart);
+    try {
+      e.preventDefault();
+      setCartIsOpen(true);
+      setLoading(true);
+      const response = await fetch("/api/cart");
+      const cart: Cart = await response.json();
+      if (cart !== undefined) {
+        setCart(cart);
+      }
+      setLoading(false);
+    } catch {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -141,7 +146,7 @@ export default function Navigation(props: CounterProps) {
 
               <div class={tw`ml-auto flex items-center`}>
                 <div class={tw`ml-4 flow-root lg:ml-6`}>
-                  {IS_BROWSER && cartIsOpen
+                  {cartIsOpen
                     ? (
                       <div
                         class={tw`relative z-10`}
