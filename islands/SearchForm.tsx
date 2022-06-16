@@ -19,9 +19,6 @@ export default function SearchForm(props: SearchProps) {
 
   async function onSubmit(e: Event) {
     e.preventDefault();
-
-    console.log("searching");
-
     await search();
   }
 
@@ -33,7 +30,6 @@ export default function SearchForm(props: SearchProps) {
     });
 
     const data: SearchProps = await response.json();
-    console.log(data);
     setProducts(data.products);
   }
 
@@ -41,7 +37,9 @@ export default function SearchForm(props: SearchProps) {
   async function onValueChange(e) {
     const { value } = e.target;
     setQuery(value);
-    console.log(`search: ${value}`);
+    const url =
+      `${window.location.origin}${window.location.pathname}?q=${value}`;
+    window.history.replaceState({}, document.title, url);
     await search();
   }
 

@@ -159,8 +159,6 @@ export async function GetCart(): Promise<Cart | undefined> {
 
     const body: { carts: Array<CartItem> } = await response.json();
 
-    console.log(body);
-
     const cart: Cart = {
       products: [],
       cost: {
@@ -194,8 +192,7 @@ export async function GetCart(): Promise<Cart | undefined> {
     cart.products = cartItems;
 
     return cart;
-  } catch (error) {
-    console.log(error);
+  } catch {
     return {
       cost: {
         subtotal: 0,

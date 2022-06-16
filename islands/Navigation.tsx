@@ -11,11 +11,9 @@ import {
 import { theme, tw } from "../utils/twind.ts";
 import CartProduct from "../components/CartProduct.tsx";
 
-import { Cart, GetCart } from "../services/ShopService.ts";
+import { Cart } from "../services/ShopService.ts";
 
-interface CounterProps {}
-
-export default function Navigation(props: CounterProps) {
+export default function Navigation() {
   const [open, setOpen] = useState(false);
   const [cartIsOpen, setCartIsOpen] = useState(false);
   const [cart, setCart] = useState<Cart>();
@@ -33,18 +31,23 @@ export default function Navigation(props: CounterProps) {
   };
 
   const handleCartClick = async (e: Event) => {
-    e.preventDefault();
-    setCartIsOpen(true);
-    setLoading(true);
-    const cart = await GetCart();
-    if (cart !== undefined) {
-      setCart(cart);
+    try {
+      e.preventDefault();
+      setCartIsOpen(true);
+      setLoading(true);
+      const response = await fetch("/api/cart");
+      const cart: Cart = await response.json();
+      if (cart !== undefined) {
+        setCart(cart);
+      }
+      setLoading(false);
+    } catch {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize, false);
+    self.addEventListener("resize", handleResize, false);
   }, []);
 
   return (
@@ -141,7 +144,7 @@ export default function Navigation(props: CounterProps) {
 
               <div class={tw`ml-auto flex items-center`}>
                 <div class={tw`ml-4 flow-root lg:ml-6`}>
-                  {IS_BROWSER && cartIsOpen
+                  { IS_BROWSER && cartIsOpen
                     ? (
                       <div
                         class={tw`relative z-10`}
