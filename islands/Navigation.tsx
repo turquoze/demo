@@ -1,7 +1,13 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import { Fragment, h, useEffect, useState } from "$fresh/runtime.ts";
+import {
+  Fragment,
+  h,
+  IS_BROWSER,
+  useEffect,
+  useState,
+} from "$fresh/runtime.ts";
 import { theme, tw } from "../utils/twind.ts";
 import CartProduct from "../components/CartProduct.tsx";
 
@@ -14,7 +20,9 @@ export default function Navigation() {
   const [loading, setLoading] = useState(false);
 
   const [quantityOfCart, setQuantityCart] = useState(
-    self.sessionStorage.getItem("cartQuantity"),
+    IS_BROWSER
+      ? self.sessionStorage.getItem("cartQuantity")
+      : cart?.products.length,
   );
 
   const mobileNav = () => {
