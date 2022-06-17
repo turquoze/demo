@@ -19,6 +19,12 @@ export default function Navigation() {
   const [cart, setCart] = useState<Cart>();
   const [loading, setLoading] = useState(false);
 
+  const [quantityOfCart, setQuantityCart] = useState(
+    IS_BROWSER
+      ? self.sessionStorage.getItem("cartQuantity")
+      : cart?.products.length,
+  );
+
   const mobileNav = () => {
     const isOpen = !open;
     setOpen(isOpen);
@@ -38,6 +44,11 @@ export default function Navigation() {
       const response = await fetch("/api/cart");
       const cart: Cart = await response.json();
       if (cart !== undefined) {
+        self.sessionStorage.setItem(
+          "cartQuantity",
+          cart.products.length.toString(),
+        );
+        setQuantityCart(cart.products.length.toString());
         setCart(cart);
       }
       setLoading(false);
@@ -88,32 +99,28 @@ export default function Navigation() {
         >
           <div class={tw`border-b border-gray-200`}>
             <div class={tw`h-16 flex items-center`}>
-              {IS_BROWSER
-                ? (
-                  <button
-                    type="button"
-                    class={tw`bg-white p-2 rounded-md text-gray-400 lg:hidden`}
-                    onClick={mobileNav}
+              <button
+                type="button"
+                class={tw`bg-white p-2 rounded-md text-gray-400 lg:hidden`}
+                onClick={mobileNav}
+              >
+                <span class={tw`sr-only`}>Open menu</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-6 w-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"
                   >
-                    <span class={tw`sr-only`}>Open menu</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      class="h-6 w-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 6h16M4 12h16M4 18h16"
-                      >
-                      </path>
-                    </svg>
-                  </button>
-                )
-                : null}
+                  </path>
+                </svg>
+              </button>
               <div class={tw`ml-2 flex lg:ml-0`}>
                 <a href="/">
                   <div
@@ -326,7 +333,7 @@ export default function Navigation() {
                       class={tw
                         `ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800`}
                     >
-                      {cart?.products.length}
+                      {quantityOfCart}
                     </span>
                     <span class={tw`sr-only`}>items in cart, view bag</span>
                   </a>
@@ -337,38 +344,34 @@ export default function Navigation() {
         </nav>
       </header>
 
-      {open
-        ? (
-          <div
-            class={tw`relative lg:hidden`}
-            aria-labelledby="slide-over-title"
-            role="dialog"
-            aria-modal="true"
-          >
-            <ul class={tw`my-6 mx-6`}>
-              <li class={tw`ml-4 mb-2`}>
-                <a
-                  href="/products"
-                  class={tw
-                    `flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
-                >
-                  Products
-                </a>
-              </li>
-              <li class={tw`ml-4`}>
-                <a
-                  href="/about"
-                  class={tw
-                    `flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
-                >
-                  About
-                </a>
-              </li>
-            </ul>
-            <hr />
-          </div>
-        )
-        : null}
+      <div
+        class={open ? tw`relative lg:hidden` : tw`hidden`}
+        aria-labelledby="slide-over-title"
+        role="dialog"
+        aria-modal="true"
+      >
+        <ul class={tw`my-6 mx-6`}>
+          <li class={tw`ml-4 mb-2`}>
+            <a
+              href="/products"
+              class={tw
+                `flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
+            >
+              Products
+            </a>
+          </li>
+          <li class={tw`ml-4`}>
+            <a
+              href="/about"
+              class={tw
+                `flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
+            >
+              About
+            </a>
+          </li>
+        </ul>
+        <hr />
+      </div>
 
       <noscript>
         <div
