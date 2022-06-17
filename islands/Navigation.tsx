@@ -1,13 +1,7 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import {
-  Fragment,
-  h,
-  IS_BROWSER,
-  useEffect,
-  useState,
-} from "$fresh/runtime.ts";
+import { Fragment, h, useEffect, useState } from "$fresh/runtime.ts";
 import { theme, tw } from "../utils/twind.ts";
 import CartProduct from "../components/CartProduct.tsx";
 
@@ -18,6 +12,10 @@ export default function Navigation() {
   const [cartIsOpen, setCartIsOpen] = useState(false);
   const [cart, setCart] = useState<Cart>();
   const [loading, setLoading] = useState(false);
+
+  const [quantityOfCart, setQuantityCart] = useState(
+    self.sessionStorage.getItem("cartQuantity"),
+  );
 
   const mobileNav = () => {
     const isOpen = !open;
@@ -38,6 +36,11 @@ export default function Navigation() {
       const response = await fetch("/api/cart");
       const cart: Cart = await response.json();
       if (cart !== undefined) {
+        self.sessionStorage.setItem(
+          "cartQuantity",
+          cart.products.length.toString(),
+        );
+        setQuantityCart(cart.products.length.toString());
         setCart(cart);
       }
       setLoading(false);
@@ -88,32 +91,28 @@ export default function Navigation() {
         >
           <div class={tw`border-b border-gray-200`}>
             <div class={tw`h-16 flex items-center`}>
-              {IS_BROWSER
-                ? (
-                  <button
-                    type="button"
-                    class={tw`bg-white p-2 rounded-md text-gray-400 lg:hidden`}
-                    onClick={mobileNav}
+              <button
+                type="button"
+                class={tw`bg-white p-2 rounded-md text-gray-400 lg:hidden`}
+                onClick={mobileNav}
+              >
+                <span class={tw`sr-only`}>Open menu</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-6 w-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"
                   >
-                    <span class={tw`sr-only`}>Open menu</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      class="h-6 w-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 6h16M4 12h16M4 18h16"
-                      >
-                      </path>
-                    </svg>
-                  </button>
-                )
-                : null}
+                  </path>
+                </svg>
+              </button>
               <div class={tw`ml-2 flex lg:ml-0`}>
                 <a href="/">
                   <div
@@ -144,7 +143,7 @@ export default function Navigation() {
 
               <div class={tw`ml-auto flex items-center`}>
                 <div class={tw`ml-4 flow-root lg:ml-6`}>
-                  {IS_BROWSER && cartIsOpen
+                  {cartIsOpen
                     ? (
                       <div
                         class={tw`relative z-10`}
@@ -326,7 +325,7 @@ export default function Navigation() {
                       class={tw
                         `ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800`}
                     >
-                      {cart?.products.length}
+                      {quantityOfCart}
                     </span>
                     <span class={tw`sr-only`}>items in cart, view bag</span>
                   </a>
