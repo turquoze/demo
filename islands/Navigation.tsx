@@ -151,7 +151,7 @@ export default function Navigation() {
 
               <div class={tw`ml-auto flex items-center`}>
                 <div class={tw`ml-4 flow-root lg:ml-6`}>
-                  {cartIsOpen
+                  {IS_BROWSER && cartIsOpen
                     ? (
                       <div
                         class={tw`relative z-10`}
@@ -344,38 +344,34 @@ export default function Navigation() {
         </nav>
       </header>
 
-      {open
-        ? (
-          <div
-            class={tw`relative lg:hidden`}
-            aria-labelledby="slide-over-title"
-            role="dialog"
-            aria-modal="true"
-          >
-            <ul class={tw`my-6 mx-6`}>
-              <li class={tw`ml-4 mb-2`}>
-                <a
-                  href="/products"
-                  class={tw
-                    `flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
-                >
-                  Products
-                </a>
-              </li>
-              <li class={tw`ml-4`}>
-                <a
-                  href="/about"
-                  class={tw
-                    `flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
-                >
-                  About
-                </a>
-              </li>
-            </ul>
-            <hr />
-          </div>
-        )
-        : null}
+      <div
+        class={open ? tw`relative lg:hidden` : tw`hidden`}
+        aria-labelledby="slide-over-title"
+        role="dialog"
+        aria-modal="true"
+      >
+        <ul class={tw`my-6 mx-6`}>
+          <li class={tw`ml-4 mb-2`}>
+            <a
+              href="/products"
+              class={tw
+                `flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
+            >
+              Products
+            </a>
+          </li>
+          <li class={tw`ml-4`}>
+            <a
+              href="/about"
+              class={tw
+                `flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
+            >
+              About
+            </a>
+          </li>
+        </ul>
+        <hr />
+      </div>
 
       <noscript>
         <div
