@@ -1,10 +1,11 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import { asset, Fragment, h, Head, PageProps } from "$fresh/runtime.ts";
-import { tw } from "../utils/twind.ts";
+import { h, Fragment } from "preact";
+import { tw } from "twind";
+import { asset, Head } from "$fresh/runtime.ts";
+import { Handlers, PageProps } from "$fresh/server.ts";
 import CartProduct from "../components/CartProduct.tsx";
-import { Handlers } from "$fresh/server.ts";
 import { Cart, GetCart } from "../services/ShopService.ts";
 
 const title = "🛍 Turquoze | Cart";
