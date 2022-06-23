@@ -1,14 +1,11 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import {
-  Fragment,
-  h,
-  IS_BROWSER,
-  useEffect,
-  useState,
-} from "$fresh/runtime.ts";
-import { theme, tw } from "../utils/twind.ts";
+import { useEffect, useState } from "preact/hooks";
+import { h, Fragment } from "preact";
+import { tw } from "twind";
+import { IS_BROWSER } from "$fresh/runtime.ts";
+import { theme } from "../utils/twind.ts";
 import CartProduct from "../components/CartProduct.tsx";
 
 import { Cart } from "../services/ShopService.ts";

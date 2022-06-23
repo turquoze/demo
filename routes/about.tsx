@@ -1,8 +1,10 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import { asset, Fragment, h, Head, PageProps } from "$fresh/runtime.ts";
-import { tw } from "../utils/twind.ts";
+import { h, Fragment } from "preact";
+import { tw } from "twind";
+import { asset, Head } from "$fresh/runtime.ts";
+import { PageProps } from "$fresh/server.ts";
 import Footer from "../components/Footer.tsx";
 import Navigation from "../islands/Navigation.tsx";
 import BreadCrumbs from "../components/BreadCrumbs.tsx";

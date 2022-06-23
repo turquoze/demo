@@ -1,8 +1,9 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import { Fragment, h, useState } from "$fresh/runtime.ts";
-import { tw } from "../utils/twind.ts";
+import { h, Fragment } from "preact";
+import { tw } from "twind";
+import { useState } from "preact/hooks";
 
 import { Product } from "../services/ShopService.ts";
 import ProductCard from "../components/ProductCard.tsx";
@@ -83,7 +84,7 @@ export default function SearchForm(props: SearchProps) {
         class={tw
           `grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}
       >
-        {products?.map((product) => {
+        {products?.map((product: Product) => {
           return <ProductCard product={product} />;
         })}
         {props.hits == 0 && products.length == 0

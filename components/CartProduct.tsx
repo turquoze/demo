@@ -1,7 +1,7 @@
 /** @jsx h */
 
-import { h } from "$fresh/runtime.ts";
-import { tw } from "../utils/twind.ts";
+import { h } from "preact";
+import { tw } from "twind";
 import { CartProduct } from "../services/ShopService.ts";
 
 interface CartProductProps {

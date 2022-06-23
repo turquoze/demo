@@ -1,11 +1,12 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import { asset, Fragment, h, Head, PageProps } from "$fresh/runtime.ts";
-import { tw } from "../../utils/twind.ts";
+import { h, Fragment } from "preact";
+import { tw } from "twind";
+import { asset, Head } from "$fresh/runtime.ts";
+import { Handlers, PageProps } from "$fresh/server.ts";
 import BreadCrumbs from "../../components/BreadCrumbs.tsx";
 import Footer from "../../components/Footer.tsx";
-import { Handlers } from "$fresh/server.ts";
 import { GetProduct, Product } from "../../services/ShopService.ts";
 import BuyButton from "../../islands/BuyButton.tsx";
 import Navigation from "../../islands/Navigation.tsx";
