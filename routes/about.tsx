@@ -1,7 +1,7 @@
 /** @jsx h */
 /** @jsxFrag Fragment */
 
-import { h, Fragment } from "preact";
+import { Fragment, h } from "preact";
 import { tw } from "twind";
 import { asset, Head } from "$fresh/runtime.ts";
 import { PageProps } from "$fresh/server.ts";

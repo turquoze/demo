@@ -2,7 +2,7 @@
 /** @jsxFrag Fragment */
 
 import { useEffect, useState } from "preact/hooks";
-import { h, Fragment } from "preact";
+import { Fragment, h } from "preact";
 import { tw } from "twind";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 import { theme } from "../utils/twind.ts";

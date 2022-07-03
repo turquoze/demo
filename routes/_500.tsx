@@ -2,34 +2,17 @@
 /** @jsxFrag Fragment */
 
 import { Fragment, h } from "preact";
-import { tw } from "twind";
-import { asset, Head } from "$fresh/runtime.ts";
-import { Handlers, PageProps } from "$fresh/server.ts";
-import ProductCard from "../components/ProductCard.tsx";
-import PromoHeader from "../components/PromoHeader.tsx";
+import { ErrorPageProps } from "$fresh/server.ts";
 import Footer from "../components/Footer.tsx";
-import { GetFeaturedProducts, Product } from "../services/ShopService.ts";
+import { asset, Head } from "$fresh/runtime.ts";
 import Navigation from "../islands/Navigation.tsx";
+import { tw } from "twind";
 
-const title = "🛍 Turquoze | Home";
+const title = "🛍 Turquoze | 404";
 const description = "e-commerce page for you";
 
-export const handler: Handlers<Array<Product> | null> = {
-  async GET(_, ctx) {
-    const products = await GetFeaturedProducts();
-    if (products === undefined) {
-      return ctx.render(null);
-    }
-    return ctx.render(products);
-  },
-};
-
-export default function Home(props: PageProps<Array<Product> | null>) {
+export default function Error500Page(props: ErrorPageProps) {
   const favicon = new URL(asset("/favicon.svg"), props.url).href;
-
-  if (!props.data) {
-    return <h1>Products not found</h1>;
-  }
 
   return (
     <>
@@ -45,7 +28,6 @@ export default function Home(props: PageProps<Array<Product> | null>) {
       </Head>
       <div>
         <Navigation />
-        <PromoHeader />
         <div
           class={tw
             `max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8`}
@@ -53,16 +35,8 @@ export default function Home(props: PageProps<Array<Product> | null>) {
           <h2
             class={tw`text-2xl tracking-tight text-gray-900 mb-2`}
           >
-            Featured Products
+            500 internal error: {(props.error as Error).message}
           </h2>
-          <div
-            class={tw
-              `grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}
-          >
-            {props.data.map((product) => {
-              return <ProductCard product={product} />;
-            })}
-          </div>
         </div>
       </div>
       <Footer />
