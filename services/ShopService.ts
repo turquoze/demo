@@ -34,6 +34,7 @@ export interface SearchProps {
   products: Array<Product>;
   query: string;
   hits: number;
+  facetsDistribution: unknown | undefined;
 }
 
 export interface CartItem {
@@ -210,8 +211,11 @@ export async function Search(params: {
   try {
     const data = JSON.stringify({
       query: params.query,
-      limit: params.limit,
-      offset: params.offset,
+      options: {
+        limit: params.limit,
+        offset: params.offset,
+        facetsDistribution: ["*"],
+      },
     });
 
     const response = await fetch(`${host}products/search`, {
@@ -228,14 +232,16 @@ export async function Search(params: {
 
     return {
       products: body.products,
-      nbHits: 0,
+      nbHits: body.info.hits,
       query: params.query,
+      facetsDistribution: body.info.facetsDistribution,
     };
   } catch {
     return {
       products: [],
       nbHits: 0,
       query: params.query,
+      facetsDistribution: {},
     };
   }
 }

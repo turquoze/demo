@@ -5,14 +5,8 @@ import { Fragment, h } from "preact";
 import { tw } from "twind";
 import { useState } from "preact/hooks";
 
-import { Product } from "../services/ShopService.ts";
+import { Product, SearchProps } from "../services/ShopService.ts";
 import ProductCard from "../components/ProductCard.tsx";
-
-interface SearchProps {
-  products: Array<Product>;
-  query: string;
-  hits: number;
-}
 
 export default function SearchForm(props: SearchProps) {
   const [products, setProducts] = useState(props.products);
@@ -33,6 +27,7 @@ export default function SearchForm(props: SearchProps) {
     });
 
     const data: SearchProps = await response.json();
+
     setProducts(data.products);
   }
 

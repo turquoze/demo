@@ -40,6 +40,7 @@ export const handler: Handlers<SearchProps | null> = {
         hits: 0,
         products: [],
         query: "",
+        facetsDistribution: {},
       });
     }
 
@@ -62,6 +63,7 @@ export const handler: Handlers<SearchProps | null> = {
         hits: response.nbHits,
         products: response.products,
         query: response.query ?? "",
+        facetsDistribution: response.facetsDistribution,
       });
     }
   },
@@ -104,6 +106,7 @@ export default function Products(props: PageProps<SearchProps | null>) {
           query={props.data.query}
           hits={props.data.hits}
           products={props.data.products}
+          facetsDistribution={props.data.facetsDistribution}
         />
       </div>
       <Footer />
