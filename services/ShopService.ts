@@ -6,6 +6,7 @@ export interface CartProduct {
   imageAlt?: "product image";
   slug: string;
   price: number;
+  public_id: string;
 }
 
 export interface Cart {
@@ -145,6 +146,52 @@ export async function GetFeaturedProducts(): Promise<
   }
 }
 
+export async function RemoveFromCart(product_id: string): Promise<void> {
+  try {
+    const id = "f3231621-3ccd-4d65-a4d3-e2dba8477bfd";
+
+    const response = await fetch(`${host}carts/${id}/items/${product_id}`, {
+      headers: new Headers({
+        "x-turquoze-key": token,
+      }),
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Not Ok");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function AddToCart(product_id: string): Promise<void> {
+  try {
+    const id = "f3231621-3ccd-4d65-a4d3-e2dba8477bfd";
+    const data = {
+      cart_id: id,
+      product_id: product_id,
+      price: 2000,
+      quantity: 1,
+    };
+    const response = await fetch(`${host}carts/${id}/items/`, {
+      headers: new Headers({
+        "x-turquoze-key": token,
+        "Content-Type": "application/json",
+        "Content-Length": `${JSON.stringify(data).length}`,
+      }),
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error("Not Ok");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function GetCart(): Promise<Cart | undefined> {
   try {
     const id = "f3231621-3ccd-4d65-a4d3-e2dba8477bfd";
@@ -172,7 +219,7 @@ export async function GetCart(): Promise<Cart | undefined> {
         const product = await GetProductById(item.product_id);
 
         if (product != undefined) {
-          const price = (item.price * item.quantity);
+          const price = (product.price * item.quantity);
 
           cart.cost.subtotal += price;
 
@@ -181,10 +228,13 @@ export async function GetCart(): Promise<Cart | undefined> {
             image: product.images[0] ?? "",
             imageAlt: "product image",
             name: product.title,
-            price: item.price,
+            price: product.price,
             quantity: item.quantity,
             slug: product.slug,
+            public_id: product.public_id,
           };
+        } else {
+          return {};
         }
       }),
     );

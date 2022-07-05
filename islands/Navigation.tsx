@@ -6,7 +6,7 @@ import { Fragment, h } from "preact";
 import { tw } from "twind";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 import { theme } from "../utils/twind.ts";
-import CartProduct from "../components/CartProduct.tsx";
+import CartProduct from "./CartProduct.tsx";
 
 import { Cart } from "../services/ShopService.ts";
 
@@ -40,12 +40,19 @@ export default function Navigation() {
       setLoading(true);
       const response = await fetch("/api/cart");
       const cart: Cart = await response.json();
+
       if (cart !== undefined) {
+        let quantity = 0;
+        cart.products.forEach((i) => {
+          quantity += i.quantity;
+        });
+
         self.sessionStorage.setItem(
           "cartQuantity",
-          cart.products.length.toString(),
+          quantity.toString(),
         );
-        setQuantityCart(cart.products.length.toString());
+
+        setQuantityCart(quantity.toString());
         setCart(cart);
       }
       setLoading(false);

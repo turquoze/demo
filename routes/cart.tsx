@@ -5,7 +5,7 @@ import { Fragment, h } from "preact";
 import { tw } from "twind";
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
-import CartProduct from "../components/CartProduct.tsx";
+import CartProduct from "../islands/CartProduct.tsx";
 import { Cart, GetCart } from "../services/ShopService.ts";
 
 const title = "🛍 Turquoze | Cart";

@@ -92,7 +92,7 @@ export default function ProductPage(props: PageProps<Product | null>) {
                 </div>
 
                 <BuyButton
-                  productId={props.data.slug}
+                  productId={props.data.public_id}
                   loading={false}
                   showOptions={true}
                   options={[]}
