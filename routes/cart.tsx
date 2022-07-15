@@ -6,13 +6,28 @@ import { tw } from "twind";
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import CartProduct from "../islands/CartProduct.tsx";
-import { Cart, GetCart } from "../services/ShopService.ts";
+import { Cart, GetCart, RemoveFromCart } from "../services/ShopService.ts";
 
 const title = "🛍 Turquoze | Cart";
 const description = "e-commerce page for you";
 
 export const handler: Handlers<Cart | null> = {
   async GET(_, ctx) {
+    const cart = await GetCart();
+    if (cart === undefined) {
+      return ctx.render(null);
+    }
+    return ctx.render(cart);
+  },
+  async POST(req, ctx) {
+    const data = await req.formData();
+    const body = Object.fromEntries(data.entries());
+    const id = body["pid"];
+
+    if (id != null || id != undefined) {
+      await RemoveFromCart(id.toString());
+    }
+
     const cart = await GetCart();
     if (cart === undefined) {
       return ctx.render(null);
@@ -50,12 +65,20 @@ export default function CartPage(props: PageProps<Cart | null>) {
           </h3>
           {props.data.products.length == 0
             ? <h5 class={tw`mt-24 mb-36`}>No Products</h5>
-            : null}
-          <ul role="list" class={tw`mt-12 -my-6 divide-y divide-gray-200`}>
-            {props.data?.products.map((product) => {
-              return <CartProduct product={product} />;
-            })}
-          </ul>
+            : (
+              <ul role="list" class={tw`mt-12 -my-6 divide-y divide-gray-200`}>
+                {props.data?.products.map((product) => {
+                  return (
+                    <CartProduct
+                      product={product}
+                      onLoad={() => {}}
+                      onRemove={() => {}}
+                      onFinished={() => {}}
+                    />
+                  );
+                })}
+              </ul>
+            )}
 
           <div
             class={tw`border-t border-gray-200 py-6`}

@@ -16,10 +16,8 @@ export default function Navigation() {
   const [cart, setCart] = useState<Cart>();
   const [loading, setLoading] = useState(false);
 
-  const [quantityOfCart, setQuantityCart] = useState(
-    IS_BROWSER
-      ? self.sessionStorage.getItem("cartQuantity")
-      : cart?.products.length,
+  const [quantityOfCart, setQuantityCart] = useState<string>(
+    self.sessionStorage.getItem("cartQuantity") ?? "",
   );
 
   const mobileNav = () => {
@@ -33,28 +31,38 @@ export default function Navigation() {
     }
   };
 
+  function handleLoading(state: boolean) {
+    setLoading(state);
+  }
+
+  const handleCart = async () => {
+    const response = await fetch("/api/cart");
+    const cart: Cart = await response.json();
+
+    if (cart !== undefined) {
+      let quantity = 0;
+      cart.products.forEach((i) => {
+        if (i.quantity != null || i.quantity != undefined) {
+          quantity += i.quantity;
+        }
+      });
+
+      self.sessionStorage.setItem(
+        "cartQuantity",
+        quantity.toString(),
+      );
+
+      setQuantityCart(quantity.toString());
+      setCart(cart);
+    }
+  };
+
   const handleCartClick = async (e: Event) => {
     try {
       e.preventDefault();
       setCartIsOpen(true);
       setLoading(true);
-      const response = await fetch("/api/cart");
-      const cart: Cart = await response.json();
-
-      if (cart !== undefined) {
-        let quantity = 0;
-        cart.products.forEach((i) => {
-          quantity += i.quantity;
-        });
-
-        self.sessionStorage.setItem(
-          "cartQuantity",
-          quantity.toString(),
-        );
-
-        setQuantityCart(quantity.toString());
-        setCart(cart);
-      }
+      await handleCart();
       setLoading(false);
     } catch {
       setLoading(false);
@@ -63,6 +71,11 @@ export default function Navigation() {
 
   useEffect(() => {
     self.addEventListener("resize", handleResize, false);
+    const cart = async () => {
+      await handleCart();
+    };
+
+    cart();
   }, []);
 
   return (
@@ -249,12 +262,18 @@ export default function Navigation() {
                                                 No Product
                                               </h3>
                                             )
-                                            : null}
-                                          {cart?.products.map((product) => {
-                                            return (
-                                              <CartProduct product={product} />
-                                            );
-                                          })}
+                                            : cart?.products.map((product) => {
+                                              return (
+                                                <CartProduct
+                                                  product={product}
+                                                  onLoad={() =>
+                                                    handleLoading(true)}
+                                                  onRemove={() =>
+                                                    handleLoading(false)}
+                                                  onFinished={handleCart}
+                                                />
+                                              );
+                                            })}
                                         </ul>
                                       </div>
                                     </div>

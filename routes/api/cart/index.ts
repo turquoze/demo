@@ -41,8 +41,7 @@ export const handler: Handlers = {
     try {
       const body: { id: string } = await req.json();
       await RemoveFromCart(body.id);
-      const cart = await GetCart();
-      return new Response(JSON.stringify(cart));
+      return new Response(JSON.stringify({}));
     } catch {
       return new Response(
         JSON.stringify({
