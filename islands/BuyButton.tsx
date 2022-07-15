@@ -26,7 +26,20 @@ export default function BuyButton(props: BuyButtonProps) {
       // add to cart
       setLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 500));
+
+      const response = await fetch(`/api/cart`, {
+        headers: {
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({ id: props.productId }),
+        method: "POST",
+      });
+
       setLoading(false);
+
+      if (!response.ok) {
+        alert("No connection to cart");
+      }
     } else {
       alert("Not allowed");
     }
