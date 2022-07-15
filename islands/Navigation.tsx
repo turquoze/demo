@@ -17,7 +17,7 @@ export default function Navigation() {
   const [loading, setLoading] = useState(false);
 
   const [quantityOfCart, setQuantityCart] = useState<string>(
-    self.sessionStorage.getItem("cartQuantity") ?? "",
+    IS_BROWSER ? self.sessionStorage.getItem("cartQuantity") ?? "" : "",
   );
 
   const mobileNav = () => {
