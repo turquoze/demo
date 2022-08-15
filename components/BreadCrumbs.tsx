@@ -30,8 +30,7 @@ export default function BreadCrumbs(props: BreadCrumbsProps) {
           </svg>
           <a
             href={props.first.href}
-            class={tw
-              `inline-flex items-center text-sm text-black hover:text-gray-400`}
+            class={tw`inline-flex items-center text-sm text-black hover:text-gray-400`}
           >
             {props.first.name}
           </a>
@@ -42,8 +41,7 @@ export default function BreadCrumbs(props: BreadCrumbsProps) {
               {">"}
               <a
                 href={breadcrumb.href}
-                class={tw
-                  `inline-flex items-center text-sm text-black hover:text-gray-400 ml-2`}
+                class={tw`inline-flex items-center text-sm text-black hover:text-gray-400 ml-2`}
               >
                 {breadcrumb.name}
               </a>

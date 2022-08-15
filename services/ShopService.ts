@@ -146,11 +146,9 @@ export async function GetFeaturedProducts(): Promise<
   }
 }
 
-export async function RemoveFromCart(product_id: string): Promise<void> {
+export async function RemoveFromCart(cart_id: string, product_id: string): Promise<void> {
   try {
-    const id = "f3231621-3ccd-4d65-a4d3-e2dba8477bfd";
-
-    const response = await fetch(`${host}carts/${id}/items/${product_id}`, {
+    const response = await fetch(`${host}carts/${cart_id}/items/${product_id}`, {
       headers: new Headers({
         "x-turquoze-key": token,
       }),
@@ -165,16 +163,15 @@ export async function RemoveFromCart(product_id: string): Promise<void> {
   }
 }
 
-export async function AddToCart(product_id: string): Promise<void> {
+export async function AddToCart(cart_id: string, product_id: string): Promise<void> {
   try {
-    const id = "f3231621-3ccd-4d65-a4d3-e2dba8477bfd";
     const data = {
-      cart_id: id,
+      cart_id: cart_id,
       product_id: product_id,
       price: 2000,
       quantity: 1,
     };
-    const response = await fetch(`${host}carts/${id}/items/`, {
+    const response = await fetch(`${host}carts/${cart_id}/items/`, {
       headers: new Headers({
         "x-turquoze-key": token,
         "Content-Type": "application/json",
@@ -192,10 +189,9 @@ export async function AddToCart(product_id: string): Promise<void> {
   }
 }
 
-export async function GetCart(): Promise<Cart | undefined> {
+export async function GetCart(cart_id: string): Promise<Cart | undefined> {
   try {
-    const id = "f3231621-3ccd-4d65-a4d3-e2dba8477bfd";
-    const response = await fetch(`${host}carts/${id}/items`, {
+    const response = await fetch(`${host}carts/${cart_id}/items`, {
       headers: new Headers({
         "x-turquoze-key": token,
       }),
