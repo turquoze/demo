@@ -57,8 +57,7 @@ export default function ProductPage(props: PageProps<Product | null>) {
             }]}
           />
           <div
-            class={tw
-              `mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8`}
+            class={tw`mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8`}
           >
             <div class={tw`sm:rounded-lg sm:overflow-hidden`}>
               <img
@@ -100,8 +99,7 @@ export default function ProductPage(props: PageProps<Product | null>) {
               </div>
 
               <div
-                class={tw
-                  `py-10 lg:pt-6 lg:pb-5 lg:col-start-1 lg:col-span-2 lg:border-gray-200 lg:pr-8`}
+                class={tw`py-10 lg:pt-6 lg:pb-5 lg:col-start-1 lg:col-span-2 lg:border-gray-200 lg:pr-8`}
               >
                 <div>
                   <h3 class={tw`sr-only`}>Description</h3>

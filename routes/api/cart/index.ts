@@ -1,14 +1,14 @@
-import { HandlerContext, Handlers } from "$fresh/server.ts";
+import { Handlers } from "$fresh/server.ts";
 import {
   AddToCart,
   GetCart,
   RemoveFromCart,
 } from "../../../services/ShopService.ts";
 
-export const handler: Handlers = {
-  async GET(_req: Request, _ctx: HandlerContext) {
+export const handler: Handlers<unknown, { cartId: string }> = {
+  async GET(_req: Request, ctx) {
     try {
-      const cart = await GetCart();
+      const cart = await GetCart(ctx.state.cartId);
       return new Response(JSON.stringify(cart));
     } catch {
       return new Response(
@@ -21,10 +21,10 @@ export const handler: Handlers = {
       );
     }
   },
-  async POST(req: Request, _ctx: HandlerContext) {
+  async POST(req: Request, ctx) {
     try {
       const body: { id: string } = await req.json();
-      await AddToCart(body.id);
+      await AddToCart(ctx.state.cartId, body.id);
       return new Response(JSON.stringify({}));
     } catch {
       return new Response(
@@ -37,10 +37,10 @@ export const handler: Handlers = {
       );
     }
   },
-  async DELETE(req: Request, _ctx: HandlerContext) {
+  async DELETE(req: Request, ctx) {
     try {
       const body: { id: string } = await req.json();
-      await RemoveFromCart(body.id);
+      await RemoveFromCart(ctx.state.cartId, body.id);
       return new Response(JSON.stringify({}));
     } catch {
       return new Response(

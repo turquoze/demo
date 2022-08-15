@@ -54,8 +54,7 @@ export default function SearchForm(props: SearchProps) {
               <input
                 type="text"
                 name="q"
-                class={tw
-                  `h-10 block w-full pl-7 text-sm pr-12 border-gray-300 rounded-md shadow-md border`}
+                class={tw`h-10 block w-full pl-7 text-sm pr-12 border-gray-300 rounded-md shadow-md border`}
                 placeholder="search"
                 value={query}
                 onInput={onValueChange}
@@ -65,8 +64,7 @@ export default function SearchForm(props: SearchProps) {
 
             <div class={tw`col-span-1`}>
               <button
-                class={tw
-                  `w-28 bg-black rounded-md h-full ml-2 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2`}
+                class={tw`w-28 bg-black rounded-md h-full ml-2 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2`}
                 type="submit"
               >
                 Search
@@ -76,8 +74,7 @@ export default function SearchForm(props: SearchProps) {
         </form>
       </div>
       <div
-        class={tw
-          `grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}
+        class={tw`grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}
       >
         {products?.map((product: Product) => {
           return <ProductCard product={product} />;

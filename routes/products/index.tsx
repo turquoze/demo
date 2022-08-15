@@ -99,8 +99,7 @@ export default function Products(props: PageProps<SearchProps | null>) {
         />
       </div>
       <div
-        class={tw
-          `max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8`}
+        class={tw`max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8`}
       >
         <SearchForm
           query={props.data.query}

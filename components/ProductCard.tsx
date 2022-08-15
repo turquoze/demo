@@ -22,8 +22,7 @@ export default function ProductCard(props: ProductCardProps) {
         <img
           src={props.product.images[0]}
           alt="product image"
-          class={tw
-            `w-full h-full object-center object-cover group-hover:opacity-75`}
+          class={tw`w-full h-full object-center object-cover group-hover:opacity-75`}
         />
       </div>
       <h3 class={tw`mt-4 text-sm text-gray-700`}>

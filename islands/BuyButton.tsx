@@ -73,8 +73,7 @@ export default function BuyButton(props: BuyButtonProps) {
         ? (
           <label>
             <select
-              class={tw
-                `w-full mt-1 rounded-md shadow-sm bg-white p-3 focus:ring-2 border-solid border-1`}
+              class={tw`w-full mt-1 rounded-md shadow-sm bg-white p-3 focus:ring-2 border-solid border-1`}
               value={value}
               onInput={onValueChange}
               name="VARIANT"
@@ -90,8 +89,7 @@ export default function BuyButton(props: BuyButtonProps) {
         : null}
       <button
         type="submit"
-        class={tw
-          `mt-6 w-full bg-black rounded-md py-3 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2`}
+        class={tw`mt-6 w-full bg-black rounded-md py-3 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2`}
       >
         Add to bag
       </button>

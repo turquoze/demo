@@ -11,11 +11,11 @@ import { Cart, GetCart, RemoveFromCart } from "../services/ShopService.ts";
 const title = "🛍 Turquoze | Cart";
 const description = "e-commerce page for you";
 
-export const handler: Handlers<Cart | null> = {
+export const handler: Handlers<Cart, { cartId: string } | null> = {
   async GET(_, ctx) {
-    const cart = await GetCart();
+    const cart = await GetCart(ctx.state!.cartId);
     if (cart === undefined) {
-      return ctx.render(null);
+      return ctx.render();
     }
     return ctx.render(cart);
   },
@@ -25,12 +25,12 @@ export const handler: Handlers<Cart | null> = {
     const id = body["pid"];
 
     if (id != null || id != undefined) {
-      await RemoveFromCart(id.toString());
+      await RemoveFromCart(ctx.state!.cartId, id.toString());
     }
 
-    const cart = await GetCart();
+    const cart = await GetCart(ctx.state!.cartId);
     if (cart === undefined) {
-      return ctx.render(null);
+      return ctx.render();
     }
     return ctx.render(cart);
   },
@@ -58,8 +58,7 @@ export default function CartPage(props: PageProps<Cart | null>) {
       <div>
         <div class={tw`mx-4 md:mx-36 xl:mx-96`}>
           <h3
-            class={tw
-              `text-4xl tracking-tight text-gray-900 sm:text-5xl text-center mb-8`}
+            class={tw`text-4xl tracking-tight text-gray-900 sm:text-5xl text-center mb-8`}
           >
             Shopping Cart
           </h3>
@@ -84,8 +83,7 @@ export default function CartPage(props: PageProps<Cart | null>) {
             class={tw`border-t border-gray-200 py-6`}
           >
             <div
-              class={tw
-                `flex justify-between text-base font-medium text-gray-900`}
+              class={tw`flex justify-between text-base font-medium text-gray-900`}
             >
               <p>Subtotal</p>
               <p>${props.data?.cost.subtotal ?? 0}</p>
@@ -99,23 +97,20 @@ export default function CartPage(props: PageProps<Cart | null>) {
                   <div class={tw`mt-6`}>
                     <a
                       href="#"
-                      class={tw
-                        `flex items-center justify-center rounded-md border border-transparent bg-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700`}
+                      class={tw`flex items-center justify-center rounded-md border border-transparent bg-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700`}
                     >
                       Checkout
                     </a>
                   </div>
                   <div
-                    class={tw
-                      `mt-6 flex justify-center text-center text-sm text-gray-500`}
+                    class={tw`mt-6 flex justify-center text-center text-sm text-gray-500`}
                   >
                     <p>
                       or{" "}
                       <a
                         href="/"
                         type="button"
-                        class={tw
-                          `font-medium text-indigo-600 hover:text-indigo-500`}
+                        class={tw`font-medium text-indigo-600 hover:text-indigo-500`}
                       >
                         Continue Shopping<span aria-hidden="true">
                           &rarr;
@@ -127,14 +122,12 @@ export default function CartPage(props: PageProps<Cart | null>) {
               )
               : (
                 <div
-                  class={tw
-                    `mt-6 flex justify-center text-center text-sm text-gray-500`}
+                  class={tw`mt-6 flex justify-center text-center text-sm text-gray-500`}
                 >
                   <a
                     href="/"
                     type="button"
-                    class={tw
-                      `font-medium text-indigo-600 hover:text-indigo-500`}
+                    class={tw`font-medium text-indigo-600 hover:text-indigo-500`}
                   >
                     Continue Shopping<span aria-hidden="true">
                       &rarr;
