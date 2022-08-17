@@ -35,6 +35,15 @@ export default function Navigation() {
     setLoading(state);
   }
 
+  async function SubmitCart() {
+    const response = await fetch("/api/cart/pay", {
+      method: "POST",
+    });
+    const data: { url: string } = await response.json();
+
+    window.location.href = data.url;
+  }
+
   const handleCart = async () => {
     const response = await fetch("/api/cart");
     const cart: Cart = await response.json();
@@ -282,6 +291,7 @@ export default function Navigation() {
                                       <a
                                         href="#"
                                         class={tw`flex items-center justify-center bg-black rounded-md px-6 py-3 text-base font-medium text-white shadow-sm`}
+                                        onClick={SubmitCart}
                                       >
                                         Checkout
                                       </a>

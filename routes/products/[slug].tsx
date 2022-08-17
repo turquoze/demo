@@ -60,11 +60,15 @@ export default function ProductPage(props: PageProps<Product | null>) {
             class={tw`mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8`}
           >
             <div class={tw`sm:rounded-lg sm:overflow-hidden`}>
-              <img
-                src={props.data.images[0]}
-                alt="product image"
-                class={tw`w-full h-full object-center object-cover`}
-              />
+              {props.data.images != null && props.data.images.length > 0
+                ? (
+                  <img
+                    src={props.data.images[0]}
+                    alt="product image"
+                    class={tw`w-full h-full object-center object-cover`}
+                  />
+                )
+                : ""}
             </div>
 
             <div class={tw`lg:mt-24 max-w-2xl mx-auto pt-10 pb-2 px-4 sm:px-6`}>
