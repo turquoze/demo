@@ -9,10 +9,25 @@ export interface CartProduct {
   public_id: string;
 }
 
+export interface CartInit {
+  id: number;
+  public_id: string;
+  created_at?: number;
+  items: Array<CartItem>;
+}
+
 export interface Cart {
   products: Array<CartProduct>;
   cost: {
     subtotal: number;
+  };
+}
+
+export interface FinalizeCart {
+  order: string;
+  payment: {
+    type: "URL" | "CODE";
+    value: string;
   };
 }
 
@@ -146,14 +161,20 @@ export async function GetFeaturedProducts(): Promise<
   }
 }
 
-export async function RemoveFromCart(cart_id: string, product_id: string): Promise<void> {
+export async function RemoveFromCart(
+  cart_id: string,
+  product_id: string,
+): Promise<void> {
   try {
-    const response = await fetch(`${host}carts/${cart_id}/items/${product_id}`, {
-      headers: new Headers({
-        "x-turquoze-key": token,
-      }),
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `${host}carts/${cart_id}/items/${product_id}`,
+      {
+        headers: new Headers({
+          "x-turquoze-key": token,
+        }),
+        method: "DELETE",
+      },
+    );
 
     if (!response.ok) {
       throw new Error("Not Ok");
@@ -163,7 +184,10 @@ export async function RemoveFromCart(cart_id: string, product_id: string): Promi
   }
 }
 
-export async function AddToCart(cart_id: string, product_id: string): Promise<void> {
+export async function AddToCart(
+  cart_id: string,
+  product_id: string,
+): Promise<void> {
   try {
     const data = {
       cart_id: cart_id,
@@ -246,6 +270,53 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
       },
       products: [],
     };
+  }
+}
+
+export async function InitCart(): Promise<string> {
+  try {
+    const data = JSON.stringify({
+      public_id: null,
+    });
+
+    const response = await fetch(`${host}carts/`, {
+      method: "POST",
+      headers: new Headers({
+        "x-turquoze-key": token,
+        "Content-Type": "application/json",
+      }),
+      body: data,
+    });
+
+    const body: { carts: CartInit } = await response.json();
+
+    return body.carts.public_id;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function FinalizeCart(cart_id: string): Promise<string> {
+  try {
+    const response = await fetch(`${host}carts/${cart_id}/finalize`, {
+      method: "POST",
+      headers: new Headers({
+        "x-turquoze-key": token,
+        "Content-Type": "application/json",
+      }),
+    });
+
+    const body: FinalizeCart = await response.json();
+
+    console.log("hahjfhjf");
+    console.log(body);
+    console.log("sgadya");
+
+    return body.payment.value;
+  } catch (error) {
+    console.log("err");
+    console.log(error);
+    throw error;
   }
 }
 
