@@ -7,8 +7,8 @@
 import { InnerRenderFunction, RenderContext, start } from "$fresh/server.ts";
 import manifest from "./fresh.gen.ts";
 
-import { virtualSheet } from "$twind/sheets";
-import { config, setup } from "twind";
+import { config, setup } from "@twind";
+import { virtualSheet } from "twind/sheets";
 
 const sheet = virtualSheet();
 sheet.reset();

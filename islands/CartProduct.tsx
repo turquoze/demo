@@ -95,7 +95,6 @@ export default function CartProductComponent(props: CartProductProps) {
       class={tw`mt-10 mb-10`}
       method="POST"
       action="/cart"
-      onClick={onRemove}
     >
       <input type="hidden" value={props.product.public_id} name="pid" />
       <li key={props.product.id} class={tw`flex py-6`}>

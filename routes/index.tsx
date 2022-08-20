@@ -27,10 +27,6 @@ export const handler: Handlers<Array<Product> | null> = {
 export default function Home(props: PageProps<Array<Product> | null>) {
   const favicon = new URL(asset("/favicon.svg"), props.url).href;
 
-  if (!props.data) {
-    return <h1>Products not found</h1>;
-  }
-
   return (
     <>
       <Head>
@@ -46,6 +42,7 @@ export default function Home(props: PageProps<Array<Product> | null>) {
       <div>
         <Navigation />
         <PromoHeader />
+        {props.data ?
         <div
           class={tw`max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8`}
         >
@@ -62,6 +59,7 @@ export default function Home(props: PageProps<Array<Product> | null>) {
             })}
           </div>
         </div>
+        : null }
       </div>
       <Footer />
     </>
