@@ -91,7 +91,8 @@ export async function GetProduct(slug: string): Promise<Product | undefined> {
     const body: { products: Product } = await response.json();
 
     return body.products;
-  } catch (_error) {
+  } catch (error) {
+    console.error(error)
     return undefined;
   }
 }
@@ -114,7 +115,8 @@ export async function GetProductById(id: string): Promise<Product | undefined> {
     const body: { products: Product } = await response.json();
 
     return body.products;
-  } catch (_error) {
+  } catch (error) {
+    console.error(error)
     return undefined;
   }
 }
@@ -134,7 +136,8 @@ export async function GetAllProducts(): Promise<Array<Product> | undefined> {
     const body: { products: Array<Product> } = await response.json();
 
     return body.products;
-  } catch (_error) {
+  } catch (error) {
+    console.error(error)
     return undefined;
   }
 }
@@ -156,7 +159,8 @@ export async function GetFeaturedProducts(): Promise<
     const body: { products: Array<Product> } = await response.json();
 
     return body.products.slice(0, 4);
-  } catch (_error) {
+  } catch (error) {
+    console.error(error)
     return undefined;
   }
 }
@@ -180,7 +184,8 @@ export async function RemoveFromCart(
       throw new Error("Not Ok");
     }
   } catch (error) {
-    console.log(error);
+    console.error(error)
+    throw error;
   }
 }
 
@@ -209,7 +214,8 @@ export async function AddToCart(
       throw new Error("Not Ok");
     }
   } catch (error) {
-    console.log(error);
+    console.error(error)
+    throw error;
   }
 }
 
@@ -263,7 +269,8 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
     cart.products = cartItems;
 
     return cart;
-  } catch {
+  } catch (error) {
+    console.error(error)
     return {
       cost: {
         subtotal: 0,
@@ -292,6 +299,7 @@ export async function InitCart(): Promise<string> {
 
     return body.carts.public_id;
   } catch (error) {
+    console.error(error)
     throw error;
   }
 }
@@ -308,14 +316,9 @@ export async function FinalizeCart(cart_id: string): Promise<string> {
 
     const body: FinalizeCart = await response.json();
 
-    console.log("hahjfhjf");
-    console.log(body);
-    console.log("sgadya");
-
     return body.payment.value;
   } catch (error) {
-    console.log("err");
-    console.log(error);
+    console.error(error)
     throw error;
   }
 }
@@ -353,7 +356,8 @@ export async function Search(params: {
       query: params.query,
       facetsDistribution: body.info.facetsDistribution,
     };
-  } catch {
+  } catch (error) {
+    console.error(error)
     return {
       products: [],
       nbHits: 0,

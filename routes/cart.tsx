@@ -73,6 +73,7 @@ export default function CartPage(props: PageProps<Cart | null>) {
                       onLoad={() => {}}
                       onRemove={() => {}}
                       onFinished={() => {}}
+                      onError={() => {}}
                     />
                   );
                 })}
