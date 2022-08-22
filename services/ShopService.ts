@@ -240,33 +240,44 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
       },
     };
 
-    const cartItems = await Promise.all(
-      body.carts.map(async (item) => {
-        const product = await GetProductById(item.product_id);
+    const ids = body.carts.map((item) => item.product_id).join(",");
 
-        if (product != undefined) {
-          const price = (product.price * item.quantity);
-
-          cart.cost.subtotal += price;
-
-          return {
-            id: item.id,
-            image: product.images[0] ?? "",
-            imageAlt: "product image",
-            name: product.title,
-            price: product.price,
-            quantity: item.quantity,
-            slug: product.slug,
-            public_id: product.public_id,
-          };
-        } else {
-          return {};
-        }
-      }),
+    const productsResponse = await fetch(
+      `${host}products/byids?ids=${ids}`,
+      {
+        headers: new Headers({
+          "x-turquoze-key": token,
+        }),
+      },
     );
 
-    // @ts-expect-error not on type
-    cart.products = cartItems;
+    if (!response.ok) {
+      throw new Error("Not Ok");
+    }
+
+    const { products }: { products: Array<Product> } = await productsResponse
+      .json();
+
+    cart.products = products.map((product) => {
+      const item = body.carts.find((p) => p.product_id == product.public_id);
+
+      if (item == undefined) {
+        throw new Error("Error with cart")
+      }
+
+      cart.cost.subtotal += (item.quantity * product.price)
+
+      return {
+        id: product.id,
+        image: product.images[0] ?? "",
+        imageAlt: "product image",
+        name: product.title,
+        price: product.price,
+        quantity: item.quantity,
+        slug: product.slug,
+        public_id: product.public_id,
+      };
+    });
 
     return cart;
   } catch (error) {
