@@ -267,7 +267,8 @@ export default function Navigation() {
                                                   onRemove={() =>
                                                     handleLoading(false)}
                                                   onFinished={handleCart}
-                                                  onError={(error: Error) => console.log(error)}
+                                                  onError={(error: Error) =>
+                                                    console.log(error)}
                                                 />
                                               );
                                             })}

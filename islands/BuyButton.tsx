@@ -40,6 +40,8 @@ export default function BuyButton(props: BuyButtonProps) {
       if (!response.ok) {
         alert("No connection to cart");
       }
+
+      window.scrollTo(0, 0);
     } else {
       alert("Not allowed");
     }
@@ -59,40 +61,40 @@ export default function BuyButton(props: BuyButtonProps) {
         </span>
       </div>
     );
-  }
-
-  return (
-    <form
-      class={tw`mt-10 mb-10`}
-      onSubmit={onSubmit}
-      method="POST"
-      action="/cart"
-    >
-      <input type="hidden" value={props.productId} name="ID" />
-      {props.showOptions
-        ? (
-          <label>
-            <select
-              class={tw`w-full mt-1 rounded-md shadow-sm bg-white p-3 focus:ring-2 border-solid border-1`}
-              value={value}
-              onInput={onValueChange}
-              name="VARIANT"
-              required={true}
-            >
-              <option value="NULL" selected={true}>Select Version</option>
-              <option value="Small">Small</option>
-              <option value="Medium">Medium</option>
-              <option value="Large">Large</option>
-            </select>
-          </label>
-        )
-        : null}
-      <button
-        type="submit"
-        class={tw`mt-6 w-full bg-black rounded-md py-3 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2`}
+  } else {
+    return (
+      <form
+        class={tw`mt-10 mb-10`}
+        onSubmit={onSubmit}
+        method="POST"
+        action="/cart"
       >
-        Add to bag
-      </button>
-    </form>
-  );
+        <input type="hidden" value={props.productId} name="ID" />
+        {props.showOptions
+          ? (
+            <label>
+              <select
+                class={tw`w-full mt-1 rounded-md shadow-sm bg-white p-3 focus:ring-2 border-solid border-1`}
+                value={value}
+                onInput={onValueChange}
+                name="VARIANT"
+                required={true}
+              >
+                <option value="NULL" selected={true}>Select Version</option>
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+              </select>
+            </label>
+          )
+          : null}
+        <button
+          type="submit"
+          class={tw`mt-6 w-full bg-black rounded-md py-3 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2`}
+        >
+          Add to bag
+        </button>
+      </form>
+    );
+  }
 }
