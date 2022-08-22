@@ -92,7 +92,7 @@ export async function GetProduct(slug: string): Promise<Product | undefined> {
 
     return body.products;
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return undefined;
   }
 }
@@ -116,7 +116,7 @@ export async function GetProductById(id: string): Promise<Product | undefined> {
 
     return body.products;
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return undefined;
   }
 }
@@ -137,7 +137,7 @@ export async function GetAllProducts(): Promise<Array<Product> | undefined> {
 
     return body.products;
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return undefined;
   }
 }
@@ -160,7 +160,7 @@ export async function GetFeaturedProducts(): Promise<
 
     return body.products.slice(0, 4);
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return undefined;
   }
 }
@@ -184,7 +184,7 @@ export async function RemoveFromCart(
       throw new Error("Not Ok");
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
     throw error;
   }
 }
@@ -214,7 +214,7 @@ export async function AddToCart(
       throw new Error("Not Ok");
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
     throw error;
   }
 }
@@ -270,7 +270,7 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
 
     return cart;
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return {
       cost: {
         subtotal: 0,
@@ -299,7 +299,7 @@ export async function InitCart(): Promise<string> {
 
     return body.carts.public_id;
   } catch (error) {
-    console.error(error)
+    console.error(error);
     throw error;
   }
 }
@@ -318,7 +318,7 @@ export async function FinalizeCart(cart_id: string): Promise<string> {
 
     return body.payment.value;
   } catch (error) {
-    console.error(error)
+    console.error(error);
     throw error;
   }
 }
@@ -357,7 +357,7 @@ export async function Search(params: {
       facetsDistribution: body.info.facetsDistribution,
     };
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return {
       products: [],
       nbHits: 0,
