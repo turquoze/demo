@@ -7,7 +7,9 @@ export const handler: Handlers<unknown, { cartId: string }> = {
     try {
       const body = await FinalizeCart(ctx.state.cartId);
       const headers = new Headers();
-      deleteCookie(headers, "cart");
+      deleteCookie(headers, "cart", {
+        path: "/",
+      });
       return new Response(JSON.stringify({ url: body }), { headers });
     } catch {
       return new Response(
