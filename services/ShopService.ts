@@ -258,14 +258,23 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
     const { products }: { products: Array<Product> } = await productsResponse
       .json();
 
+    if (products == undefined || products.length == 0) {
+      return {
+        cost: {
+          subtotal: 0,
+        },
+        products: [],
+      };
+    }
+
     cart.products = products.map((product) => {
       const item = body.carts.find((p) => p.product_id == product.public_id);
 
       if (item == undefined) {
-        throw new Error("Error with cart")
+        throw new Error("Error with cart");
       }
 
-      cart.cost.subtotal += (item.quantity * product.price)
+      cart.cost.subtotal += item.quantity * product.price;
 
       return {
         id: product.id,
