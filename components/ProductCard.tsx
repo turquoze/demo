@@ -2,13 +2,15 @@
 
 import { h } from "preact";
 import { tw } from "twind";
-import { Product } from "../services/ShopService.ts";
+import { GetPrice, Product } from "../services/ShopService.ts";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard(props: ProductCardProps) {
+  const price = GetPrice(props.product.price, "SEK");
+
   return (
     <a href={`/products/${props.product.slug}`}>
       <div
@@ -33,7 +35,7 @@ export default function ProductCard(props: ProductCardProps) {
         {props.product.title}
       </h3>
       <p class={tw`mt-1 text-lg text-gray-900`}>
-        ${props.product.price}
+        {price}
       </p>
     </a>
   );

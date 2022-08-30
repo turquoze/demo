@@ -7,7 +7,7 @@ import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import BreadCrumbs from "../../components/BreadCrumbs.tsx";
 import Footer from "../../components/Footer.tsx";
-import { GetProduct, Product } from "../../services/ShopService.ts";
+import { GetPrice, GetProduct, Product } from "../../services/ShopService.ts";
 import BuyButton from "../../islands/BuyButton.tsx";
 import Navigation from "../../islands/Navigation.tsx";
 
@@ -29,6 +29,7 @@ export const handler: Handlers<Product | null> = {
 
 export default function ProductPage(props: PageProps<Product | null>) {
   const favicon = new URL(asset("/favicon.svg"), props.url).href;
+  const price = GetPrice(props.data?.price ?? 0, "SEK");
 
   if (!props.data) {
     return <h1>Product not found</h1>;
@@ -82,7 +83,7 @@ export default function ProductPage(props: PageProps<Product | null>) {
 
               <div class={tw`mt-4 lg:mt-0 lg:row-span-3`}>
                 <h2 class={tw`sr-only`}>Product information</h2>
-                <p class={tw`text-3xl text-gray-900`}>${props.data.price}</p>
+                <p class={tw`text-3xl text-gray-900`}>{price}</p>
 
                 <div class={tw`mt-6`}>
                   <h3 class={tw`sr-only`}>Reviews</h3>

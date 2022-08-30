@@ -8,7 +8,7 @@ import { IS_BROWSER } from "$fresh/runtime.ts";
 import { theme } from "../utils/twind.ts";
 import CartProduct from "./CartProduct.tsx";
 
-import { Cart } from "../services/ShopService.ts";
+import { Cart, GetPrice } from "../services/ShopService.ts";
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
@@ -19,6 +19,10 @@ export default function Navigation() {
   const [quantityOfCart, setQuantityCart] = useState<string>(
     IS_BROWSER ? self.sessionStorage.getItem("cartQuantity") ?? "" : "",
   );
+
+  const [cartTotal, setCartTotal] = useState<string>();
+
+  setCartTotal(GetPrice(cart?.cost.subtotal ?? 0, "SEK"));
 
   const mobileNav = () => {
     const isOpen = !open;
@@ -63,6 +67,7 @@ export default function Navigation() {
 
       setQuantityCart(quantity.toString());
       setCart(cart);
+      setCartTotal(GetPrice(cart?.cost.subtotal ?? 0, "SEK"));
     }
   };
 
@@ -284,7 +289,7 @@ export default function Navigation() {
                                       class={tw`flex justify-between text-base font-medium text-gray-900`}
                                     >
                                       <p>Subtotal</p>
-                                      <p>${cart?.cost.subtotal ?? 0}</p>
+                                      <p>{cartTotal}</p>
                                     </div>
                                     <p class={tw`mt-0.5 text-sm text-gray-500`}>
                                       Shipping and taxes calculated at checkout.

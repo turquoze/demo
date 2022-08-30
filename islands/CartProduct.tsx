@@ -2,7 +2,7 @@
 
 import { h } from "preact";
 import { tw } from "twind";
-import { CartProduct } from "../services/ShopService.ts";
+import { CartProduct, GetPrice } from "../services/ShopService.ts";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
 interface CartProductProps {
@@ -18,6 +18,8 @@ interface CartProductProps {
 }
 
 export default function CartProductComponent(props: CartProductProps) {
+  const price = GetPrice(props.product.price, "SEK");
+
   async function onRemove(e: Event) {
     e.preventDefault();
 
@@ -73,7 +75,7 @@ export default function CartProductComponent(props: CartProductProps) {
                         {props.product.name}
                       </a>
                     </h3>
-                    <p class={tw`ml-4`}>${props.product.price}</p>
+                    <p class={tw`ml-4`}>{price}</p>
                   </div>
                 </div>
                 <div class={tw`flex flex-1 items-end justify-between text-sm`}>

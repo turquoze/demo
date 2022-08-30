@@ -1,3 +1,5 @@
+import Dinero from "https://cdn.skypack.dev/dinero.js@1.9.1";
+
 export interface CartProduct {
   id: number;
   name: string;
@@ -59,6 +61,7 @@ export interface CartItem {
   product_id: string;
   price: number;
   quantity: number;
+  totalPrice: number;
 }
 
 export interface SearchInfo {
@@ -72,6 +75,11 @@ export interface SearchInfo {
 
 const host = `https://turquoze-backend.deno.dev/api/`;
 const token = `1562452e-d4fe-4a00-a242-4fa1e069584d`;
+
+export function GetPrice(price: number, currency: string): string {
+  // TODO: get currency from api
+  return Dinero({ amount: price, currency: currency }).toFormat();
+}
 
 export async function GetProduct(slug: string): Promise<Product | undefined> {
   try {
