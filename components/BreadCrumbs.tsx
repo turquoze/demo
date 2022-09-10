@@ -1,6 +1,3 @@
-/** @jsx h */
-
-import { h } from "preact";
 import { tw } from "twind";
 
 interface BreadCrumbsProps {
@@ -16,11 +13,11 @@ interface BreadCrumbsProps {
 
 export default function BreadCrumbs(props: BreadCrumbsProps) {
   return (
-    <nav class={tw`flex ml-4 md:ml-8 lg:ml-8 xl:ml-10`} aria-label="Breadcrumb">
-      <ol class={tw`inline-flex items-center space-x-1 md:space-x-3`}>
-        <li class={tw`inline-flex items-center`}>
+    <nav class="flex ml-4 md:ml-8 lg:ml-8 xl:ml-10" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <li class="inline-flex items-center">
           <svg
-            class={tw`mr-2 w-4 h-4`}
+            class="mr-2 w-4 h-4"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -30,18 +27,18 @@ export default function BreadCrumbs(props: BreadCrumbsProps) {
           </svg>
           <a
             href={props.first.href}
-            class={tw`inline-flex items-center text-sm text-black hover:text-gray-400`}
+            class="inline-flex items-center text-sm text-black hover:text-gray-400"
           >
             {props.first.name}
           </a>
         </li>
         {props.links.map((breadcrumb) => {
           return (
-            <li class={tw`inline-flex items-center`}>
+            <li class="inline-flex items-center">
               {">"}
               <a
                 href={breadcrumb.href}
-                class={tw`inline-flex items-center text-sm text-black hover:text-gray-400 ml-2`}
+                class="inline-flex items-center text-sm text-black hover:text-gray-400 ml-2"
               >
                 {breadcrumb.name}
               </a>

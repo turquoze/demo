@@ -1,39 +1,36 @@
-/** @jsx h */
-
-import { h } from "preact";
 import { tw } from "twind";
 
 export default function Footer() {
   return (
-    <footer class={tw`p-4 bg-white sm:p-6`}>
+    <footer class="p-4 bg-white sm:p-6">
       <hr
-        class={tw`my-4 border-gray-200 sm:mx-auto lg:my-8`}
+        class="my-4 border-gray-200 sm:mx-auto lg:my-8"
       />
-      <div class={tw`md:flex md:justify-between`}>
-        <div class={tw`mb-6 md:mb-0`}>
-          <a href="" class={tw`flex items-center`}>
+      <div class="md:flex md:justify-between">
+        <div class="mb-6 md:mb-0">
+          <a href="" class="flex items-center">
             <span
-              class={tw`self-center text-2xl font-semibold whitespace-nowrap`}
+              class="self-center text-2xl font-semibold whitespace-nowrap"
             >
               Turquoze
             </span>
           </a>
         </div>
-        <div class={tw`grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3`}>
+        <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
           <div>
             <h2
-              class={tw`mb-6 text-sm font-semibold text-gray-900 uppercase`}
+              class="mb-6 text-sm font-semibold text-gray-900 uppercase"
             >
               Resources
             </h2>
-            <ul class={tw`text-gray-600`}>
-              <li class={tw`mb-4`}>
-                <a href="#" class={tw`hover:underline`}>
+            <ul class="text-gray-600">
+              <li class="mb-4">
+                <a href="#" class="hover:underline">
                   Turquoze
                 </a>
               </li>
               <li>
-                <a href="https://tailwindcss.com/" class={tw`hover:underline`}>
+                <a href="https://tailwindcss.com/" class="hover:underline">
                   Tailwind CSS
                 </a>
               </li>
@@ -41,16 +38,16 @@ export default function Footer() {
           </div>
           <div>
             <h2
-              class={tw`mb-6 text-sm font-semibold text-gray-900 uppercase`}
+              class="mb-6 text-sm font-semibold text-gray-900 uppercase"
             >
               Legal
             </h2>
-            <ul class={tw`text-gray-600`}>
-              <li class={tw`mb-4`}>
-                <a href="#" class={tw`hover:underline`}>Privacy Policy</a>
+            <ul class="text-gray-600">
+              <li class="mb-4">
+                <a href="#" class="hover:underline">Privacy Policy</a>
               </li>
               <li>
-                <a href="#" class={tw`hover:underline`}>
+                <a href="#" class="hover:underline">
                   Terms &amp; Conditions
                 </a>
               </li>
@@ -59,24 +56,24 @@ export default function Footer() {
         </div>
       </div>
       <hr
-        class={tw`my-6 border-gray-200 sm:mx-auto lg:my-8`}
+        class="my-6 border-gray-200 sm:mx-auto lg:my-8"
       />
-      <div class={tw`sm:flex sm:items-center sm:justify-between`}>
+      <div class="sm:flex sm:items-center sm:justify-between">
         <span
-          class={tw`text-sm text-gray-500 sm:text-center`}
+          class="text-sm text-gray-500 sm:text-center"
         >
           © 2022{" "}
-          <a href="#" class={tw`hover:underline`}>
+          <a href="#" class="hover:underline">
             Turquoze™
           </a>. All Rights Reserved.
         </span>
-        <div class={tw`flex mt-4 space-x-6 sm:justify-center sm:mt-0`}>
+        <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
           <a
             href="#"
-            class={tw`text-gray-500 hover:text-gray-900`}
+            class="text-gray-500 hover:text-gray-900"
           >
             <svg
-              class={tw`w-5 h-5`}
+              class="w-5 h-5"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -90,10 +87,10 @@ export default function Footer() {
           </a>
           <a
             href="#"
-            class={tw`text-gray-500 hover:text-gray-900`}
+            class="text-gray-500 hover:text-gray-900"
           >
             <svg
-              class={tw`w-5 h-5`}
+              class="w-5 h-5"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -107,10 +104,10 @@ export default function Footer() {
           </a>
           <a
             href="#"
-            class={tw`text-gray-500 hover:text-gray-900`}
+            class="text-gray-500 hover:text-gray-900"
           >
             <svg
-              class={tw`w-5 h-5`}
+              class="w-5 h-5"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -120,10 +117,10 @@ export default function Footer() {
           </a>
           <a
             href="#"
-            class={tw`text-gray-500 hover:text-gray-900`}
+            class="text-gray-500 hover:text-gray-900"
           >
             <svg
-              class={tw`w-5 h-5`}
+              class="w-5 h-5"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -137,10 +134,10 @@ export default function Footer() {
           </a>
           <a
             href="#"
-            class={tw`text-gray-500 hover:text-gray-900`}
+            class="text-gray-500 hover:text-gray-900"
           >
             <svg
-              class={tw`w-5 h-5`}
+              class="w-5 h-5"
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"

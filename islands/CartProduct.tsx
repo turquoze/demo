@@ -1,6 +1,3 @@
-/** @jsx h */
-
-import { h } from "preact";
 import { tw } from "twind";
 import { CartProduct, GetPrice } from "../services/ShopService.ts";
 import { IS_BROWSER } from "$fresh/runtime.ts";
@@ -52,39 +49,39 @@ export default function CartProductComponent(props: CartProductProps) {
       {IS_BROWSER
         ? (
           <div
-            class={tw`mt-10 mb-10`}
+            class="mt-10 mb-10"
           >
-            <li key={props.product.id} class={tw`flex py-6`}>
+            <li key={props.product.id} class="flex py-6">
               <div
-                class={tw`h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200`}
+                class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
               >
                 <img
                   src={props.product.image}
                   alt={props.product.imageAlt}
-                  class={tw`h-full w-full object-cover object-center`}
+                  class="h-full w-full object-cover object-center"
                 />
               </div>
 
-              <div class={tw`ml-4 flex flex-1 flex-col`}>
+              <div class="ml-4 flex flex-1 flex-col">
                 <div>
                   <div
-                    class={tw`flex justify-between text-base font-medium text-gray-900`}
+                    class="flex justify-between text-base font-medium text-gray-900"
                   >
                     <h3>
                       <a href={`/products/${props.product.slug}`}>
                         {props.product.name}
                       </a>
                     </h3>
-                    <p class={tw`ml-4`}>{price}</p>
+                    <p class="ml-4">{price}</p>
                   </div>
                 </div>
-                <div class={tw`flex flex-1 items-end justify-between text-sm`}>
-                  <p class={tw`text-gray-500`}>Qty {props.product.quantity}</p>
+                <div class="flex flex-1 items-end justify-between text-sm">
+                  <p class="text-gray-500">Qty {props.product.quantity}</p>
 
-                  <div class={tw`flex`}>
+                  <div class="flex">
                     <button
                       type="submit"
-                      class={tw`font-medium`}
+                      class="font-medium"
                       onClick={onRemove}
                     >
                       Remove
@@ -97,42 +94,42 @@ export default function CartProductComponent(props: CartProductProps) {
         )
         : (
           <form
-            class={tw`mt-10 mb-10`}
+            class="mt-10 mb-10"
             method="POST"
             action="/cart"
           >
             <input type="hidden" value={props.product.public_id} name="pid" />
-            <li key={props.product.id} class={tw`flex py-6`}>
+            <li key={props.product.id} class="flex py-6">
               <div
-                class={tw`h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200`}
+                class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
               >
                 <img
                   src={props.product.image}
                   alt={props.product.imageAlt}
-                  class={tw`h-full w-full object-cover object-center`}
+                  class="h-full w-full object-cover object-center"
                 />
               </div>
 
-              <div class={tw`ml-4 flex flex-1 flex-col`}>
+              <div class="ml-4 flex flex-1 flex-col">
                 <div>
                   <div
-                    class={tw`flex justify-between text-base font-medium text-gray-900`}
+                    class="flex justify-between text-base font-medium text-gray-900"
                   >
                     <h3>
                       <a href={`/products/${props.product.slug}`}>
                         {props.product.name}
                       </a>
                     </h3>
-                    <p class={tw`ml-4`}>${props.product.price}</p>
+                    <p class="ml-4">${props.product.price}</p>
                   </div>
                 </div>
-                <div class={tw`flex flex-1 items-end justify-between text-sm`}>
-                  <p class={tw`text-gray-500`}>Qty {props.product.quantity}</p>
+                <div class="flex flex-1 items-end justify-between text-sm">
+                  <p class="text-gray-500">Qty {props.product.quantity}</p>
 
-                  <div class={tw`flex`}>
+                  <div class="flex">
                     <button
                       type="submit"
-                      class={tw`font-medium`}
+                      class="font-medium"
                     >
                       Remove
                     </button>

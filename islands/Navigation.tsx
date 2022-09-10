@@ -1,11 +1,7 @@
-/** @jsx h */
-/** @jsxFrag Fragment */
 
 import { useEffect, useState } from "preact/hooks";
-import { Fragment, h } from "preact";
 import { tw } from "twind";
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { theme } from "../utils/twind.ts";
 import CartProduct from "./CartProduct.tsx";
 
 import { Cart, GetPrice } from "../services/ShopService.ts";
@@ -94,16 +90,16 @@ export default function Navigation() {
 
   return (
     <>
-      <header class={tw`relative bg-white`}>
+      <header class="relative bg-white">
         <noscript>
           <p
-            class={tw`bg-black h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8`}
+            class="bg-black h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8"
           >
             For full functionality of this site it is necessary to enable
             JavaScript. Here are the{" "}
             <a
               href="https://enable-javascript.com/"
-              class={tw`ml-1 hover:text-gray-400`}
+              class="ml-1 hover:text-gray-400"
               target="_blank"
             >
               instructions how to enable JavaScript in your web browser
@@ -111,12 +107,12 @@ export default function Navigation() {
           </p>
         </noscript>
         <p
-          class={tw`bg-black h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8`}
+          class="bg-black h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8"
         >
           Test e-commerce site for{" "}
           <a
             href="https://turquoze.com/"
-            class={tw`ml-1`}
+            class="ml-1"
             target="_blank"
           >
             Turquoze
@@ -124,16 +120,16 @@ export default function Navigation() {
         </p>
         <nav
           aria-label="Top"
-          class={tw`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`}
+          class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         >
-          <div class={tw`border-b border-gray-200`}>
-            <div class={tw`h-16 flex items-center`}>
+          <div class="border-b border-gray-200">
+            <div class="h-16 flex items-center">
               <button
                 type="button"
-                class={tw`bg-white p-2 rounded-md text-gray-400 lg:hidden`}
+                class="bg-white p-2 rounded-md text-gray-400 lg:hidden"
                 onClick={mobileNav}
               >
-                <span class={tw`sr-only`}>Open menu</span>
+                <span class="sr-only">Open menu</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -150,83 +146,83 @@ export default function Navigation() {
                   </path>
                 </svg>
               </button>
-              <div class={tw`ml-2 flex lg:ml-0`}>
+              <div class="ml-2 flex lg:ml-0">
                 <a href="/">
                   <div
-                    class={tw`h-8 w-8 rounded-md`}
-                    style={{ backgroundColor: theme.colors.turquoise }}
+                    class="h-8 w-8 rounded-md bg-black"
+                    style={{backgroundColor: "#40E0D0"}}
                   >
                   </div>
                 </a>
               </div>
-              <div class={tw`hidden lg:ml-8 lg:block lg:self-stretch`}>
-                <div class={tw`h-full flex space-x-8`}>
+              <div class="hidden lg:ml-8 lg:block lg:self-stretch">
+                <div class="h-full flex space-x-8">
                   <a
                     href="/products"
-                    class={tw`flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
+                    class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                   >
                     Products
                   </a>
                   <a
                     href="/about"
-                    class={tw`flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
+                    class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                   >
                     About
                   </a>
                 </div>
               </div>
 
-              <div class={tw`ml-auto flex items-center`}>
-                <div class={tw`ml-4 flow-root lg:ml-6`}>
+              <div class="ml-auto flex items-center">
+                <div class="ml-4 flow-root lg:ml-6">
                   {IS_BROWSER && cartIsOpen
                     ? (
                       <div
-                        class={tw`relative z-10`}
+                        class="relative z-10"
                         aria-labelledby="slide-over-title"
                         role="dialog"
                         aria-modal="true"
                       >
                         <div
-                          class={tw`fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity`}
+                          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                         >
                         </div>
 
-                        <div class={tw`fixed inset-0 overflow-hidden`}>
-                          <div class={tw`absolute inset-0 overflow-hidden`}>
+                        <div class="fixed inset-0 overflow-hidden">
+                          <div class="absolute inset-0 overflow-hidden">
                             <div
-                              class={tw`pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10`}
+                              class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
                             >
                               <div
-                                class={tw`pointer-events-auto w-screen max-w-md`}
+                                class="pointer-events-auto w-screen max-w-md"
                               >
                                 <div
-                                  class={tw`flex h-full flex-col overflow-y-scroll bg-white shadow-xl`}
+                                  class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl"
                                 >
                                   <div
-                                    class={tw`flex-1 overflow-y-auto py-6 px-4 sm:px-6`}
+                                    class="flex-1 overflow-y-auto py-6 px-4 sm:px-6"
                                   >
                                     <div
-                                      class={tw`flex items-start justify-between`}
+                                      class="flex items-start justify-between"
                                     >
                                       <h2
-                                        class={tw`text-lg font-medium text-gray-900`}
+                                        class="text-lg font-medium text-gray-900"
                                         id="slide-over-title"
                                       >
                                         Shopping cart
                                       </h2>
                                       <div
-                                        class={tw`ml-3 flex h-7 items-center`}
+                                        class="ml-3 flex h-7 items-center"
                                       >
                                         <button
                                           type="button"
-                                          class={tw`-m-2 p-2 text-gray-400 hover:text-gray-500`}
+                                          class="-m-2 p-2 text-gray-400 hover:text-gray-500"
                                           onClick={() => setCartIsOpen(false)}
                                         >
-                                          <span class={tw`sr-only`}>
+                                          <span class="sr-only">
                                             Close panel
                                           </span>
                                           <svg
-                                            class={tw`h-6 w-6`}
+                                            class="h-6 w-6"
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
                                             viewBox="0 0 24 24"
@@ -244,22 +240,22 @@ export default function Navigation() {
                                       </div>
                                     </div>
 
-                                    <div class={tw`mt-8`}>
-                                      <div class={tw`flow-root`}>
+                                    <div class="mt-8">
+                                      <div class="flow-root">
                                         <ul
                                           role="list"
-                                          class={tw`-my-6 divide-y divide-gray-200`}
+                                          class="-my-6 divide-y divide-gray-200"
                                         >
                                           {loading
                                             ? (
-                                              <h3 class={tw`mt-4`}>
+                                              <h3 class="mt-4">
                                                 Loading...
                                               </h3>
                                             )
                                             : cart == undefined ||
                                                 cart.products.length <= 0
                                             ? (
-                                              <h3 class={tw`mt-4`}>
+                                              <h3 class="mt-4">
                                                 No Product
                                               </h3>
                                             )
@@ -283,34 +279,34 @@ export default function Navigation() {
                                   </div>
 
                                   <div
-                                    class={tw`border-t border-gray-200 py-6 px-4 sm:px-6`}
+                                    class="border-t border-gray-200 py-6 px-4 sm:px-6"
                                   >
                                     <div
-                                      class={tw`flex justify-between text-base font-medium text-gray-900`}
+                                      class="flex justify-between text-base font-medium text-gray-900"
                                     >
                                       <p>Subtotal</p>
                                       <p>{cartTotal}</p>
                                     </div>
-                                    <p class={tw`mt-0.5 text-sm text-gray-500`}>
+                                    <p class="mt-0.5 text-sm text-gray-500">
                                       Shipping and taxes calculated at checkout.
                                     </p>
-                                    <div class={tw`mt-6`}>
+                                    <div class="mt-6">
                                       <a
                                         href="#"
-                                        class={tw`flex items-center justify-center bg-black rounded-md px-6 py-3 text-base font-medium text-white shadow-sm`}
+                                        class="flex items-center justify-center bg-black rounded-md px-6 py-3 text-base font-medium text-white shadow-sm"
                                         onClick={SubmitCart}
                                       >
                                         Checkout
                                       </a>
                                     </div>
                                     <div
-                                      class={tw`mt-6 flex justify-center text-center text-sm text-gray-500`}
+                                      class="mt-6 flex justify-center text-center text-sm text-gray-500"
                                     >
                                       <p>
                                         or{" "}
                                         <button
                                           type="button"
-                                          class={tw`font-medium text-indigo-600`}
+                                          class="font-medium text-indigo-600"
                                           onClick={() => setCartIsOpen(false)}
                                         >
                                           Continue
@@ -332,7 +328,7 @@ export default function Navigation() {
                   <a
                     href="/cart"
                     type={"button"}
-                    class={tw`group -m-2 p-2 flex items-center`}
+                    class="group -m-2 p-2 flex items-center"
                     onClick={handleCartClick}
                   >
                     <svg
@@ -340,7 +336,7 @@ export default function Navigation() {
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
-                      class={tw`flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500`}
+                      class="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
                     >
                       <path
                         stroke-linecap="round"
@@ -351,11 +347,11 @@ export default function Navigation() {
                       </path>
                     </svg>
                     <span
-                      class={tw`ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800`}
+                      class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"
                     >
                       {quantityOfCart}
                     </span>
-                    <span class={tw`sr-only`}>items in cart, view bag</span>
+                    <span class="sr-only">items in cart, view bag</span>
                   </a>
                 </div>
               </div>
@@ -370,19 +366,19 @@ export default function Navigation() {
         role="dialog"
         aria-modal="true"
       >
-        <ul class={tw`my-6 mx-6`}>
-          <li class={tw`ml-4 mb-2`}>
+        <ul class="my-6 mx-6">
+          <li class="ml-4 mb-2">
             <a
               href="/products"
-              class={tw`flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
+              class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
             >
               Products
             </a>
           </li>
-          <li class={tw`ml-4`}>
+          <li class="ml-4">
             <a
               href="/about"
-              class={tw`flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
+              class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
             >
               About
             </a>
@@ -393,24 +389,24 @@ export default function Navigation() {
 
       <noscript>
         <div
-          class={tw`relative lg:hidden`}
+          class="relative lg:hidden"
           aria-labelledby="slide-over-title"
           role="dialog"
           aria-modal="true"
         >
-          <ul class={tw`my-6 mx-6`}>
-            <li class={tw`ml-4 mb-2`}>
+          <ul class="my-6 mx-6">
+            <li class="ml-4 mb-2">
               <a
                 href="/products"
-                class={tw`flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
+                class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
               >
                 Products
               </a>
             </li>
-            <li class={tw`ml-4`}>
+            <li class="ml-4">
               <a
                 href="/about"
-                class={tw`flex items-center text-sm font-medium text-gray-700 hover:text-gray-800`}
+                class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
               >
                 About
               </a>

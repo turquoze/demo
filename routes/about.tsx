@@ -1,7 +1,3 @@
-/** @jsx h */
-/** @jsxFrag Fragment */
-
-import { Fragment, h } from "preact";
 import { tw } from "twind";
 import { asset, Head } from "$fresh/runtime.ts";
 import { PageProps } from "$fresh/server.ts";
@@ -29,7 +25,7 @@ export default function About(props: PageProps) {
       </Head>
       <div>
         <Navigation />
-        <div class={tw`mt-4`}>
+        <div class="mt-4">
           <BreadCrumbs
             first={{ href: "/", name: "Home" }}
             links={[{
@@ -38,18 +34,18 @@ export default function About(props: PageProps) {
             }]}
           />
         </div>
-        <div class={tw`mt-8 mx-8 md:mx-24`}>
-          <h3 class={tw``}>
+        <div class="mt-8 mx-8 md:mx-24">
+          <h3 class="">
             Demo site for{" "}
             <a
               href="https://turquoze.com"
               target="_blank"
-              class={tw`hover:text-gray-400`}
+              class="hover:text-gray-400"
             >
               Turquoze
             </a>
           </h3>
-          <p class={tw`mt-4`}>
+          <p class="mt-4">
             Assumenda iure dolores excepturi et commodi. Nam vel et suscipit
             est. Harum assumenda omnis nesciunt iste ut nisi. Pariatur assumenda
             quae non aut sit consequuntur odit. Accusamus doloremque sunt nobis

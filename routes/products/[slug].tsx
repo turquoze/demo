@@ -1,7 +1,3 @@
-/** @jsx h */
-/** @jsxFrag Fragment */
-
-import { Fragment, h } from "preact";
 import { tw } from "twind";
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
@@ -48,8 +44,8 @@ export default function ProductPage(props: PageProps<Product | null>) {
         <link rel="icon" type="image/svg" href={favicon}></link>
       </Head>
       <Navigation />
-      <div class={tw`bg-white`}>
-        <div class={tw`pt-6`}>
+      <div class="bg-white">
+        <div class="pt-6">
           <BreadCrumbs
             first={{ href: "/", name: "Home" }}
             links={[{ href: "/products", name: "Products" }, {
@@ -58,40 +54,40 @@ export default function ProductPage(props: PageProps<Product | null>) {
             }]}
           />
           <div
-            class={tw`mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8`}
+            class="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8"
           >
-            <div class={tw`sm:rounded-lg sm:overflow-hidden`}>
+            <div class="sm:rounded-lg sm:overflow-hidden">
               {props.data.images != null && props.data.images.length > 0
                 ? (
                   <img
                     src={props.data.images[0]}
                     alt="product image"
-                    class={tw`w-full h-full object-center object-cover`}
+                    class="w-full h-full object-center object-cover"
                   />
                 )
                 : ""}
             </div>
 
-            <div class={tw`lg:mt-24 max-w-2xl mx-auto pt-10 pb-2 px-4 sm:px-6`}>
-              <div class={tw`lg:col-span-2 lg:border-gray-200 lg:pr-8`}>
+            <div class="lg:mt-24 max-w-2xl mx-auto pt-10 pb-2 px-4 sm:px-6">
+              <div class="lg:col-span-2 lg:border-gray-200 lg:pr-8">
                 <h1
-                  class={tw`text-2xl tracking-tight text-gray-900 sm:text-3xl`}
+                  class="text-2xl tracking-tight text-gray-900 sm:text-3xl"
                 >
                   {props.data.title}
                 </h1>
               </div>
 
-              <div class={tw`mt-4 lg:mt-0 lg:row-span-3`}>
-                <h2 class={tw`sr-only`}>Product information</h2>
-                <p class={tw`text-3xl text-gray-900`}>{price}</p>
+              <div class="mt-4 lg:mt-0 lg:row-span-3">
+                <h2 class="sr-only">Product information</h2>
+                <p class="text-3xl text-gray-900">{price}</p>
 
-                <div class={tw`mt-6`}>
-                  <h3 class={tw`sr-only`}>Reviews</h3>
-                  <div class={tw`flex items-center`}>
-                    <div class={tw`flex items-center`}>
+                <div class="mt-6">
+                  <h3 class="sr-only">Reviews</h3>
+                  <div class="flex items-center">
+                    <div class="flex items-center">
                       * * *
                     </div>
-                    <p class={tw`sr-only`}>3 out of 5 stars</p>
+                    <p class="sr-only">3 out of 5 stars</p>
                   </div>
                 </div>
 
@@ -104,12 +100,12 @@ export default function ProductPage(props: PageProps<Product | null>) {
               </div>
 
               <div
-                class={tw`py-10 lg:pt-6 lg:pb-5 lg:col-start-1 lg:col-span-2 lg:border-gray-200 lg:pr-8`}
+                class="py-10 lg:pt-6 lg:pb-5 lg:col-start-1 lg:col-span-2 lg:border-gray-200 lg:pr-8"
               >
                 <div>
-                  <h3 class={tw`sr-only`}>Description</h3>
-                  <div class={tw`space-y-6`}>
-                    <p class={tw`text-base text-gray-900`}>
+                  <h3 class="sr-only">Description</h3>
+                  <div class="space-y-6">
+                    <p class="text-base text-gray-900">
                       {props.data.long_description}
                     </p>
                   </div>

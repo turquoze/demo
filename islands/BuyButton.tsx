@@ -1,6 +1,3 @@
-/** @jsx h */
-
-import { h } from "preact";
 import { tw } from "twind";
 import { useState } from "preact/hooks";
 
@@ -55,8 +52,8 @@ export default function BuyButton(props: BuyButtonProps) {
 
   if (loading) {
     return (
-      <div class={tw`h-48 mb-2 text-center flex`}>
-        <span class={tw`align-middle self-center`}>
+      <div class="h-48 mb-2 text-center flex">
+        <span class="align-middle self-center">
           Processing...
         </span>
       </div>
@@ -64,7 +61,7 @@ export default function BuyButton(props: BuyButtonProps) {
   } else {
     return (
       <form
-        class={tw`mt-10 mb-10`}
+        class="mt-10 mb-10"
         onSubmit={onSubmit}
         method="POST"
         action="/cart"
@@ -74,7 +71,7 @@ export default function BuyButton(props: BuyButtonProps) {
           ? (
             <label>
               <select
-                class={tw`w-full mt-1 rounded-md shadow-sm bg-white p-3 focus:ring-2 border-solid border-1`}
+                class="w-full mt-1 rounded-md shadow-sm bg-white p-3 focus:ring-2 border-solid border-1"
                 value={value}
                 onInput={onValueChange}
                 name="VARIANT"
@@ -90,7 +87,7 @@ export default function BuyButton(props: BuyButtonProps) {
           : null}
         <button
           type="submit"
-          class={tw`mt-6 w-full bg-black rounded-md py-3 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2`}
+          class="mt-6 w-full bg-black rounded-md py-3 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
         >
           Add to bag
         </button>

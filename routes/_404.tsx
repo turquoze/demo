@@ -1,7 +1,3 @@
-/** @jsx h */
-/** @jsxFrag Fragment */
-
-import { Fragment, h } from "preact";
 import { UnknownPageProps } from "$fresh/server.ts";
 import Footer from "../components/Footer.tsx";
 import { asset, Head } from "$fresh/runtime.ts";
@@ -29,10 +25,10 @@ export default function NotFoundPage({ url }: UnknownPageProps) {
       <div>
         <Navigation />
         <div
-          class={tw`max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8`}
+          class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8"
         >
           <h2
-            class={tw`text-2xl tracking-tight text-gray-900 mb-2`}
+            class="text-2xl tracking-tight text-gray-900 mb-2"
           >
             404 not found: {url.pathname}
           </h2>
