@@ -1,7 +1,3 @@
-/** @jsx h */
-/** @jsxFrag Fragment */
-
-import { Fragment, h } from "preact";
 import { tw } from "twind";
 import { useState } from "preact/hooks";
 
@@ -43,18 +39,18 @@ export default function SearchForm(props: SearchProps) {
 
   return (
     <>
-      <div class={tw`my-8 flex justify-center`}>
+      <div class="my-8 flex justify-center">
         <form
           onSubmit={onSubmit}
           method="GET"
           action="/search"
         >
-          <div class={tw`grid grid-cols-3 justify-items-center`}>
-            <div class={tw`col-span-2`}>
+          <div class="grid grid-cols-3 justify-items-center">
+            <div class="col-span-2">
               <input
                 type="text"
                 name="q"
-                class={tw`h-10 block w-full pl-7 text-sm pr-12 border-gray-300 rounded-md shadow-md border`}
+                class="h-10 block w-full pl-7 text-sm pr-12 border-gray-300 rounded-md shadow-md border"
                 placeholder="search"
                 value={query}
                 onInput={onValueChange}
@@ -62,9 +58,9 @@ export default function SearchForm(props: SearchProps) {
               />
             </div>
 
-            <div class={tw`col-span-1`}>
+            <div class="col-span-1">
               <button
-                class={tw`w-28 bg-black rounded-md h-full ml-2 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2`}
+                class="w-28 bg-black rounded-md h-full ml-2 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
                 type="submit"
               >
                 Search
@@ -74,14 +70,14 @@ export default function SearchForm(props: SearchProps) {
         </form>
       </div>
       <div
-        class={tw`grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8`}
+        class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
       >
         {products?.map((product: Product) => {
           return <ProductCard product={product} />;
         })}
         {props.hits == 0 && products.length == 0
           ? (
-            <h2 class={tw`text-4xl tracking-tight text-gray-900 mb-2`}>
+            <h2 class="text-4xl tracking-tight text-gray-900 mb-2">
               No search hits
             </h2>
           )

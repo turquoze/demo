@@ -1,7 +1,3 @@
-/** @jsx h */
-/** @jsxFrag Fragment */
-
-import { Fragment, h } from "preact";
 import { tw } from "twind";
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
@@ -92,14 +88,14 @@ export default function Products(props: PageProps<SearchProps | null>) {
         <link rel="icon" type="image/svg" href={favicon}></link>
       </Head>
       <Navigation />
-      <div class={tw`pt-6`}>
+      <div class="pt-6">
         <BreadCrumbs
           first={{ href: "/", name: "Home" }}
           links={[{ href: "/products", name: "Products" }]}
         />
       </div>
       <div
-        class={tw`max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8`}
+        class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8"
       >
         <SearchForm
           query={props.data.query}
