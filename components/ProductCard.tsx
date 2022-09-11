@@ -1,4 +1,3 @@
-import { tw } from "twind";
 import { GetPrice, Product } from "../services/ShopService.ts";
 
 interface ProductCardProps {
@@ -10,14 +9,7 @@ export default function ProductCard(props: ProductCardProps) {
 
   return (
     <a href={`/products/${props.product.slug}`}>
-      <div
-        class="
-                                w-full
-                                bg-gray-200
-                                rounded-lg
-                                overflow-hidden
-                              "
-      >
+      <div class="w-full bg-gray-200 rounded-lg overflow-hidden">
         {props.product.images != null && props.product.images.length > 0
           ? (
             <img

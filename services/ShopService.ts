@@ -1,4 +1,5 @@
 import Dinero from "https://cdn.skypack.dev/dinero.js@1.9.1";
+import { signal } from "@preact/signals";
 
 export interface CartProduct {
   id: number;
@@ -75,6 +76,8 @@ export interface SearchInfo {
 
 const host = `https://turquoze-backend.deno.dev/api/`;
 const token = `1562452e-d4fe-4a00-a242-4fa1e069584d`;
+
+export const cartQuantity = signal<number>(0);
 
 export function GetPrice(price: number, currency: string): string {
   // TODO: get currency from api
@@ -295,6 +298,8 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
         public_id: product.public_id,
       };
     });
+
+    cartQuantity.value = cart.products.length;
 
     return cart;
   } catch (error) {

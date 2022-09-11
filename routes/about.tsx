@@ -1,4 +1,3 @@
-import { tw } from "twind";
 import { asset, Head } from "$fresh/runtime.ts";
 import { PageProps } from "$fresh/server.ts";
 import Footer from "../components/Footer.tsx";

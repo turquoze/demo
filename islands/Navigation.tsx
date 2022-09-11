@@ -1,20 +1,14 @@
-
 import { useEffect, useState } from "preact/hooks";
-import { tw } from "twind";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 import CartProduct from "./CartProduct.tsx";
 
-import { Cart, GetPrice } from "../services/ShopService.ts";
+import { Cart, cartQuantity, GetPrice } from "../services/ShopService.ts";
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
   const [cartIsOpen, setCartIsOpen] = useState(false);
   const [cart, setCart] = useState<Cart>();
   const [loading, setLoading] = useState(false);
-
-  const [quantityOfCart, setQuantityCart] = useState<string>(
-    IS_BROWSER ? self.sessionStorage.getItem("cartQuantity") ?? "" : "",
-  );
 
   const [cartTotal, setCartTotal] = useState<string>();
 
@@ -56,12 +50,8 @@ export default function Navigation() {
         }
       });
 
-      self.sessionStorage.setItem(
-        "cartQuantity",
-        quantity.toString(),
-      );
+      cartQuantity.value = quantity;
 
-      setQuantityCart(quantity.toString());
       setCart(cart);
       setCartTotal(GetPrice(cart?.cost.subtotal ?? 0, "SEK"));
     }
@@ -92,9 +82,7 @@ export default function Navigation() {
     <>
       <header class="relative bg-white">
         <noscript>
-          <p
-            class="bg-black h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8"
-          >
+          <p class="bg-black h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8">
             For full functionality of this site it is necessary to enable
             JavaScript. Here are the{" "}
             <a
@@ -106,9 +94,7 @@ export default function Navigation() {
             </a>
           </p>
         </noscript>
-        <p
-          class="bg-black h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8"
-        >
+        <p class="bg-black h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8">
           Test e-commerce site for{" "}
           <a
             href="https://turquoze.com/"
@@ -150,7 +136,7 @@ export default function Navigation() {
                 <a href="/">
                   <div
                     class="h-8 w-8 rounded-md bg-black"
-                    style={{backgroundColor: "#40E0D0"}}
+                    style={{ backgroundColor: "#40E0D0" }}
                   >
                   </div>
                 </a>
@@ -182,37 +168,23 @@ export default function Navigation() {
                         role="dialog"
                         aria-modal="true"
                       >
-                        <div
-                          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-                        >
+                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
                         </div>
 
                         <div class="fixed inset-0 overflow-hidden">
                           <div class="absolute inset-0 overflow-hidden">
-                            <div
-                              class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
-                            >
-                              <div
-                                class="pointer-events-auto w-screen max-w-md"
-                              >
-                                <div
-                                  class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl"
-                                >
-                                  <div
-                                    class="flex-1 overflow-y-auto py-6 px-4 sm:px-6"
-                                  >
-                                    <div
-                                      class="flex items-start justify-between"
-                                    >
+                            <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+                              <div class="pointer-events-auto w-screen max-w-md">
+                                <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                                  <div class="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
+                                    <div class="flex items-start justify-between">
                                       <h2
                                         class="text-lg font-medium text-gray-900"
                                         id="slide-over-title"
                                       >
                                         Shopping cart
                                       </h2>
-                                      <div
-                                        class="ml-3 flex h-7 items-center"
-                                      >
+                                      <div class="ml-3 flex h-7 items-center">
                                         <button
                                           type="button"
                                           class="-m-2 p-2 text-gray-400 hover:text-gray-500"
@@ -278,12 +250,8 @@ export default function Navigation() {
                                     </div>
                                   </div>
 
-                                  <div
-                                    class="border-t border-gray-200 py-6 px-4 sm:px-6"
-                                  >
-                                    <div
-                                      class="flex justify-between text-base font-medium text-gray-900"
-                                    >
+                                  <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
+                                    <div class="flex justify-between text-base font-medium text-gray-900">
                                       <p>Subtotal</p>
                                       <p>{cartTotal}</p>
                                     </div>
@@ -299,9 +267,7 @@ export default function Navigation() {
                                         Checkout
                                       </a>
                                     </div>
-                                    <div
-                                      class="mt-6 flex justify-center text-center text-sm text-gray-500"
-                                    >
+                                    <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
                                       <p>
                                         or{" "}
                                         <button
@@ -346,10 +312,8 @@ export default function Navigation() {
                       >
                       </path>
                     </svg>
-                    <span
-                      class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"
-                    >
-                      {quantityOfCart}
+                    <span class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                      {cartQuantity.value}
                     </span>
                     <span class="sr-only">items in cart, view bag</span>
                   </a>
@@ -361,7 +325,7 @@ export default function Navigation() {
       </header>
 
       <div
-        class={open ? tw`relative lg:hidden` : tw`hidden`}
+        class={open ? `relative lg:hidden` : `hidden`}
         aria-labelledby="slide-over-title"
         role="dialog"
         aria-modal="true"

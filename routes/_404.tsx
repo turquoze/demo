@@ -2,7 +2,6 @@ import { UnknownPageProps } from "$fresh/server.ts";
 import Footer from "../components/Footer.tsx";
 import { asset, Head } from "$fresh/runtime.ts";
 import Navigation from "../islands/Navigation.tsx";
-import { tw } from "twind";
 
 const title = "🛍 Turquoze | 404";
 const description = "e-commerce page for you";
@@ -24,12 +23,8 @@ export default function NotFoundPage({ url }: UnknownPageProps) {
       </Head>
       <div>
         <Navigation />
-        <div
-          class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8"
-        >
-          <h2
-            class="text-2xl tracking-tight text-gray-900 mb-2"
-          >
+        <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+          <h2 class="text-2xl tracking-tight text-gray-900 mb-2">
             404 not found: {url.pathname}
           </h2>
         </div>

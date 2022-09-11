@@ -1,4 +1,3 @@
-import { tw } from "twind";
 import { useState } from "preact/hooks";
 
 import { Product, SearchProps } from "../services/ShopService.ts";
@@ -69,9 +68,7 @@ export default function SearchForm(props: SearchProps) {
           </div>
         </form>
       </div>
-      <div
-        class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
-      >
+      <div class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         {products?.map((product: Product) => {
           return <ProductCard product={product} />;
         })}

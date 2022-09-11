@@ -1,26 +1,18 @@
-import { tw } from "twind";
-
 export default function Footer() {
   return (
     <footer class="p-4 bg-white sm:p-6">
-      <hr
-        class="my-4 border-gray-200 sm:mx-auto lg:my-8"
-      />
+      <hr class="my-4 border-gray-200 sm:mx-auto lg:my-8" />
       <div class="md:flex md:justify-between">
         <div class="mb-6 md:mb-0">
           <a href="" class="flex items-center">
-            <span
-              class="self-center text-2xl font-semibold whitespace-nowrap"
-            >
+            <span class="self-center text-2xl font-semibold whitespace-nowrap">
               Turquoze
             </span>
           </a>
         </div>
         <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
           <div>
-            <h2
-              class="mb-6 text-sm font-semibold text-gray-900 uppercase"
-            >
+            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">
               Resources
             </h2>
             <ul class="text-gray-600">
@@ -37,9 +29,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h2
-              class="mb-6 text-sm font-semibold text-gray-900 uppercase"
-            >
+            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">
               Legal
             </h2>
             <ul class="text-gray-600">
@@ -55,13 +45,9 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <hr
-        class="my-6 border-gray-200 sm:mx-auto lg:my-8"
-      />
+      <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
-        <span
-          class="text-sm text-gray-500 sm:text-center"
-        >
+        <span class="text-sm text-gray-500 sm:text-center">
           © 2022{" "}
           <a href="#" class="hover:underline">
             Turquoze™
