@@ -1,4 +1,3 @@
-import { tw } from "twind";
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import BreadCrumbs from "../../components/BreadCrumbs.tsx";
@@ -15,9 +14,7 @@ export const handler: Handlers<Product | null> = {
     const { slug } = ctx.params;
     const product = await GetProduct(slug);
     if (product === undefined) {
-      return new Response("404 Page not found", {
-        status: 404,
-      });
+      return ctx.renderNotFound();
     }
     return ctx.render(product);
   },
@@ -53,9 +50,7 @@ export default function ProductPage(props: PageProps<Product | null>) {
               name: props.data.title,
             }]}
           />
-          <div
-            class="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8"
-          >
+          <div class="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8">
             <div class="sm:rounded-lg sm:overflow-hidden">
               {props.data.images != null && props.data.images.length > 0
                 ? (
@@ -70,9 +65,7 @@ export default function ProductPage(props: PageProps<Product | null>) {
 
             <div class="lg:mt-24 max-w-2xl mx-auto pt-10 pb-2 px-4 sm:px-6">
               <div class="lg:col-span-2 lg:border-gray-200 lg:pr-8">
-                <h1
-                  class="text-2xl tracking-tight text-gray-900 sm:text-3xl"
-                >
+                <h1 class="text-2xl tracking-tight text-gray-900 sm:text-3xl">
                   {props.data.title}
                 </h1>
               </div>
@@ -99,9 +92,7 @@ export default function ProductPage(props: PageProps<Product | null>) {
                 />
               </div>
 
-              <div
-                class="py-10 lg:pt-6 lg:pb-5 lg:col-start-1 lg:col-span-2 lg:border-gray-200 lg:pr-8"
-              >
+              <div class="py-10 lg:pt-6 lg:pb-5 lg:col-start-1 lg:col-span-2 lg:border-gray-200 lg:pr-8">
                 <div>
                   <h3 class="sr-only">Description</h3>
                   <div class="space-y-6">

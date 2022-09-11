@@ -1,5 +1,5 @@
-import { tw } from "twind";
 import { useState } from "preact/hooks";
+import { cartQuantity } from "../services/ShopService.ts";
 
 interface BuyButtonProps {
   productId: string;
@@ -37,6 +37,11 @@ export default function BuyButton(props: BuyButtonProps) {
       if (!response.ok) {
         alert("No connection to cart");
       }
+
+      const cartNum = cartQuantity.peek();
+      console.log(cartNum);
+      cartQuantity.value = cartNum + 1;
+      console.log(cartQuantity.peek());
 
       window.scrollTo(0, 0);
     } else {

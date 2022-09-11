@@ -94,9 +94,7 @@ export default function Products(props: PageProps<SearchProps | null>) {
           links={[{ href: "/products", name: "Products" }]}
         />
       </div>
-      <div
-        class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8"
-      >
+      <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <SearchForm
           query={props.data.query}
           hits={props.data.hits}

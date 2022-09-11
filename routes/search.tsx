@@ -1,4 +1,3 @@
-import { tw } from "twind";
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Footer from "../components/Footer.tsx";
@@ -85,9 +84,7 @@ export default function SearchPage(props: PageProps<SearchProps>) {
       </Head>
       <div>
         <Navigation />
-        <div
-          class="max-w-2xl mx-auto py-4 px-8 sm:py-4 sm:px-6 lg:max-w-7xl lg:px-8"
-        >
+        <div class="max-w-2xl mx-auto py-4 px-8 sm:py-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <SearchForm
             query={props.data.query}
             hits={props.data.hits}

@@ -1,5 +1,3 @@
-import { tw } from "twind";
-
 interface BreadCrumbsProps {
   first: {
     href: string;

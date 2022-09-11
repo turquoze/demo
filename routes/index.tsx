@@ -1,4 +1,3 @@
-import { tw } from "twind";
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import ProductCard from "../components/ProductCard.tsx";
@@ -14,7 +13,7 @@ export const handler: Handlers<Array<Product> | null> = {
   async GET(_, ctx) {
     const products = await GetFeaturedProducts();
     if (products === undefined) {
-      return ctx.render(null);
+      return ctx.renderNotFound();
     }
     return ctx.render(products);
   },
@@ -40,17 +39,11 @@ export default function Home(props: PageProps<Array<Product> | null>) {
         <PromoHeader />
         {props.data
           ? (
-            <div
-              class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8"
-            >
-              <h2
-                class="text-2xl tracking-tight text-gray-900 mb-2"
-              >
+            <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+              <h2 class="text-2xl tracking-tight text-gray-900 mb-2">
                 Featured Products
               </h2>
-              <div
-                class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
-              >
+              <div class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                 {props.data.map((product) => {
                   return <ProductCard product={product} />;
                 })}

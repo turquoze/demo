@@ -1,4 +1,3 @@
-import { tw } from "twind";
 import { CartProduct, GetPrice } from "../services/ShopService.ts";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
@@ -48,13 +47,9 @@ export default function CartProductComponent(props: CartProductProps) {
     <div>
       {IS_BROWSER
         ? (
-          <div
-            class="mt-10 mb-10"
-          >
+          <div class="mt-10 mb-10">
             <li key={props.product.id} class="flex py-6">
-              <div
-                class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
-              >
+              <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                 <img
                   src={props.product.image}
                   alt={props.product.imageAlt}
@@ -64,9 +59,7 @@ export default function CartProductComponent(props: CartProductProps) {
 
               <div class="ml-4 flex flex-1 flex-col">
                 <div>
-                  <div
-                    class="flex justify-between text-base font-medium text-gray-900"
-                  >
+                  <div class="flex justify-between text-base font-medium text-gray-900">
                     <h3>
                       <a href={`/products/${props.product.slug}`}>
                         {props.product.name}
@@ -100,9 +93,7 @@ export default function CartProductComponent(props: CartProductProps) {
           >
             <input type="hidden" value={props.product.public_id} name="pid" />
             <li key={props.product.id} class="flex py-6">
-              <div
-                class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
-              >
+              <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                 <img
                   src={props.product.image}
                   alt={props.product.imageAlt}
@@ -112,9 +103,7 @@ export default function CartProductComponent(props: CartProductProps) {
 
               <div class="ml-4 flex flex-1 flex-col">
                 <div>
-                  <div
-                    class="flex justify-between text-base font-medium text-gray-900"
-                  >
+                  <div class="flex justify-between text-base font-medium text-gray-900">
                     <h3>
                       <a href={`/products/${props.product.slug}`}>
                         {props.product.name}
