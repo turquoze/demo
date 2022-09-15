@@ -328,6 +328,10 @@ export async function InitCart(): Promise<string> {
       body: data,
     });
 
+    if (!response.ok) {
+      throw new Error("Not OK");
+    }
+
     const body: { carts: CartInit } = await response.json();
 
     return body.carts.public_id;

@@ -30,12 +30,16 @@ export default function Navigation() {
   }
 
   async function SubmitCart() {
-    const response = await fetch("/api/cart/pay", {
-      method: "POST",
-    });
-    const data: { url: string } = await response.json();
+    if (cart != undefined && cart.products.length > 0) {
+      const response = await fetch("/api/cart/pay", {
+        method: "POST",
+      });
+      const data: { url: string } = await response.json();
 
-    window.location.href = data.url;
+      window.location.href = data.url;
+    } else {
+      alert("Error with cart");
+    }
   }
 
   const handleCart = async () => {
@@ -258,30 +262,53 @@ export default function Navigation() {
                                     <p class="mt-0.5 text-sm text-gray-500">
                                       Shipping and taxes calculated at checkout.
                                     </p>
-                                    <div class="mt-6">
-                                      <a
-                                        href="#"
-                                        class="flex items-center justify-center bg-black rounded-md px-6 py-3 text-base font-medium text-white shadow-sm"
-                                        onClick={SubmitCart}
-                                      >
-                                        Checkout
-                                      </a>
-                                    </div>
-                                    <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
-                                      <p>
-                                        or{" "}
-                                        <button
-                                          type="button"
-                                          class="font-medium text-indigo-600"
-                                          onClick={() => setCartIsOpen(false)}
-                                        >
-                                          Continue
-                                          Shopping<span aria-hidden="true">
-                                            &rarr;
-                                          </span>
-                                        </button>
-                                      </p>
-                                    </div>
+                                    {cart != undefined &&
+                                        cart.products.length > 0
+                                      ? (
+                                        <>
+                                          <div class="mt-6">
+                                            <button
+                                              class="flex items-center justify-center w-full bg-black rounded-md px-6 py-3 text-base font-medium text-white shadow-sm"
+                                              onClick={SubmitCart}
+                                            >
+                                              Checkout
+                                            </button>
+                                          </div>
+                                          <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+                                            <p>
+                                              or{" "}
+                                              <button
+                                                type="button"
+                                                class="font-medium text-indigo-600"
+                                                onClick={() =>
+                                                  setCartIsOpen(false)}
+                                              >
+                                                Continue
+                                                Shopping<span aria-hidden="true">
+                                                  &rarr;
+                                                </span>
+                                              </button>
+                                            </p>
+                                          </div>
+                                        </>
+                                      )
+                                      : (
+                                        <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+                                          <p>
+                                            <button
+                                              type="button"
+                                              class="font-medium text-indigo-600"
+                                              onClick={() =>
+                                                setCartIsOpen(false)}
+                                            >
+                                              Continue
+                                              Shopping<span aria-hidden="true">
+                                                &rarr;
+                                              </span>
+                                            </button>
+                                          </p>
+                                        </div>
+                                      )}
                                   </div>
                                 </div>
                               </div>

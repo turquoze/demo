@@ -13,7 +13,7 @@ export const handler: Handlers<Array<Product> | null> = {
   async GET(_, ctx) {
     const products = await GetFeaturedProducts();
     if (products === undefined) {
-      return ctx.renderNotFound();
+      return ctx.render(null);
     }
     return ctx.render(products);
   },

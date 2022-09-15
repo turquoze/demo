@@ -3,7 +3,7 @@ import Footer from "../components/Footer.tsx";
 import { asset, Head } from "$fresh/runtime.ts";
 import Navigation from "../islands/Navigation.tsx";
 
-const title = "🛍 Turquoze | 404";
+const title = "🛍 Turquoze | 500";
 const description = "e-commerce page for you";
 
 export default function Error500Page(props: ErrorPageProps) {
