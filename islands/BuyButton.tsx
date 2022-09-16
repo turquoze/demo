@@ -39,9 +39,7 @@ export default function BuyButton(props: BuyButtonProps) {
       }
 
       const cartNum = cartQuantity.peek();
-      console.log(cartNum);
       cartQuantity.value = cartNum + 1;
-      console.log(cartQuantity.peek());
 
       window.scrollTo(0, 0);
     } else {

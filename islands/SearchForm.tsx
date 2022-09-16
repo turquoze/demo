@@ -6,6 +6,14 @@ import ProductCard from "../components/ProductCard.tsx";
 export default function SearchForm(props: SearchProps) {
   const [products, setProducts] = useState(props.products);
   const [query, setQuery] = useState(props.query);
+  const [stateOffset, setOffset] = useState(props.offset);
+
+  const nextServerSideUrl = props.query == ""
+    ? `?offset=${props.offset + props.limit}`
+    : `?q=${props.query}&offset=${props.offset + props.limit}`;
+  const prevServerSideUrl = props.query == ""
+    ? `?offset=${props.offset - props.limit}`
+    : `?q=${props.query}&offset=${props.offset - props.limit}`;
 
   async function onSubmit(e: Event) {
     e.preventDefault();
@@ -14,8 +22,12 @@ export default function SearchForm(props: SearchProps) {
     await search();
   }
 
-  async function search() {
-    const response = await fetch(`/search?q=${query}`, {
+  async function search(offset?: number, localLimit = props.limit) {
+    let url = `/search?q=${query}&limit=${localLimit}`;
+    if (offset != null) {
+      url = url + `&offset=${offset}`;
+    }
+    const response = await fetch(url, {
       headers: {
         "Accept": "application/json",
       },
@@ -23,7 +35,40 @@ export default function SearchForm(props: SearchProps) {
 
     const data: SearchProps = await response.json();
 
+    setOffset(data.offset);
     setProducts(data.products);
+    setUrl(offset!);
+  }
+
+  function setUrl(offset: number) {
+    const url = new URL(window.location.toString());
+    if (offset == 0) {
+      url.searchParams.delete("offset");
+    } else {
+      url.searchParams.set("offset", offset.toString());
+    }
+
+    url.searchParams.set("limit", props.limit.toString());
+
+    window.history.replaceState({}, document.title, url);
+  }
+
+  async function handleLoadMoreData(e: Event) {
+    e.preventDefault();
+
+    const nextOffset = (stateOffset + props.limit) > props.hits
+      ? stateOffset
+      : (stateOffset + props.limit);
+    await search(nextOffset, props.limit);
+  }
+
+  async function handleLoadPrevData(e: Event) {
+    e.preventDefault();
+
+    const nextOffset = (stateOffset - props.limit) < 0
+      ? 0
+      : (stateOffset - props.limit);
+    await search(nextOffset, props.limit);
   }
 
   // @ts-expect-error no type
@@ -77,6 +122,32 @@ export default function SearchForm(props: SearchProps) {
             <h2 class="text-4xl tracking-tight text-gray-900 mb-2">
               No search hits
             </h2>
+          )
+          : null}
+      </div>
+      <div class="flex justify-center pt-10">
+        {stateOffset > 0 && stateOffset <= props.hits + props.limit
+          ? (
+            <a
+              href={prevServerSideUrl}
+              onClick={handleLoadPrevData}
+              class="w-28 m-4 pt-2 pb-2 bg-black rounded-md h-full ml-2 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
+              type="submit"
+            >
+              Back
+            </a>
+          )
+          : null}
+        {stateOffset + props.limit < props.hits
+          ? (
+            <a
+              href={nextServerSideUrl}
+              onClick={handleLoadMoreData}
+              class="w-28 m-4 pt-2 pb-2 bg-black rounded-md h-full ml-2 px-8 flex items-center justify-center text-base text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
+              type="submit"
+            >
+              Next
+            </a>
           )
           : null}
       </div>

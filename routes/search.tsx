@@ -37,6 +37,9 @@ export const handler: Handlers<SearchProps | null> = {
         hits: 0,
         products: [],
         query: "",
+        seen: 0,
+        limit: limitInt,
+        offset: 0,
         facetsDistribution: {},
       });
     }
@@ -46,7 +49,10 @@ export const handler: Handlers<SearchProps | null> = {
         JSON.stringify({
           hits: response.nbHits,
           products: response.products,
+          seen: response.seen,
           query: response.query,
+          limit: limitInt,
+          offset: response.offset,
           facetsDistribution: response.facetsDistribution,
         }),
         {
@@ -61,6 +67,9 @@ export const handler: Handlers<SearchProps | null> = {
         hits: response.nbHits,
         products: response.products,
         query: response.query ?? "",
+        seen: response.seen,
+        limit: limitInt,
+        offset: response.offset,
         facetsDistribution: response.facetsDistribution,
       });
     }
@@ -88,7 +97,10 @@ export default function SearchPage(props: PageProps<SearchProps>) {
           <SearchForm
             query={props.data.query}
             hits={props.data.hits}
+            seen={props.data.seen}
+            limit={props.data.limit}
             products={props.data.products}
+            offset={props.data.offset}
             facetsDistribution={props.data.facetsDistribution}
           />
         </div>
