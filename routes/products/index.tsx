@@ -1,4 +1,3 @@
-import { tw } from "twind";
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import BreadCrumbs from "../../components/BreadCrumbs.tsx";
@@ -36,6 +35,9 @@ export const handler: Handlers<SearchProps | null> = {
         hits: 0,
         products: [],
         query: "",
+        seen: 0,
+        offset: 0,
+        limit: limitInt,
         facetsDistribution: {},
       });
     }
@@ -44,6 +46,9 @@ export const handler: Handlers<SearchProps | null> = {
       return new Response(
         JSON.stringify({
           hits: response.nbHits,
+          limit: limitInt,
+          seen: response.seen,
+          offset: response.offset,
           products: response.products,
           query: response.query,
         }),
@@ -58,7 +63,10 @@ export const handler: Handlers<SearchProps | null> = {
       return ctx.render({
         hits: response.nbHits,
         products: response.products,
+        seen: response.seen,
         query: response.query ?? "",
+        limit: limitInt,
+        offset: response.offset,
         facetsDistribution: response.facetsDistribution,
       });
     }
@@ -98,6 +106,9 @@ export default function Products(props: PageProps<SearchProps | null>) {
         <SearchForm
           query={props.data.query}
           hits={props.data.hits}
+          seen={props.data.seen}
+          limit={props.data.limit}
+          offset={props.data.offset}
           products={props.data.products}
           facetsDistribution={props.data.facetsDistribution}
         />

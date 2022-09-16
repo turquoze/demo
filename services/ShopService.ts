@@ -53,6 +53,9 @@ export interface SearchProps {
   products: Array<Product>;
   query: string;
   hits: number;
+  seen: number;
+  limit: number;
+  offset: number;
   facetsDistribution: unknown | undefined;
 }
 
@@ -387,9 +390,15 @@ export async function Search(params: {
     const body: { products: Array<Product>; info: SearchInfo } = await response
       .json();
 
+    const hitsSeen = body.info.offset == 0
+      ? body.info.limit
+      : body.info.offset + body.info.limit;
+
     return {
       products: body.products,
       nbHits: body.info.hits,
+      seen: hitsSeen,
+      offset: body.info.offset,
       query: params.query,
       facetsDistribution: body.info.facetsDistribution,
     };
@@ -398,6 +407,8 @@ export async function Search(params: {
     return {
       products: [],
       nbHits: 0,
+      seen: 0,
+      offset: 0,
       query: params.query,
       facetsDistribution: {},
     };
