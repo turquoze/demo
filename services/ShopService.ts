@@ -56,8 +56,11 @@ export interface SearchProps {
   seen: number;
   limit: number;
   offset: number;
-  facetsDistribution: unknown | undefined;
+  facetsDistribution: any | undefined;
+  usedFilter: UsedFilter;
 }
+
+export type UsedFilter = Array<{ id: string; value: string }>;
 
 export interface CartItem {
   id: number;
@@ -72,7 +75,7 @@ export interface SearchInfo {
   hits: number;
   offset: number;
   limit: number;
-  facetsDistribution: unknown | undefined;
+  facetsDistribution: any | undefined;
   exhaustiveNbHits: boolean;
   exhaustiveFacetsCount: boolean | undefined;
 }

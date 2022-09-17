@@ -7,6 +7,7 @@ export default function SearchForm(props: SearchProps) {
   const [products, setProducts] = useState(props.products);
   const [query, setQuery] = useState(props.query);
   const [stateOffset, setOffset] = useState(props.offset);
+  const [hits, setHits] = useState(props.hits);
 
   const nextServerSideUrl = props.query == ""
     ? `?offset=${props.offset + props.limit}`
@@ -36,8 +37,11 @@ export default function SearchForm(props: SearchProps) {
     const data: SearchProps = await response.json();
 
     setOffset(data.offset);
+    setHits(data.hits);
     setProducts(data.products);
-    setUrl(offset!);
+    if (offset != undefined) {
+      setUrl(offset!);
+    }
   }
 
   function setUrl(offset: number) {
@@ -60,6 +64,7 @@ export default function SearchForm(props: SearchProps) {
       ? stateOffset
       : (stateOffset + props.limit);
     await search(nextOffset, props.limit);
+    window.scrollTo(0, 0);
   }
 
   async function handleLoadPrevData(e: Event) {
@@ -69,14 +74,15 @@ export default function SearchForm(props: SearchProps) {
       ? 0
       : (stateOffset - props.limit);
     await search(nextOffset, props.limit);
+    window.scrollTo(0, 0);
   }
 
   // @ts-expect-error no type
   async function onValueChange(e) {
     const { value } = e.target;
     setQuery(value);
-    const url =
-      `${window.location.origin}${window.location.pathname}?q=${value}`;
+    const url = new URL(window.location.toString());
+    url.searchParams.set("q", value);
     window.history.replaceState({}, document.title, url);
     await search();
   }
@@ -126,7 +132,10 @@ export default function SearchForm(props: SearchProps) {
           : null}
       </div>
       <div class="flex justify-center pt-10">
-        {stateOffset > 0 && stateOffset <= props.hits + props.limit
+        <h5>hits - {hits}</h5>
+      </div>
+      <div class="flex justify-center pt-2">
+        {stateOffset > 0 && stateOffset <= hits + props.limit
           ? (
             <a
               href={prevServerSideUrl}
@@ -138,7 +147,7 @@ export default function SearchForm(props: SearchProps) {
             </a>
           )
           : null}
-        {stateOffset + props.limit < props.hits
+        {stateOffset + props.limit < hits
           ? (
             <a
               href={nextServerSideUrl}

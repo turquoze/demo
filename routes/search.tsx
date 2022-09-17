@@ -41,6 +41,7 @@ export const handler: Handlers<SearchProps | null> = {
         limit: limitInt,
         offset: 0,
         facetsDistribution: {},
+        usedFilter: [],
       });
     }
 
@@ -54,6 +55,7 @@ export const handler: Handlers<SearchProps | null> = {
           limit: limitInt,
           offset: response.offset,
           facetsDistribution: response.facetsDistribution,
+          usedFilter: [],
         }),
         {
           status: 200,
@@ -71,6 +73,7 @@ export const handler: Handlers<SearchProps | null> = {
         limit: limitInt,
         offset: response.offset,
         facetsDistribution: response.facetsDistribution,
+        usedFilter: [],
       });
     }
   },
@@ -102,6 +105,7 @@ export default function SearchPage(props: PageProps<SearchProps>) {
             products={props.data.products}
             offset={props.data.offset}
             facetsDistribution={props.data.facetsDistribution}
+            usedFilter={[]}
           />
         </div>
       </div>

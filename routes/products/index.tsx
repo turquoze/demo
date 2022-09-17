@@ -5,6 +5,7 @@ import Footer from "../../components/Footer.tsx";
 import { Search, SearchProps } from "../../services/ShopService.ts";
 import Navigation from "../../islands/Navigation.tsx";
 import SearchForm from "../../islands/SearchForm.tsx";
+import Filters from "../../islands/Filters.tsx";
 
 export const handler: Handlers<SearchProps | null> = {
   async GET(req, ctx) {
@@ -12,6 +13,17 @@ export const handler: Handlers<SearchProps | null> = {
     const urlParams = new URLSearchParams(url.search);
     const limit = urlParams.get("limit");
     const offset = urlParams.get("offset");
+
+    const usedFiltersArr: Array<{ id: string; value: string }> = [];
+
+    if (url.search != "" || url.search != undefined) {
+      const usedFilters = url.search.replace("?", "").split("&");
+
+      for (const item in usedFilters) {
+        const split = usedFilters[item].split("=");
+        usedFiltersArr.push({ id: split[0], value: split[1] });
+      }
+    }
 
     let limitInt = 20;
     let offsetInt = 0;
@@ -39,6 +51,7 @@ export const handler: Handlers<SearchProps | null> = {
         offset: 0,
         limit: limitInt,
         facetsDistribution: {},
+        usedFilter: usedFiltersArr,
       });
     }
 
@@ -51,6 +64,7 @@ export const handler: Handlers<SearchProps | null> = {
           offset: response.offset,
           products: response.products,
           query: response.query,
+          usedFilter: usedFiltersArr,
         }),
         {
           status: 200,
@@ -68,6 +82,7 @@ export const handler: Handlers<SearchProps | null> = {
         limit: limitInt,
         offset: response.offset,
         facetsDistribution: response.facetsDistribution,
+        usedFilter: usedFiltersArr,
       });
     }
   },
@@ -103,6 +118,13 @@ export default function Products(props: PageProps<SearchProps | null>) {
         />
       </div>
       <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+        {
+          /*<Filters
+          filters={props.data.facetsDistribution}
+          usedFilters={props.data.usedFilter}
+        >
+          </Filters>*/
+        }
         <SearchForm
           query={props.data.query}
           hits={props.data.hits}
@@ -111,6 +133,7 @@ export default function Products(props: PageProps<SearchProps | null>) {
           offset={props.data.offset}
           products={props.data.products}
           facetsDistribution={props.data.facetsDistribution}
+          usedFilter={[]}
         />
       </div>
       <Footer />

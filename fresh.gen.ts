@@ -16,8 +16,9 @@ import * as $9 from "./routes/products/index.tsx";
 import * as $10 from "./routes/search.tsx";
 import * as $$0 from "./islands/BuyButton.tsx";
 import * as $$1 from "./islands/CartProduct.tsx";
-import * as $$2 from "./islands/Navigation.tsx";
-import * as $$3 from "./islands/SearchForm.tsx";
+import * as $$2 from "./islands/Filters.tsx";
+import * as $$3 from "./islands/Navigation.tsx";
+import * as $$4 from "./islands/SearchForm.tsx";
 
 const manifest = {
   routes: {
@@ -36,8 +37,9 @@ const manifest = {
   islands: {
     "./islands/BuyButton.tsx": $$0,
     "./islands/CartProduct.tsx": $$1,
-    "./islands/Navigation.tsx": $$2,
-    "./islands/SearchForm.tsx": $$3,
+    "./islands/Filters.tsx": $$2,
+    "./islands/Navigation.tsx": $$3,
+    "./islands/SearchForm.tsx": $$4,
   },
   baseUrl: import.meta.url,
   config,
