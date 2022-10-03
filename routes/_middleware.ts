@@ -15,11 +15,10 @@ export async function handler(
   let newCookie = false;
 
   if (cookies.cart != undefined || cookies.cart != null) {
+    // TODO: check if cart is valid
     cartId = cookies.cart;
   } else {
-    // get cart
     cartId = await InitCart();
-    //cartId = "f3231621-3ccd-4d65-a4d3-e2dba8477bfd";
     newCookie = true;
   }
 

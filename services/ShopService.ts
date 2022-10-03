@@ -1,5 +1,6 @@
 import Dinero from "https://cdn.skypack.dev/dinero.js@1.9.1";
 import { signal } from "@preact/signals";
+import "https://deno.land/std@0.158.0/dotenv/load.ts";
 
 export interface CartProduct {
   id: number;
@@ -80,8 +81,25 @@ export interface SearchInfo {
   exhaustiveFacetsCount: boolean | undefined;
 }
 
-const host = `https://turquoze-backend.deno.dev/api/`;
-const token = `1562452e-d4fe-4a00-a242-4fa1e069584d`;
+const host = Deno.env.get("HOST");
+if (!host) {
+  throw new Error("environment variable HOST not set");
+}
+
+const turquozeID = Deno.env.get("TurquozeId");
+if (!turquozeID) {
+  throw new Error("environment variable TurquozeId not set");
+}
+
+const turquozeSecret = Deno.env.get("TurquozeSecret");
+if (!turquozeSecret) {
+  throw new Error("environment variable TurquozeSecret not set");
+}
+
+const authHeaders = {
+  "X-Turquoze-Id": turquozeID,
+  "X-Turquoze-Secret": turquozeSecret,
+};
 
 export const cartQuantity = signal<number>(0);
 
@@ -96,7 +114,7 @@ export async function GetProduct(slug: string): Promise<Product | undefined> {
       `${host}products/byslug/${slug}`,
       {
         headers: new Headers({
-          "x-turquoze-key": token,
+          ...authHeaders,
         }),
       },
     );
@@ -120,7 +138,7 @@ export async function GetProductById(id: string): Promise<Product | undefined> {
       `${host}products/${id}`,
       {
         headers: new Headers({
-          "x-turquoze-key": token,
+          ...authHeaders,
         }),
       },
     );
@@ -142,7 +160,7 @@ export async function GetAllProducts(): Promise<Array<Product> | undefined> {
   try {
     const response = await fetch(`${host}products?limit=20`, {
       headers: new Headers({
-        "x-turquoze-key": token,
+        ...authHeaders,
       }),
     });
 
@@ -165,7 +183,7 @@ export async function GetFeaturedProducts(): Promise<
   try {
     const response = await fetch(`${host}products?limit=6`, {
       headers: new Headers({
-        "x-turquoze-key": token,
+        ...authHeaders,
       }),
     });
 
@@ -191,7 +209,7 @@ export async function RemoveFromCart(
       `${host}carts/${cart_id}/items/${product_id}`,
       {
         headers: new Headers({
-          "x-turquoze-key": token,
+          ...authHeaders,
         }),
         method: "DELETE",
       },
@@ -219,7 +237,7 @@ export async function AddToCart(
     };
     const response = await fetch(`${host}carts/${cart_id}/items/`, {
       headers: new Headers({
-        "x-turquoze-key": token,
+        ...authHeaders,
         "Content-Type": "application/json",
         "Content-Length": `${JSON.stringify(data).length}`,
       }),
@@ -240,7 +258,7 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
   try {
     const response = await fetch(`${host}carts/${cart_id}/items`, {
       headers: new Headers({
-        "x-turquoze-key": token,
+        ...authHeaders,
       }),
     });
 
@@ -263,7 +281,7 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
       `${host}products/byids?ids=${ids}`,
       {
         headers: new Headers({
-          "x-turquoze-key": token,
+          ...authHeaders,
         }),
       },
     );
@@ -328,11 +346,13 @@ export async function InitCart(): Promise<string> {
     const response = await fetch(`${host}carts/`, {
       method: "POST",
       headers: new Headers({
-        "x-turquoze-key": token,
+        ...authHeaders,
         "Content-Type": "application/json",
       }),
       body: data,
     });
+
+    console.log(response);
 
     if (!response.ok) {
       throw new Error("Not OK");
@@ -352,7 +372,7 @@ export async function FinalizeCart(cart_id: string): Promise<string> {
     const response = await fetch(`${host}carts/${cart_id}/finalize`, {
       method: "POST",
       headers: new Headers({
-        "x-turquoze-key": token,
+        ...authHeaders,
         "Content-Type": "application/json",
       }),
     });
@@ -384,7 +404,7 @@ export async function Search(params: {
     const response = await fetch(`${host}products/search`, {
       method: "POST",
       headers: new Headers({
-        "x-turquoze-key": token,
+        ...authHeaders,
         "Content-Type": "application/json",
       }),
       body: data,
