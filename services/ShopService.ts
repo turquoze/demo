@@ -1,6 +1,6 @@
 import Dinero from "https://cdn.skypack.dev/dinero.js@1.9.1";
 import { signal } from "@preact/signals";
-//import "https://deno.land/std@0.158.0/dotenv/load.ts";
+import "https://deno.land/std@0.158.0/dotenv/load.ts";
 // USE IN DEV
 
 export interface CartProduct {
@@ -80,6 +80,10 @@ export interface SearchInfo {
   facetsDistribution: any | undefined;
   exhaustiveNbHits: boolean;
   exhaustiveFacetsCount: boolean | undefined;
+}
+
+export interface LoginResponse {
+  token: string;
 }
 
 const host = Deno.env.get("HOST");
@@ -353,8 +357,6 @@ export async function InitCart(): Promise<string> {
       body: data,
     });
 
-    console.log(response);
-
     if (!response.ok) {
       throw new Error("Not OK");
     }
@@ -436,5 +438,38 @@ export async function Search(params: {
       query: params.query,
       facetsDistribution: {},
     };
+  }
+}
+
+export async function Login(
+  email: string,
+  password: string,
+): Promise<string> {
+  try {
+    const data = {
+      email,
+      password,
+    };
+
+    const response = await fetch(`${host}users/login`, {
+      headers: new Headers({
+        ...authHeaders,
+        "Content-Type": "application/json",
+        "Content-Length": `${JSON.stringify(data).length}`,
+      }),
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error("Not Ok");
+    }
+
+    const loginResponse: LoginResponse = await response.json();
+
+    return loginResponse.token;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 }
