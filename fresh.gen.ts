@@ -11,9 +11,10 @@ import * as $4 from "./routes/api/cart/index.ts";
 import * as $5 from "./routes/api/cart/pay.ts";
 import * as $6 from "./routes/cart.tsx";
 import * as $7 from "./routes/index.tsx";
-import * as $8 from "./routes/products/[slug].tsx";
-import * as $9 from "./routes/products/index.tsx";
-import * as $10 from "./routes/search.tsx";
+import * as $8 from "./routes/login.tsx";
+import * as $9 from "./routes/products/[slug].tsx";
+import * as $10 from "./routes/products/index.tsx";
+import * as $11 from "./routes/search.tsx";
 import * as $$0 from "./islands/BuyButton.tsx";
 import * as $$1 from "./islands/CartProduct.tsx";
 import * as $$2 from "./islands/Filters.tsx";
@@ -30,9 +31,10 @@ const manifest = {
     "./routes/api/cart/pay.ts": $5,
     "./routes/cart.tsx": $6,
     "./routes/index.tsx": $7,
-    "./routes/products/[slug].tsx": $8,
-    "./routes/products/index.tsx": $9,
-    "./routes/search.tsx": $10,
+    "./routes/login.tsx": $8,
+    "./routes/products/[slug].tsx": $9,
+    "./routes/products/index.tsx": $10,
+    "./routes/search.tsx": $11,
   },
   islands: {
     "./islands/BuyButton.tsx": $$0,
