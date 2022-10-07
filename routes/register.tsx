@@ -2,8 +2,7 @@ import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Footer from "../components/Footer.tsx";
 import Navigation from "../islands/Navigation.tsx";
-import { setCookie } from "cookie";
-import { Login } from "../services/ShopService.ts";
+import { Register } from "../services/ShopService.ts";
 
 const title = "🛍 Turquoze | Home";
 const description = "e-commerce page for you";
@@ -12,32 +11,18 @@ export const handler: Handlers = {
   async POST(req, ctx) {
     try {
       const data = await req.formData();
+      const name = data.get("name");
       const email = data.get("email");
       const password = data.get("password");
-      const rememberMe = data.get("remember-me");
 
-      if (email && password) {
-        const token = await Login(email.toString(), password.toString());
-
-        const resp = new Response("", {
+      if (name && email && password) {
+        await Register(name.toString(), email.toString(), password.toString());
+        return new Response("", {
           status: 307,
           headers: {
-            Location: "/profile",
+            Location: "/login",
           },
         });
-
-        setCookie(resp.headers, {
-          name: "Id",
-          value: token,
-          expires: rememberMe != null
-            ? new Date(Date.now() + (1000 * 60 * 5000))
-            : undefined,
-          path: "/",
-          httpOnly: true,
-          sameSite: "Strict",
-        });
-
-        return resp;
       } else {
         return ctx.render();
       }
@@ -47,7 +32,7 @@ export const handler: Handlers = {
   },
 };
 
-export default function LoginPage(props: PageProps) {
+export default function RegisterPage(props: PageProps) {
   const favicon = new URL(asset("/favicon.svg"), props.url).href;
 
   return (
@@ -68,12 +53,26 @@ export default function LoginPage(props: PageProps) {
           <div class="w-full max-w-md space-y-8">
             <div>
               <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-                Sign in to your account
+                Register your account
               </h2>
             </div>
             <form class="mt-8 space-y-6" method="POST">
               <input type="hidden" name="remember" value="true" />
               <div class="-space-y-px rounded-md shadow-sm">
+                <div>
+                  <label for="name" class="sr-only">
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="name"
+                    autocomplete="name"
+                    required
+                    class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                    placeholder="Name"
+                  />
+                </div>
                 <div>
                   <label for="email-address" class="sr-only">
                     Email address
@@ -103,27 +102,12 @@ export default function LoginPage(props: PageProps) {
               </div>
 
               <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                  <input
-                    id="remember-me"
-                    name="remember-me"
-                    type="checkbox"
-                    class="h-4 w-4 rounded border-gray-300 focus:ring-gray-500"
-                  />
-                  <label
-                    for="remember-me"
-                    class="ml-2 block text-sm text-gray-900"
-                  >
-                    Remember me
-                  </label>
-                </div>
-
                 <div class="text-sm">
                   <a
-                    href="/reset-password"
+                    href="/login"
                     class="font-medium"
                   >
-                    Forgot your password?
+                    Already have an account?
                   </a>
                 </div>
               </div>
@@ -148,7 +132,7 @@ export default function LoginPage(props: PageProps) {
                       />
                     </svg>
                   </span>
-                  Sign in
+                  Register
                 </button>
               </div>
             </form>

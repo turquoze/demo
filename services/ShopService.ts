@@ -473,3 +473,34 @@ export async function Login(
     throw error;
   }
 }
+
+export async function Register(
+  name: string,
+  email: string,
+  password: string,
+): Promise<void> {
+  try {
+    const data = {
+      name,
+      email,
+      password,
+    };
+
+    const response = await fetch(`${host}users`, {
+      headers: new Headers({
+        ...authHeaders,
+        "Content-Type": "application/json",
+        "Content-Length": `${JSON.stringify(data).length}`,
+      }),
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error("Not Ok");
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
