@@ -2,7 +2,8 @@ import { useEffect, useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 import CartProduct from "./CartProduct.tsx";
 
-import { Cart, cartQuantity, GetPrice } from "../services/ShopService.ts";
+import { cartQuantity, GetPrice } from "../services/ShopService.ts";
+import { Cart } from "../utils/types.ts";
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);

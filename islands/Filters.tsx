@@ -1,4 +1,4 @@
-import { UsedFilter } from "../services/ShopService.ts";
+import { UsedFilter } from "../utils/types.ts";
 
 interface FiltersProps {
   filters: Record<string, any>;
