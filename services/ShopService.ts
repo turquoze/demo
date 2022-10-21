@@ -1,7 +1,6 @@
 import Dinero from "https://cdn.skypack.dev/dinero.js@1.9.1";
 import { signal } from "@preact/signals";
-import "https://deno.land/std@0.158.0/dotenv/load.ts";
-// USE IN DEV
+//import "https://deno.land/std@0.158.0/dotenv/load.ts"; // USE IN DEV
 
 export interface CartProduct {
   id: number;
