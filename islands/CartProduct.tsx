@@ -1,5 +1,6 @@
-import { CartProduct, GetPrice } from "../services/ShopService.ts";
+import { GetPrice } from "../services/ShopService.ts";
 import { IS_BROWSER } from "$fresh/runtime.ts";
+import { CartProduct } from "../utils/types.ts";
 
 interface CartProductProps {
   product: CartProduct;

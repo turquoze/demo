@@ -1,7 +1,6 @@
 import { useState } from "preact/hooks";
-
-import { Product, SearchProps } from "../services/ShopService.ts";
 import ProductCard from "../components/ProductCard.tsx";
+import { Product, SearchProps } from "../utils/types.ts";
 
 export default function SearchForm(props: SearchProps) {
   const [products, setProducts] = useState(props.products);
