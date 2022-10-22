@@ -1,9 +1,10 @@
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Footer from "../components/Footer.tsx";
-import { Search, SearchProps } from "../services/ShopService.ts";
+import { Search } from "../services/ShopService.ts";
 import Navigation from "../islands/Navigation.tsx";
 import SearchForm from "../islands/SearchForm.tsx";
+import { SearchProps } from "../utils/types.ts";
 
 const title = "🛍 Turquoze | Home";
 const description = "e-commerce page for you";

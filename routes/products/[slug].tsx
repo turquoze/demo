@@ -2,9 +2,10 @@ import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import BreadCrumbs from "../../components/BreadCrumbs.tsx";
 import Footer from "../../components/Footer.tsx";
-import { GetPrice, GetProduct, Product } from "../../services/ShopService.ts";
+import { GetPrice, GetProduct } from "../../services/ShopService.ts";
 import BuyButton from "../../islands/BuyButton.tsx";
 import Navigation from "../../islands/Navigation.tsx";
+import { Product } from "../../utils/types.ts";
 
 const title = "🛍 Turquoze | Product";
 const description = "e-commerce page for you";
@@ -46,7 +47,7 @@ export default function ProductPage(props: PageProps<Product | null>) {
           <BreadCrumbs
             first={{ href: "/", name: "Home" }}
             links={[{ href: "/products", name: "Products" }, {
-              href: "#",
+              href: "",
               name: props.data.title,
             }]}
           />

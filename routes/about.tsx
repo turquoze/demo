@@ -28,7 +28,7 @@ export default function About(props: PageProps) {
           <BreadCrumbs
             first={{ href: "/", name: "Home" }}
             links={[{
-              href: "#",
+              href: "",
               name: "About",
             }]}
           />

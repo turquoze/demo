@@ -2,12 +2,13 @@ import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import BreadCrumbs from "../../components/BreadCrumbs.tsx";
 import Footer from "../../components/Footer.tsx";
-import { Search, SearchProps } from "../../services/ShopService.ts";
+import { Categories, Search } from "../../services/ShopService.ts";
 import Navigation from "../../islands/Navigation.tsx";
 import SearchForm from "../../islands/SearchForm.tsx";
 import Filters from "../../islands/Filters.tsx";
+import { ProductsProps } from "../../utils/types.ts";
 
-export const handler: Handlers<SearchProps | null> = {
+export const handler: Handlers<ProductsProps | null> = {
   async GET(req, ctx) {
     const url = new URL(req.url);
     const urlParams = new URLSearchParams(url.search);
@@ -36,6 +37,8 @@ export const handler: Handlers<SearchProps | null> = {
       offsetInt = parseInt(offset);
     }
 
+    const categories = await Categories();
+
     const response = await Search({
       query: urlParams.get("q") ?? "",
       limit: limitInt,
@@ -44,14 +47,17 @@ export const handler: Handlers<SearchProps | null> = {
 
     if (response.products === undefined) {
       return ctx.render({
-        hits: 0,
-        products: [],
-        query: "",
-        seen: 0,
-        offset: 0,
-        limit: limitInt,
-        facetsDistribution: {},
-        usedFilter: usedFiltersArr,
+        categories: categories,
+        search: {
+          hits: 0,
+          products: [],
+          query: "",
+          seen: 0,
+          offset: 0,
+          limit: limitInt,
+          facetsDistribution: {},
+          usedFilter: usedFiltersArr,
+        },
       });
     }
 
@@ -75,14 +81,17 @@ export const handler: Handlers<SearchProps | null> = {
       );
     } else {
       return ctx.render({
-        hits: response.nbHits,
-        products: response.products,
-        seen: response.seen,
-        query: response.query ?? "",
-        limit: limitInt,
-        offset: response.offset,
-        facetsDistribution: response.facetsDistribution,
-        usedFilter: usedFiltersArr,
+        categories: categories,
+        search: {
+          hits: response.nbHits,
+          products: response.products,
+          seen: response.seen,
+          query: response.query ?? "",
+          limit: limitInt,
+          offset: response.offset,
+          facetsDistribution: response.facetsDistribution,
+          usedFilter: usedFiltersArr,
+        },
       });
     }
   },
@@ -91,7 +100,7 @@ export const handler: Handlers<SearchProps | null> = {
 const title = "🛍 Turquoze | Products";
 const description = "e-commerce page for you";
 
-export default function Products(props: PageProps<SearchProps | null>) {
+export default function Products(props: PageProps<ProductsProps | null>) {
   const favicon = new URL(asset("/favicon.svg"), props.url).href;
 
   if (!props.data) {
@@ -117,7 +126,19 @@ export default function Products(props: PageProps<SearchProps | null>) {
           links={[{ href: "/products", name: "Products" }]}
         />
       </div>
-      <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+      <div class="pt-4 grid place-items-center grid-cols-1 gap-y-2 sm:grid-cols-2 gap-x-2 lg:grid-cols-4 xl:grid-cols-6 xl:gap-x-6">
+        {props.data.categories.map((category) => {
+          return (
+            <a
+              href={`/category/${category.name}`}
+              class="px-1 py-1 rounded-md text-sm font-medium"
+            >
+              {category.name}
+            </a>
+          );
+        })}
+      </div>
+      <div class="max-w-2xl mx-auto py-2 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8">
         {
           /*<Filters
           filters={props.data.facetsDistribution}
@@ -126,13 +147,13 @@ export default function Products(props: PageProps<SearchProps | null>) {
           </Filters>*/
         }
         <SearchForm
-          query={props.data.query}
-          hits={props.data.hits}
-          seen={props.data.seen}
-          limit={props.data.limit}
-          offset={props.data.offset}
-          products={props.data.products}
-          facetsDistribution={props.data.facetsDistribution}
+          query={props.data.search.query}
+          hits={props.data.search.hits}
+          seen={props.data.search.seen}
+          limit={props.data.search.limit}
+          offset={props.data.search.offset}
+          products={props.data.search.products}
+          facetsDistribution={props.data.search.facetsDistribution}
           usedFilter={[]}
         />
       </div>

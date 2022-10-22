@@ -3,8 +3,9 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import ProductCard from "../components/ProductCard.tsx";
 import PromoHeader from "../components/PromoHeader.tsx";
 import Footer from "../components/Footer.tsx";
-import { GetFeaturedProducts, Product } from "../services/ShopService.ts";
+import { GetFeaturedProducts } from "../services/ShopService.ts";
 import Navigation from "../islands/Navigation.tsx";
+import { Product } from "../utils/types.ts";
 
 const title = "🛍 Turquoze | Home";
 const description = "e-commerce page for you";

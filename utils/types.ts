@@ -57,6 +57,11 @@ export interface SearchProps {
   usedFilter: UsedFilter;
 }
 
+export interface ProductsProps {
+  search: SearchProps;
+  categories: Array<Category>;
+}
+
 export type UsedFilter = Array<{ id: string; value: string }>;
 
 export interface CartItem {
@@ -79,4 +84,13 @@ export interface SearchInfo {
 
 export interface LoginResponse {
   token: string;
+}
+
+export interface Category {
+  public_id: string;
+  created_at: string;
+  name: string;
+  parent: string;
+  shop: string;
+  id: string;
 }
