@@ -1,7 +1,8 @@
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import CartProduct from "../islands/CartProduct.tsx";
-import { Cart, GetCart, RemoveFromCart } from "../services/ShopService.ts";
+import { GetCart, RemoveFromCart } from "../services/ShopService.ts";
+import { Cart } from "../utils/types.ts";
 
 const title = "🛍 Turquoze | Cart";
 const description = "e-commerce page for you";

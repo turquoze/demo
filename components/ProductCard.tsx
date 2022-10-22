@@ -1,11 +1,12 @@
-import { GetPrice, Product } from "../services/ShopService.ts";
+import { GetPrice } from "../services/ShopService.ts";
+import { Product } from "../utils/types.ts";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard(props: ProductCardProps) {
-  const price = GetPrice(props.product.price, "SEK");
+  const price = GetPrice(parseInt(props.product.price.toString()), "SEK");
 
   return (
     <a href={`/products/${props.product.slug}`}>

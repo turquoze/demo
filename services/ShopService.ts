@@ -4,6 +4,7 @@ import {
   Cart,
   CartInit,
   CartItem,
+  Category,
   FinalizeCart,
   LoginResponse,
   Product,
@@ -432,6 +433,79 @@ export async function Register(
     if (!response.ok) {
       throw new Error("Not Ok");
     }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+export async function Categories(): Promise<Array<Category>> {
+  try {
+    const response = await fetch(`${host}categories`, {
+      headers: new Headers({
+        ...authHeaders,
+        "Content-Type": "application/json",
+      }),
+      method: "GET",
+    });
+
+    if (!response.ok) {
+      throw new Error("Not Ok");
+    }
+
+    const body: { categories: Array<Category> } = await response.json();
+
+    return body.categories;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+export async function ProductsByCategory(
+  name: string,
+): Promise<Array<Product>> {
+  try {
+    const response = await fetch(`${host}categories/byname/${name}`, {
+      headers: new Headers({
+        ...authHeaders,
+        "Content-Type": "application/json",
+      }),
+      method: "GET",
+    });
+
+    if (!response.ok) {
+      throw new Error("Not Ok");
+    }
+
+    const body: { categories: Category } = await response.json();
+
+    if (
+      body?.categories?.public_id == undefined ||
+      body?.categories?.public_id == ""
+    ) {
+      throw new Error("Not Ok");
+    }
+
+    const responseProducts = await fetch(
+      `${host}categories/${body.categories.public_id}/products`,
+      {
+        headers: new Headers({
+          ...authHeaders,
+          "Content-Type": "application/json",
+        }),
+        method: "GET",
+      },
+    );
+
+    if (!responseProducts.ok) {
+      throw new Error("Not Ok");
+    }
+
+    const products: { products: Array<Product> } = await responseProducts
+      .json();
+
+    return products.products;
   } catch (error) {
     console.error(error);
     throw error;
