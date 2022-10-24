@@ -55,6 +55,7 @@ export interface SearchProps {
   offset: number;
   facetsDistribution: any | undefined;
   usedFilter: UsedFilter;
+  info: SearchInfo;
 }
 
 export interface ProductsProps {
@@ -77,7 +78,7 @@ export interface SearchInfo {
   hits: number;
   offset: number;
   limit: number;
-  facetsDistribution: any | undefined;
+  facetsDistribution: Record<string, Record<string, number>>;
   exhaustiveNbHits: boolean;
   exhaustiveFacetsCount: boolean | undefined;
 }
