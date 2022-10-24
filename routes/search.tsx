@@ -43,6 +43,8 @@ export const handler: Handlers<SearchProps | null> = {
         offset: 0,
         facetsDistribution: {},
         usedFilter: [],
+        // @ts-expect-error err
+        info: null,
       });
     }
 
@@ -75,6 +77,8 @@ export const handler: Handlers<SearchProps | null> = {
         offset: response.offset,
         facetsDistribution: response.facetsDistribution,
         usedFilter: [],
+        //@ts-expect-error err
+        info: response.info,
       });
     }
   },
@@ -107,6 +111,7 @@ export default function SearchPage(props: PageProps<SearchProps>) {
             offset={props.data.offset}
             facetsDistribution={props.data.facetsDistribution}
             usedFilter={[]}
+            info={props.data.info}
           />
         </div>
       </div>

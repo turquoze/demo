@@ -350,7 +350,7 @@ export async function Search(params: {
     const body: { products: Array<Product>; info: SearchInfo } = await response
       .json();
 
-    const hitsSeen = body.info.offset == 0
+    const hitsSeen = body?.info?.offset == undefined || body.info.offset == 0
       ? body.info.limit
       : body.info.offset + body.info.limit;
 
@@ -361,6 +361,7 @@ export async function Search(params: {
       offset: body.info.offset,
       query: params.query,
       facetsDistribution: body.info.facetsDistribution,
+      info: body.info,
     };
   } catch (error) {
     console.error(error);
@@ -371,6 +372,7 @@ export async function Search(params: {
       offset: 0,
       query: params.query,
       facetsDistribution: {},
+      info: {},
     };
   }
 }
