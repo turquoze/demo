@@ -5,7 +5,6 @@ import Footer from "../../components/Footer.tsx";
 import { Categories, Search } from "../../services/ShopService.ts";
 import Navigation from "../../islands/Navigation.tsx";
 import SearchForm from "../../islands/SearchForm.tsx";
-import Filters from "../../islands/Filters.tsx";
 import { ProductsProps } from "../../utils/types.ts";
 
 export const handler: Handlers<ProductsProps | null> = {
@@ -143,27 +142,17 @@ export default function Products(props: PageProps<ProductsProps | null>) {
         })}
       </div>
       <div class="max-w-2xl mx-auto py-2 px-4 sm:py-10 sm:px-6 lg:max-w-7xl lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-3">
-          <div class="p-4">
-            <Filters
-              info={props.data.search.info}
-              usedFilters={props.data.search.usedFilter}
-            />
-          </div>
-          <div class="col-span-2">
-            <SearchForm
-              query={props.data.search.query}
-              hits={props.data.search.hits}
-              seen={props.data.search.seen}
-              limit={props.data.search.limit}
-              offset={props.data.search.offset}
-              products={props.data.search.products}
-              facetsDistribution={props.data.search.facetsDistribution}
-              usedFilter={[]}
-              info={props.data.search.info}
-            />
-          </div>
-        </div>
+        <SearchForm
+          query={props.data.search.query}
+          hits={props.data.search.hits}
+          seen={props.data.search.seen}
+          limit={props.data.search.limit}
+          offset={props.data.search.offset}
+          products={props.data.search.products}
+          facetsDistribution={props.data.search.facetsDistribution}
+          usedFilter={[]}
+          info={props.data.search.info}
+        />
       </div>
       <Footer />
     </>
