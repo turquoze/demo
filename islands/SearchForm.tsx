@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 import ProductCard from "../components/ProductCard.tsx";
-import { Product, SearchProps } from "../utils/types.ts";
+import { Product, SearchInfo, SearchProps } from "../utils/types.ts";
 import Filters from "./Filters.tsx";
 
 export default function SearchForm(props: SearchProps) {
@@ -8,6 +8,7 @@ export default function SearchForm(props: SearchProps) {
   const [query, setQuery] = useState(props.query);
   const [stateOffset, setOffset] = useState(props.offset);
   const [hits, setHits] = useState(props.hits);
+  const [info, setInfo] = useState<SearchInfo>(props.info);
 
   const nextServerSideUrl = props.query == ""
     ? `?offset=${props.offset + props.limit}`
@@ -44,6 +45,7 @@ export default function SearchForm(props: SearchProps) {
     setOffset(data.offset);
     setHits(data.hits);
     setProducts(data.products);
+    setInfo(data.info);
     if (offset != undefined) {
       setUrl(offset!);
     }
@@ -122,7 +124,7 @@ export default function SearchForm(props: SearchProps) {
       <div class="grid grid-cols-1 md:grid-cols-3">
         <div class="p-4">
           <Filters
-            info={props.info}
+            info={info}
             onFilter={search}
           />
         </div>

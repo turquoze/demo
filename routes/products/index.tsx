@@ -36,12 +36,35 @@ export const handler: Handlers<ProductsProps | null> = {
       offsetInt = parseInt(offset);
     }
 
+    const filters = url.searchParams.get("filters");
+    const usedFilter = new Map<string, string>();
+
+    if (filters != null) {
+      const obj: Record<string, number> = JSON.parse(filters);
+      Object.entries(obj).map(([key, value]) => {
+        const filterId = key.split("-")[1];
+
+        if (usedFilter.has(filterId)) {
+          const oldVal = usedFilter.get(filterId);
+
+          const newVal = oldVal + " OR " + filterId + " = " + value.toString();
+          usedFilter.set(filterId, newVal);
+        } else {
+          usedFilter.set(filterId, filterId + " = " + value.toString());
+        }
+      });
+    }
+
+    const filtersArr = Array.from(usedFilter.values());
+    const filterString = filtersArr.join(" AND ");
+
     const categories = await Categories();
 
     const response = await Search({
       query: urlParams.get("q") ?? "",
       limit: limitInt,
       offset: offsetInt,
+      filters: filterString,
     });
 
     if (response.products === undefined) {
@@ -72,6 +95,7 @@ export const handler: Handlers<ProductsProps | null> = {
           products: response.products,
           query: response.query,
           usedFilter: usedFiltersArr,
+          info: response.info,
         }),
         {
           status: 200,

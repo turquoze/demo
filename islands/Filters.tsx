@@ -69,7 +69,7 @@ export default function Filters(props: FiltersProps) {
       <form>
         <h3 class="pb-4">Filters</h3>
         <div class="border-b border-gray-200 h-40 md:h-96 overflow-y-scroll">
-          {Object.entries(props.info.facetsDistribution).map(
+          {props.info?.facetsDistribution != null && Object.entries(props.info?.facetsDistribution).map(
             ([key, values]) => {
               return (
                 <div key={key} class="pt-6" id="filter-section-0">

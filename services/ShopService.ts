@@ -327,14 +327,22 @@ export async function Search(params: {
   query: string | null;
   limit: number;
   offset: number;
+  filters: string | null;
 }) {
   try {
+
+    let filters = null;
+    if (params.filters != null) {
+      filters = params.filters.replace('"', '')
+    }
+
     const data = JSON.stringify({
       query: params.query,
       options: {
         limit: params.limit,
         offset: params.offset,
         facetsDistribution: ["*"],
+        filter: filters,
       },
     });
 
@@ -351,16 +359,16 @@ export async function Search(params: {
       .json();
 
     const hitsSeen = body?.info?.offset == undefined || body.info.offset == 0
-      ? body.info.limit
+      ? body?.info?.limit ?? 0
       : body.info.offset + body.info.limit;
 
     return {
       products: body.products,
-      nbHits: body.info.hits,
+      nbHits: body?.info?.hits ?? 0,
       seen: hitsSeen,
-      offset: body.info.offset,
+      offset: body?.info?.offset ?? 0,
       query: params.query,
-      facetsDistribution: body.info.facetsDistribution,
+      facetsDistribution: body?.info?.facetsDistribution ?? {},
       info: body.info,
     };
   } catch (error) {

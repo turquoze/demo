@@ -27,10 +27,13 @@ export const handler: Handlers<SearchProps | null> = {
       offsetInt = parseInt(offset);
     }
 
+    const filters = url.searchParams.get("filter");
+
     const response = await Search({
       query: urlParams.get("q"),
       limit: limitInt,
       offset: offsetInt,
+      filters: filters?.replaceAll('"', '') ?? "",
     });
 
     if (response.products === undefined) {
@@ -59,6 +62,7 @@ export const handler: Handlers<SearchProps | null> = {
           offset: response.offset,
           facetsDistribution: response.facetsDistribution,
           usedFilter: [],
+          info: response.info,
         }),
         {
           status: 200,
