@@ -22,8 +22,7 @@ export default function BuyButton(props: BuyButtonProps) {
     if (value != undefined && value != "NULL") {
       // add to cart
       setLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
+      
       const response = await fetch(`/api/cart`, {
         headers: {
           "Accept": "application/json",
@@ -80,10 +79,9 @@ export default function BuyButton(props: BuyButtonProps) {
                 name="VARIANT"
                 required={true}
               >
-                <option value="NULL" selected={true}>Select Version</option>
-                <option value="Small">Small</option>
-                <option value="Medium">Medium</option>
-                <option value="Large">Large</option>
+                {props.options.map((value) => {
+                  return <option value={value.id}>{value.title}</option>;
+                })}
               </select>
             </label>
           )

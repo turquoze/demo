@@ -330,10 +330,9 @@ export async function Search(params: {
   filters: string | null;
 }) {
   try {
-
     let filters = null;
     if (params.filters != null) {
-      filters = params.filters.replace('"', '')
+      filters = params.filters.replace('"', "");
     }
 
     const data = JSON.stringify({

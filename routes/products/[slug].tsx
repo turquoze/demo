@@ -6,6 +6,7 @@ import { GetPrice, GetProduct } from "../../services/ShopService.ts";
 import BuyButton from "../../islands/BuyButton.tsx";
 import Navigation from "../../islands/Navigation.tsx";
 import { Product } from "../../utils/types.ts";
+import Inventory from "../../islands/Inventory.tsx";
 
 const title = "🛍 Turquoze | Product";
 const description = "e-commerce page for you";
@@ -85,11 +86,17 @@ export default function ProductPage(props: PageProps<Product | null>) {
                   </div>
                 </div>
 
+                <Inventory productId={props.data.public_id} />
+
                 <BuyButton
                   productId={props.data.public_id}
                   loading={false}
-                  showOptions={true}
-                  options={[]}
+                  showOptions={false}
+                  options={[{
+                    default: true,
+                    id: props.data.public_id,
+                    title: props.data.title,
+                  }]}
                 />
               </div>
 

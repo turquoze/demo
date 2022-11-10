@@ -9,20 +9,22 @@ import * as $2 from "./routes/_middleware.ts";
 import * as $3 from "./routes/about.tsx";
 import * as $4 from "./routes/api/cart/index.ts";
 import * as $5 from "./routes/api/cart/pay.ts";
-import * as $6 from "./routes/cart.tsx";
-import * as $7 from "./routes/category/[slug].tsx";
-import * as $8 from "./routes/index.tsx";
-import * as $9 from "./routes/login.tsx";
-import * as $10 from "./routes/products/[slug].tsx";
-import * as $11 from "./routes/products/index.tsx";
-import * as $12 from "./routes/profile.tsx";
-import * as $13 from "./routes/register.tsx";
-import * as $14 from "./routes/search.tsx";
+import * as $6 from "./routes/api/inventory/[id].ts";
+import * as $7 from "./routes/cart.tsx";
+import * as $8 from "./routes/category/[slug].tsx";
+import * as $9 from "./routes/index.tsx";
+import * as $10 from "./routes/login.tsx";
+import * as $11 from "./routes/products/[slug].tsx";
+import * as $12 from "./routes/products/index.tsx";
+import * as $13 from "./routes/profile.tsx";
+import * as $14 from "./routes/register.tsx";
+import * as $15 from "./routes/search.tsx";
 import * as $$0 from "./islands/BuyButton.tsx";
 import * as $$1 from "./islands/CartProduct.tsx";
 import * as $$2 from "./islands/Filters.tsx";
-import * as $$3 from "./islands/Navigation.tsx";
-import * as $$4 from "./islands/SearchForm.tsx";
+import * as $$3 from "./islands/Inventory.tsx";
+import * as $$4 from "./islands/Navigation.tsx";
+import * as $$5 from "./islands/SearchForm.tsx";
 
 const manifest = {
   routes: {
@@ -32,22 +34,24 @@ const manifest = {
     "./routes/about.tsx": $3,
     "./routes/api/cart/index.ts": $4,
     "./routes/api/cart/pay.ts": $5,
-    "./routes/cart.tsx": $6,
-    "./routes/category/[slug].tsx": $7,
-    "./routes/index.tsx": $8,
-    "./routes/login.tsx": $9,
-    "./routes/products/[slug].tsx": $10,
-    "./routes/products/index.tsx": $11,
-    "./routes/profile.tsx": $12,
-    "./routes/register.tsx": $13,
-    "./routes/search.tsx": $14,
+    "./routes/api/inventory/[id].ts": $6,
+    "./routes/cart.tsx": $7,
+    "./routes/category/[slug].tsx": $8,
+    "./routes/index.tsx": $9,
+    "./routes/login.tsx": $10,
+    "./routes/products/[slug].tsx": $11,
+    "./routes/products/index.tsx": $12,
+    "./routes/profile.tsx": $13,
+    "./routes/register.tsx": $14,
+    "./routes/search.tsx": $15,
   },
   islands: {
     "./islands/BuyButton.tsx": $$0,
     "./islands/CartProduct.tsx": $$1,
     "./islands/Filters.tsx": $$2,
-    "./islands/Navigation.tsx": $$3,
-    "./islands/SearchForm.tsx": $$4,
+    "./islands/Inventory.tsx": $$3,
+    "./islands/Navigation.tsx": $$4,
+    "./islands/SearchForm.tsx": $$5,
   },
   baseUrl: import.meta.url,
   config,
