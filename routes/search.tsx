@@ -33,7 +33,7 @@ export const handler: Handlers<SearchProps | null> = {
       query: urlParams.get("q"),
       limit: limitInt,
       offset: offsetInt,
-      filters: filters?.replaceAll('"', '') ?? "",
+      filters: filters?.replaceAll('"', "") ?? "",
     });
 
     if (response.products === undefined) {
