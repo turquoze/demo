@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import { cartQuantity } from "../services/ShopService.ts";
+import { cart } from "../utils/cart.ts";
 
 interface BuyButtonProps {
   productId: string;
@@ -22,7 +22,7 @@ export default function BuyButton(props: BuyButtonProps) {
     if (value != undefined && value != "NULL") {
       // add to cart
       setLoading(true);
-      
+
       const response = await fetch(`/api/cart`, {
         headers: {
           "Accept": "application/json",
@@ -37,9 +37,8 @@ export default function BuyButton(props: BuyButtonProps) {
         alert("No connection to cart");
       }
 
-      const cartNum = cartQuantity.peek();
-      cartQuantity.value = cartNum + 1;
-
+      const cartNum = cart.peek();
+      cart.value = cartNum + 1;
       window.scrollTo(0, 0);
     } else {
       alert("Not allowed");

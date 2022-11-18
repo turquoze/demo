@@ -1,5 +1,4 @@
 import Dinero from "https://cdn.skypack.dev/dinero.js@1.9.1";
-import { signal } from "@preact/signals";
 import {
   Cart,
   CartInit,
@@ -39,8 +38,6 @@ const authHeaders = {
   "X-Turquoze-Id": turquozeID,
   "X-Turquoze-Secret": turquozeSecret,
 };
-
-export const cartQuantity = signal<number>(0);
 
 export function GetPrice(price: number, currency: string): string {
   // TODO: get currency from api
@@ -261,8 +258,6 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
         public_id: product.public_id,
       };
     });
-
-    cartQuantity.value = cart.products.length;
 
     return cart;
   } catch (error) {
