@@ -53,7 +53,7 @@ export interface SearchProps {
   seen: number;
   limit: number;
   offset: number;
-  facetsDistribution: any | undefined;
+  facetsDistribution: Record<string, Record<string, number>> | undefined;
   usedFilter: UsedFilter;
   info: SearchInfo;
 }
@@ -78,7 +78,7 @@ export interface SearchInfo {
   hits: number;
   offset: number;
   limit: number;
-  facetsDistribution: Record<string, Record<string, number>>;
+  facets: Record<string, Record<string, number>>;
   exhaustiveNbHits: boolean;
   exhaustiveFacetsCount: boolean | undefined;
 }
