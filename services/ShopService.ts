@@ -335,7 +335,7 @@ export async function Search(params: {
       options: {
         limit: params.limit,
         offset: params.offset,
-        facetsDistribution: ["*"],
+        facets: ["*"],
         filter: filters,
       },
     });
@@ -362,7 +362,7 @@ export async function Search(params: {
       seen: hitsSeen,
       offset: body?.info?.offset ?? 0,
       query: params.query,
-      facetsDistribution: body?.info?.facetsDistribution ?? {},
+      facetsDistribution: body?.info?.facets ?? {},
       info: body.info,
     };
   } catch (error) {
