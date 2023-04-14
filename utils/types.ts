@@ -63,6 +63,15 @@ export interface ProductsProps {
   categories: Array<Category>;
 }
 
+export interface Inventory {
+  id: number;
+  public_id: string;
+  created_at?: number;
+  warehouse: string;
+  product: string;
+  quantity: number;
+}
+
 export type UsedFilter = Array<{ id: string; value: string }>;
 
 export interface CartItem {

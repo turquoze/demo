@@ -1,24 +1,26 @@
 import { Handlers } from "$fresh/server.ts";
+import { GetInventoryByProductId } from "../../../services/ShopService.ts";
 
 export const handler: Handlers<unknown, { id: string }> = {
   async GET(_req: Request, ctx) {
     try {
-      const { _id } = ctx.params;
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      return new Response(JSON.stringify([
-        {
-          id: "1234",
-          name: "Warehouse1",
-          amount: 34,
+      const { id } = ctx.params;
+      const inventories = await GetInventoryByProductId(id);
+
+      if (inventories == undefined) {
+        return new Response(JSON.stringify([]));
+      }
+
+      const responseData = inventories.map((inventory) => {
+        return {
+          id: inventory.public_id,
+          name: inventory.warehouse,
+          amount: inventory.quantity,
           unit: "Pieces",
-        },
-        {
-          id: "1235",
-          name: "Warehouse2",
-          amount: 12,
-          unit: "Pieces",
-        },
-      ]));
+        };
+      });
+
+      return new Response(JSON.stringify(responseData));
     } catch {
       return new Response(
         JSON.stringify({
