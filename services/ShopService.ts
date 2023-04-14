@@ -5,6 +5,7 @@ import {
   CartItem,
   Category,
   FinalizeCart,
+  Inventory,
   LoginResponse,
   Product,
   SearchInfo,
@@ -62,6 +63,32 @@ export async function GetProduct(slug: string): Promise<Product | undefined> {
     const body: { products: Product } = await response.json();
 
     return body.products;
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
+}
+
+export async function GetInventoryByProductId(
+  id: string,
+): Promise<Array<Inventory> | undefined> {
+  try {
+    const response = await fetch(
+      `${host}products/inventory/${id}`,
+      {
+        headers: new Headers({
+          ...authHeaders,
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Not Ok");
+    }
+
+    const body: { inventories: Array<Inventory> } = await response.json();
+
+    return body.inventories;
   } catch (error) {
     console.error(error);
     return undefined;
