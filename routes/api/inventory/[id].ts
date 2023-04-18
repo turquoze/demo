@@ -13,7 +13,7 @@ export const handler: Handlers<unknown, { id: string }> = {
 
       const responseData = inventories.map((inventory) => {
         return {
-          id: inventory.public_id,
+          id: inventory.id,
           name: inventory.warehouse,
           amount: inventory.quantity,
           unit: "Pieces",

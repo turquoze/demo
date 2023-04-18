@@ -54,11 +54,13 @@ export default function Inventory(props: InventoryProps) {
           <h3 class="mt-2 mb-2 text-sm font-semibold text-gray-900 uppercase">
             Stock
           </h3>
-          <ol>
-            {inventories.map((inv) => {
-              return <li>{inv.name} - {inv.amount} {inv.unit}</li>;
-            })}
-          </ol>
+          {inventories.length == 0 ? <h4>No Stock</h4> : (
+            <ol>
+              {inventories.map((inv) => {
+                return <li>{inv.name} - {inv.amount} {inv.unit}</li>;
+              })}
+            </ol>
+          )}
         </div>
       );
     }
