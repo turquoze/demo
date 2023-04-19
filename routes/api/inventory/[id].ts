@@ -14,7 +14,7 @@ export const handler: Handlers<unknown, { id: string }> = {
       const responseData = inventories.map((inventory) => {
         return {
           id: inventory.id,
-          name: inventory.warehouse,
+          name: inventory.warehouse_name,
           amount: inventory.quantity,
           unit: "Pieces",
         };
