@@ -70,6 +70,7 @@ export interface Inventory {
   warehouse: string;
   product: string;
   quantity: number;
+  warehouse_name: string;
 }
 
 export type UsedFilter = Array<{ id: string; value: string }>;
