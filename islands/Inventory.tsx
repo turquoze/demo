@@ -7,6 +7,7 @@ interface InventoryProps {
 export default function Inventory(props: InventoryProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [inventories, setInventories] = useState<
     Array<{ id: string; name: string; amount: number; unit: string }>
   >([]);
@@ -15,18 +16,23 @@ export default function Inventory(props: InventoryProps) {
     const inventory = async (id: string) => {
       setLoading(true);
 
-      const response = await fetch(`/api/inventory/${id}`, {
-        headers: {
-          "Accept": "application/json",
-        },
-        method: "GET",
-      });
+      try {
+        const response = await fetch(`/api/inventory/${id}`, {
+          headers: {
+            "Accept": "application/json",
+          },
+          method: "GET",
+        });
 
-      setLoading(false);
+        setLoading(false);
 
-      if (response.ok) {
-        setInventories(await response.json());
-      } else {
+        if (response.ok) {
+          setInventories(await response.json());
+        } else {
+          setError(true);
+        }
+      } catch (error) {
+        setErrorMsg(JSON.stringify(error));
         setError(true);
       }
     };
@@ -47,7 +53,7 @@ export default function Inventory(props: InventoryProps) {
     );
   } else {
     if (error) {
-      return <div></div>;
+      return <div>{errorMsg}</div>;
     } else {
       return (
         <div class="mb-4">
