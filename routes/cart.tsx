@@ -9,26 +9,36 @@ const description = "e-commerce page for you";
 
 export const handler: Handlers<Cart, { cartId: string } | null> = {
   async GET(_, ctx) {
-    const cart = await GetCart(ctx.state!.cartId);
-    if (cart === undefined) {
+    try {
+      const cart = await GetCart(ctx.state!.cartId);
+      if (cart === undefined) {
+        return ctx.renderNotFound();
+      }
+      return ctx.render(cart);
+    } catch (error) {
+      console.error(error);
       return ctx.renderNotFound();
     }
-    return ctx.render(cart);
   },
   async POST(req, ctx) {
-    const data = await req.formData();
-    const body = Object.fromEntries(data.entries());
-    const id = body["pid"];
+    try {
+      const data = await req.formData();
+      const body = Object.fromEntries(data.entries());
+      const id = body["pid"];
 
-    if (id != null || id != undefined) {
-      await RemoveFromCart(ctx.state!.cartId, id.toString());
-    }
+      if (id != null || id != undefined) {
+        await RemoveFromCart(ctx.state!.cartId, id.toString());
+      }
 
-    const cart = await GetCart(ctx.state!.cartId);
-    if (cart === undefined) {
+      const cart = await GetCart(ctx.state!.cartId);
+      if (cart === undefined) {
+        return ctx.render();
+      }
+      return ctx.render(cart);
+    } catch (error) {
+      console.error(error);
       return ctx.render();
     }
-    return ctx.render(cart);
   },
 };
 

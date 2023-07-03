@@ -336,6 +336,10 @@ export async function FinalizeCart(cart_id: string): Promise<string> {
       }),
     });
 
+    if (!response.ok) {
+      throw new Error("Not OK");
+    }
+
     const body: FinalizeCart = await response.json();
 
     return body.payment.value;

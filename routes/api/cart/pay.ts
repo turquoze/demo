@@ -11,10 +11,11 @@ export const handler: Handlers<unknown, { cartId: string }> = {
         path: "/",
       });
       return new Response(JSON.stringify({ url: body }), { headers });
-    } catch {
+    } catch (error) {
       return new Response(
         JSON.stringify({
           msg: "Error with cart",
+          inner: JSON.stringify(error),
         }),
         {
           status: 500,

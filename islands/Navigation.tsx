@@ -32,14 +32,24 @@ export default function Navigation() {
   }
 
   async function SubmitCart() {
-    if (cart != undefined && cart.products.length > 0) {
-      const response = await fetch("/api/cart/pay", {
-        method: "POST",
-      });
-      const data: { url: string } = await response.json();
+    try {
+      if (cart != undefined && cart.products.length > 0) {
+        const response = await fetch("/api/cart/pay", {
+          method: "POST",
+        });
 
-      window.location.href = data.url;
-    } else {
+        if (!response.ok) {
+          throw new Error("Error with submit cart");
+        }
+
+        const data: { url: string } = await response.json();
+
+        window.location.href = data.url;
+      } else {
+        alert("Error with cart");
+      }
+    } catch (error) {
+      console.error(error);
       alert("Error with cart");
     }
   }
