@@ -337,6 +337,8 @@ export async function FinalizeCart(cart_id: string): Promise<string> {
     });
 
     if (!response.ok) {
+      const text = await response.text();
+      console.error(`${response.status}, ${text}`);
       throw new Error("Not OK");
     }
 
