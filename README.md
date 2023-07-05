@@ -1,4 +1,8 @@
-# fresh project
+# Turquoze e-commerce site demo
+
+### Demo
+
+Check out the [demo](https://demo.turquoze.com)
 
 ### Usage
 
