@@ -194,7 +194,7 @@ export async function AddToCart(
   try {
     const data = {
       cart_id: cart_id,
-      product_id: product_id,
+      item_id: product_id,
       price: 2000,
       quantity: 1,
     };
@@ -209,6 +209,8 @@ export async function AddToCart(
     });
 
     if (!response.ok) {
+      const text = await response.text();
+      console.log(`${response.status}, ${text}`);
       throw new Error("Not Ok");
     }
   } catch (error) {
@@ -226,6 +228,8 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
     });
 
     if (!response.ok) {
+      const text = await response.text();
+      console.log(`${response.status}, ${text}`);
       throw new Error("Not Ok");
     }
 
@@ -238,7 +242,7 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
       },
     };
 
-    const ids = body.carts.map((item) => item.product_id).join(",");
+    const ids = body.carts.map((item) => item.item_id).join(",");
 
     const productsResponse = await fetch(
       `${host}products/byids?ids=${ids}`,
@@ -266,7 +270,7 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
     }
 
     cart.products = products.map((product) => {
-      const item = body.carts.find((p) => p.product_id == product.public_id);
+      const item = body.carts.find((p) => p.item_id == product.public_id);
 
       if (item == undefined) {
         throw new Error("Error with cart");
