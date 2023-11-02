@@ -90,6 +90,7 @@ export interface SearchInfo {
   offset: number;
   limit: number;
   facets: Record<string, Record<string, number>>;
+  facetsDistribution: Record<string, Record<string, number>>;
   exhaustiveNbHits: boolean;
   exhaustiveFacetsCount: boolean | undefined;
 }
