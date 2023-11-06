@@ -193,8 +193,8 @@ export async function AddToCart(
 ): Promise<void> {
   try {
     const data = {
-      cart_id: cart_id,
-      item_id: product_id,
+      cartId: cart_id,
+      itemId: product_id,
       price: 2000,
       quantity: 1,
     };
@@ -242,7 +242,7 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
       },
     };
 
-    const ids = body.carts.map((item) => item.item_id).join(",");
+    const ids = body.carts.map((item) => item.itemId).join(",");
 
     const productsResponse = await fetch(
       `${host}products/byids?ids=${ids}`,
@@ -270,7 +270,7 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
     }
 
     cart.products = products.map((product) => {
-      const item = body.carts.find((p) => p.item_id == product.public_id);
+      const item = body.carts.find((p) => p.itemId == product.publicId);
 
       if (item == undefined) {
         throw new Error("Error with cart");
@@ -286,7 +286,7 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
         price: product.price,
         quantity: item.quantity,
         slug: product.slug,
-        public_id: product.public_id,
+        publicId: product.publicId,
       };
     });
 
@@ -305,7 +305,7 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
 export async function InitCart(): Promise<string> {
   try {
     const data = JSON.stringify({
-      public_id: null,
+      publicId: null,
     });
 
     const response = await fetch(`${host}carts/`, {
@@ -323,7 +323,7 @@ export async function InitCart(): Promise<string> {
 
     const body: { carts: CartInit } = await response.json();
 
-    return body.carts.public_id;
+    return body.carts.publicId;
   } catch (error) {
     console.error(error);
     throw error;
@@ -522,14 +522,14 @@ export async function ProductsByCategory(
     const body: { categories: Category } = await response.json();
 
     if (
-      body?.categories?.public_id == undefined ||
-      body?.categories?.public_id == ""
+      body?.categories?.publicId == undefined ||
+      body?.categories?.publicId == ""
     ) {
       throw new Error("Not Ok");
     }
 
     const responseProducts = await fetch(
-      `${host}categories/${body.categories.public_id}/products`,
+      `${host}categories/${body.categories.publicId}/products`,
       {
         headers: new Headers({
           ...authHeaders,

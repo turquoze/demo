@@ -6,13 +6,13 @@ export interface CartProduct {
   imageAlt?: "product image";
   slug: string;
   price: number;
-  public_id: string;
+  publicId: string;
 }
 
 export interface CartInit {
   id: number;
-  public_id: string;
-  created_at?: number;
+  publicId: string;
+  createdAt?: number;
   items: Array<CartItem>;
 }
 
@@ -33,14 +33,14 @@ export interface FinalizeCart {
 
 export interface Product {
   id: number;
-  public_id: string;
-  created_at?: string;
+  publicId: string;
+  createdAt?: string;
   slug: string;
   active: boolean;
   parent?: string;
   title: string;
-  short_description: string;
-  long_description: string;
+  shortDescription: string;
+  longDescription: string;
   images: Array<string>;
   price: number;
   shop: string;
@@ -65,8 +65,8 @@ export interface ProductsProps {
 
 export interface Inventory {
   id: number;
-  public_id: string;
-  created_at?: number;
+  publicId: string;
+  createdAt?: number;
   warehouse: string;
   product: string;
   quantity: number;
@@ -77,8 +77,8 @@ export type UsedFilter = Array<{ id: string; value: string }>;
 
 export interface CartItem {
   id: number;
-  cart_id: string;
-  item_id: string;
+  cartId: string;
+  itemId: string;
   price: number;
   quantity: number;
   totalPrice: number;
@@ -100,8 +100,8 @@ export interface LoginResponse {
 }
 
 export interface Category {
-  public_id: string;
-  created_at: string;
+  publicId: string;
+  createdAt: string;
   name: string;
   parent: string;
   shop: string;

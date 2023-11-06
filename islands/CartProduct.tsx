@@ -22,7 +22,7 @@ export default function CartProductComponent(props: CartProductProps) {
 
     try {
       props.onLoad();
-      const data = { id: props.product.public_id };
+      const data = { id: props.product.publicId };
       const response = await fetch(`/api/cart`, {
         headers: {
           "Accept": "application/json",
@@ -92,7 +92,7 @@ export default function CartProductComponent(props: CartProductProps) {
             method="POST"
             action="/cart"
           >
-            <input type="hidden" value={props.product.public_id} name="pid" />
+            <input type="hidden" value={props.product.publicId} name="pid" />
             <li key={props.product.id} class="flex py-6">
               <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                 <img
