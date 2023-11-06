@@ -86,15 +86,15 @@ export default function ProductPage(props: PageProps<Product | null>) {
                   </div>
                 </div>
 
-                <Inventory productId={props.data.public_id} />
+                <Inventory productId={props.data.publicId} />
 
                 <BuyButton
-                  productId={props.data.public_id}
+                  productId={props.data.publicId}
                   loading={false}
                   showOptions={false}
                   options={[{
                     default: true,
-                    id: props.data.public_id,
+                    id: props.data.publicId,
                     title: props.data.title,
                   }]}
                 />
