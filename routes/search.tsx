@@ -81,7 +81,6 @@ export const handler: Handlers<SearchProps | null> = {
         offset: response.offset,
         facetsDistribution: response.facetsDistribution,
         usedFilter: [],
-        //@ts-expect-error err
         info: response.info,
       });
     }

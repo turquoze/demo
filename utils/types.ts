@@ -55,7 +55,8 @@ export interface SearchProps {
   offset: number;
   facetsDistribution: Record<string, Record<string, number>> | undefined;
   usedFilter: UsedFilter;
-  info: SearchInfo;
+  // deno-lint-ignore ban-types
+  info: SearchInfo | {};
 }
 
 export interface ProductsProps {

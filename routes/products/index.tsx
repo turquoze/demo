@@ -6,6 +6,7 @@ import { Categories, Search } from "../../services/ShopService.ts";
 import Navigation from "../../islands/Navigation.tsx";
 import SearchForm from "../../islands/SearchForm.tsx";
 import { ProductsProps } from "../../utils/types.ts";
+import { getSearchFilters } from "../../utils/filters.ts";
 
 export const handler: Handlers<ProductsProps | null> = {
   async GET(req, ctx) {
@@ -36,27 +37,9 @@ export const handler: Handlers<ProductsProps | null> = {
       offsetInt = parseInt(offset);
     }
 
-    const filters = url.searchParams.get("filters");
-    const usedFilter = new Map<string, string>();
-
-    if (filters != null) {
-      const obj: Record<string, number> = JSON.parse(filters);
-      Object.entries(obj).map(([key, value]) => {
-        const filterId = key.split("-")[1];
-
-        if (usedFilter.has(filterId)) {
-          const oldVal = usedFilter.get(filterId);
-
-          const newVal = oldVal + " OR " + filterId + " = " + value.toString();
-          usedFilter.set(filterId, newVal);
-        } else {
-          usedFilter.set(filterId, filterId + " = " + value.toString());
-        }
-      });
-    }
-
-    const filtersArr = Array.from(usedFilter.values());
-    const filterString = filtersArr.join(" AND ");
+    const getFilters = getSearchFilters(req.url);
+    const filters = Array.from(getFilters.values());
+    const filterString = filters.join(" AND ");
 
     const categories = await Categories();
 
@@ -79,7 +62,6 @@ export const handler: Handlers<ProductsProps | null> = {
           limit: limitInt,
           facetsDistribution: {},
           usedFilter: usedFiltersArr,
-          //@ts-expect-error err
           info: {},
         },
       });
@@ -116,7 +98,6 @@ export const handler: Handlers<ProductsProps | null> = {
           offset: response.offset,
           facetsDistribution: response.facetsDistribution,
           usedFilter: usedFiltersArr,
-          //@ts-expect-error err
           info: response.info,
         },
       });

@@ -1,5 +1,5 @@
-import { Product, SearchInfo, UsedFilter } from "../utils/types.ts";
-import { useEffect, useState } from "preact/hooks";
+import { SearchInfo } from "../utils/types.ts";
+import { IS_BROWSER } from "$fresh/runtime.ts";
 
 interface FiltersProps {
   info: SearchInfo;
@@ -8,60 +8,51 @@ interface FiltersProps {
 }
 
 export default function Filters(props: FiltersProps) {
-  const [usedFilters, setUsedFilters] = useState<Record<string, number>>({});
-
-  useEffect(() => {
-    const url = new URL(window.location.toString());
-    const filters = url.searchParams.get("filters");
-
-    if (filters != null) {
-      const usedFiltersLocal = JSON.parse(filters);
-      setUsedFilters(usedFiltersLocal);
-    } else {
-      setUsedFilters({});
-    }
-  }, [props]);
-
   const handleClick = (e: Event) => {
     //@ts-expect-error not on type
-    const id = e.target.id;
+    const id = e.target.id as string;
     //@ts-expect-error not on type
-    const value = e.target.value;
+    const value = e.target.value as string;
 
-    const filters = getFilters();
-    const entry = Object.keys(filters).find((x) => x == id);
-    if (entry != undefined) {
-      delete filters[id];
-    } else {
-      filters[id] = value;
+    const filters = [];
+
+    const splits = id.split("-");
+    const [first, filterId] = splits;
+
+    const localUrl = new URL(window.location.toString());
+    const hasKey = localUrl.searchParams.has(`${first}-${filterId}`);
+
+    let match = false;
+    if (hasKey) {
+      const searchValue = localUrl.searchParams.get(`${first}-${filterId}`);
+      match = searchValue == value;
+    }
+
+    if (!match) {
+      filters.push({
+        id: `${first}-${filterId}`,
+        value: value,
+      });
     }
 
     setUrl(filters);
     props.onFilter();
   };
 
-  function setUrl(filter: Record<string, number>) {
+  // deno-lint-ignore no-explicit-any
+  function setUrl(filters: Array<{ id: string; value: any }>) {
     const url = new URL(window.location.toString());
 
-    if (Object.keys(filter).length === 0) {
-      url.searchParams.delete("filters");
-    } else {
-      url.searchParams.set("filters", JSON.stringify(filter));
+    for (const [key, _value] of url.searchParams.entries()) {
+      if (key.includes("filter")) {
+        url.searchParams.delete(key);
+      }
+    }
+    for (const i in filters) {
+      url.searchParams.set(filters[i].id, filters[i].value);
     }
 
     window.history.replaceState({}, document.title, url);
-  }
-
-  function getFilters(): Record<string, number> {
-    const url = new URL(window.location.toString());
-
-    const filters = url.searchParams.get("filters");
-
-    if (filters == null) {
-      return {};
-    }
-
-    return JSON.parse(filters);
   }
 
   return (
@@ -72,38 +63,96 @@ export default function Filters(props: FiltersProps) {
           {props.info?.facetsDistribution != null &&
             Object.entries(props.info?.facetsDistribution).map(
               ([key, values]) => {
-                return (
-                  <div key={key} class="pt-6" id="filter-section-0">
-                    <h4 class="pb-2">{key}</h4>
-                    <div class="space-y-4">
-                      {Object.entries(values).map(([value, amount]) => {
-                        const htmlId = `filter-${key}-${value}`;
-                        const match = Object.keys(usedFilters).find((x) =>
-                          x == htmlId
-                        );
-                        return (
-                          <div key={htmlId} class="flex items-center">
-                            <input
-                              checked={match != undefined}
-                              id={htmlId}
-                              name={value}
-                              value={value}
-                              onChange={handleClick}
-                              type="checkbox"
-                              class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              for={htmlId}
-                              class="ml-3 text-sm text-gray-600"
-                            >
-                              {value} - {amount}
-                            </label>
-                          </div>
-                        );
-                      })}
+                const arr = Object.entries(values);
+                if (arr.length > 15) {
+                  const chunks = [];
+
+                  const chunkSize = arr.length / 5;
+                  for (let i = 0; i < arr.length; i += chunkSize) {
+                    const chunk = arr.slice(i, i + chunkSize);
+                    chunks.push(chunk);
+                  }
+
+                  return (
+                    <div key={key} class="pt-6" id="filter-section-0">
+                      <h4 class="pb-2">{key}</h4>
+                      <div class="space-y-4">
+                        {chunks.map((a) => {
+                          const [first, _f] = a[0];
+                          const [last, _l] = a[a.length - 1];
+                          const htmlId = `filter-${key}-${first}-${last}`;
+                          return (
+                            <div key={htmlId} class="flex items-center">
+                              <input
+                                checked={false}
+                                id={htmlId}
+                                name={`min:${first}|max:${last}`}
+                                value={`min:${first}|max:${last}`}
+                                onChange={handleClick}
+                                type="checkbox"
+                                class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                              />
+                              <label
+                                for={htmlId}
+                                class="ml-3 text-sm text-gray-600"
+                              >
+                                {first} - {last}
+                              </label>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                );
+                  );
+                } else {
+                  return (
+                    <div key={key} class="pt-6" id="filter-section-0">
+                      <h4 class="pb-2">{key}</h4>
+                      <div class="space-y-4">
+                        {Object.entries(values).map(([value, amount]) => {
+                          const htmlId = `filter-${key}-${value}`;
+                          let match = false;
+
+                          if (IS_BROWSER) {
+                            const localUrl = new URL(
+                              window.location.toString(),
+                            );
+                            const hasKey = localUrl.searchParams.has(
+                              `filter-${key}`,
+                            );
+
+                            if (hasKey) {
+                              const searchValue = localUrl.searchParams.get(
+                                `filter-${key}`,
+                              );
+                              match = searchValue == value;
+                            }
+                          }
+
+                          return (
+                            <div key={htmlId} class="flex items-center">
+                              <input
+                                checked={match}
+                                id={htmlId}
+                                name={value}
+                                value={value}
+                                onChange={handleClick}
+                                type="checkbox"
+                                class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                              />
+                              <label
+                                for={htmlId}
+                                class="ml-3 text-sm text-gray-600"
+                              >
+                                {value} - {amount}
+                              </label>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                }
               },
             )}
         </div>
