@@ -397,7 +397,7 @@ export async function Search(params: {
       seen: hitsSeen,
       offset: body?.info?.offset ?? 0,
       query: params.query,
-      facetsDistribution: body?.info?.facets ?? {},
+      facetsDistribution: body?.info?.exhaustiveFacetsCount ?? {},
       info: body.info,
     };
   } catch (error) {

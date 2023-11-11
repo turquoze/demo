@@ -2,13 +2,21 @@ import { useState } from "preact/hooks";
 import ProductCard from "../components/ProductCard.tsx";
 import { Product, SearchInfo, SearchProps } from "../utils/types.ts";
 import Filters from "./Filters.tsx";
+import { getSearchFilters } from "../utils/filters.ts";
 
 export default function SearchForm(props: SearchProps) {
   const [products, setProducts] = useState(props.products);
   const [query, setQuery] = useState(props.query);
   const [stateOffset, setOffset] = useState(props.offset);
   const [hits, setHits] = useState(props.hits);
+  // @ts-ignore not on type
   const [info, setInfo] = useState<SearchInfo>(props.info);
+  const [debounceTimer, setDebounceTimer] = useState<number | undefined>(
+    undefined,
+  );
+  const [abortController, setAbortController] = useState<
+    AbortController | undefined
+  >(undefined);
 
   const nextServerSideUrl = props.query == ""
     ? `?offset=${props.offset + props.limit}`
@@ -24,30 +32,67 @@ export default function SearchForm(props: SearchProps) {
     await search();
   }
 
-  async function search(offset?: number, localLimit = props.limit) {
-    const getFilters = getSearchFilters();
-    const filters = Array.from(getFilters.values());
-    const filterString = filters.join(" AND ");
-
-    let url = `/search?q=${query}&limit=${localLimit}&filter="${filterString}"`;
-
-    if (offset != null) {
-      url = url + `&offset=${offset}`;
+  function searchDebounce(
+    controller: AbortController,
+    // deno-lint-ignore no-explicit-any
+    callback: any,
+    time: number,
+  ) {
+    if (abortController != undefined) {
+      abortController.abort();
     }
-    const response = await fetch(url, {
-      headers: {
-        "Accept": "application/json",
-      },
-    });
+    clearTimeout(debounceTimer);
+    const localDebounceTimer = setTimeout(() => {
+      setAbortController(controller);
+      callback;
+    }, time);
 
-    const data: SearchProps = await response.json();
+    setDebounceTimer(localDebounceTimer);
+  }
 
-    setOffset(data.offset);
-    setHits(data.hits);
-    setProducts(data.products);
-    setInfo(data.info);
-    if (offset != undefined) {
-      setUrl(offset!);
+  async function search(
+    offset?: number,
+    localLimit?: number,
+    abortControllerFetch = new AbortController(),
+  ) {
+    try {
+      const getFilters = getSearchFilters(window.location.toString());
+      const filters = Array.from(getFilters.values());
+      const filterString = filters.join(" AND ");
+
+      if (localLimit == undefined || localLimit == null) {
+        localLimit = props.limit;
+      }
+
+      let url =
+        `/search?q=${query}&limit=${localLimit}&filter="${filterString}"`;
+
+      if (offset != null) {
+        url = url + `&offset=${offset}`;
+      }
+      const response = await fetch(url, {
+        signal: abortControllerFetch.signal,
+        headers: {
+          "Accept": "application/json",
+        },
+      });
+
+      const data: SearchProps = await response.json();
+
+      setOffset(data.offset);
+      setHits(data.hits);
+      setProducts(data.products);
+      // @ts-ignore not on type
+      setInfo(data.info);
+      if (offset != undefined) {
+        setUrl(offset!);
+      }
+    } catch (error) {
+      if (error instanceof DOMException) {
+        //aborted
+      } else {
+        console.error(error);
+      }
     }
   }
 
@@ -85,38 +130,21 @@ export default function SearchForm(props: SearchProps) {
   }
 
   // @ts-expect-error no type
-  async function onValueChange(e) {
+  function onValueChange(e) {
     const { value } = e.target;
     setQuery(value);
     const url = new URL(window.location.toString());
     url.searchParams.set("q", value);
     window.history.replaceState({}, document.title, url);
-    await search();
-  }
 
-  function getSearchFilters() {
-    const url = new URL(window.location.toString());
-    const filters = url.searchParams.get("filters");
-
-    const usedFilter = new Map<string, string>();
-
-    if (filters != null) {
-      const obj: Record<string, number> = JSON.parse(filters);
-      Object.entries(obj).map(([key, value]) => {
-        const filterId = key.split("-")[1];
-
-        if (usedFilter.has(filterId)) {
-          const oldVal = usedFilter.get(filterId);
-
-          const newVal = oldVal + " OR " + filterId + " = " + value.toString();
-          usedFilter.set(filterId, newVal);
-        } else {
-          usedFilter.set(filterId, filterId + " = " + value.toString());
-        }
-      });
+    if (value.length > 2) {
+      const localController = new AbortController();
+      searchDebounce(
+        localController,
+        search(undefined, undefined, localController),
+        150,
+      );
     }
-
-    return usedFilter;
   }
 
   return (

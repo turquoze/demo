@@ -105,7 +105,7 @@ export default function ProductPage(props: PageProps<Product | null>) {
                   <h3 class="sr-only">Description</h3>
                   <div class="space-y-6">
                     <p class="text-base text-gray-900">
-                      {props.data.long_description}
+                      {props.data.longDescription}
                     </p>
                   </div>
                 </div>
