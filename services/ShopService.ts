@@ -304,9 +304,7 @@ export async function GetCart(cart_id: string): Promise<Cart | undefined> {
 
 export async function InitCart(): Promise<string> {
   try {
-    const data = JSON.stringify({
-      publicId: null,
-    });
+    const data = JSON.stringify({});
 
     const response = await fetch(`${host}carts/`, {
       method: "POST",
