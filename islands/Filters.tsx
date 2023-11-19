@@ -1,5 +1,6 @@
 import { SearchInfo } from "../utils/types.ts";
 import { IS_BROWSER } from "$fresh/runtime.ts";
+import { GetPrice } from "../services/ShopService.ts";
 
 interface FiltersProps {
   info: SearchInfo;
@@ -81,6 +82,15 @@ export default function Filters(props: FiltersProps) {
                           const [first, _f] = a[0];
                           const [last, _l] = a[a.length - 1];
                           const htmlId = `filter-${key}-${first}-${last}`;
+
+                          let displayFirst = first;
+                          let displayLast = last;
+
+                          if (key == "price") {
+                            displayFirst = GetPrice(parseInt(first), "SEK");
+                            displayLast = GetPrice(parseInt(last), "SEK");
+                          }
+
                           return (
                             <div key={htmlId} class="flex items-center">
                               <input
@@ -96,7 +106,7 @@ export default function Filters(props: FiltersProps) {
                                 for={htmlId}
                                 class="ml-3 text-sm text-gray-600"
                               >
-                                {first} - {last}
+                                {displayFirst} - {displayLast}
                               </label>
                             </div>
                           );
@@ -129,6 +139,12 @@ export default function Filters(props: FiltersProps) {
                             }
                           }
 
+                          let displayValue = value;
+
+                          if (key == "price") {
+                            displayValue = GetPrice(parseInt(value), "SEK");
+                          }
+
                           return (
                             <div key={htmlId} class="flex items-center">
                               <input
@@ -144,7 +160,7 @@ export default function Filters(props: FiltersProps) {
                                 for={htmlId}
                                 class="ml-3 text-sm text-gray-600"
                               >
-                                {value} - {amount}
+                                {displayValue} - {amount}
                               </label>
                             </div>
                           );
