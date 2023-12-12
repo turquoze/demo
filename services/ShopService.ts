@@ -198,7 +198,7 @@ export async function AddToCart(
       price: 2000,
       quantity: 1,
     };
-    const response = await fetch(`${host}carts/${cart_id}/items/`, {
+    const response = await fetch(`${host}carts/${cart_id}/items`, {
       headers: new Headers({
         ...authHeaders,
         "Content-Type": "application/json",
@@ -306,7 +306,7 @@ export async function InitCart(): Promise<string> {
   try {
     const data = JSON.stringify({});
 
-    const response = await fetch(`${host}carts/`, {
+    const response = await fetch(`${host}carts`, {
       method: "POST",
       headers: new Headers({
         ...authHeaders,
