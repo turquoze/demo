@@ -2,59 +2,60 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/_404.tsx";
-import * as $1 from "./routes/_500.tsx";
-import * as $2 from "./routes/_app.tsx";
-import * as $3 from "./routes/_middleware.ts";
-import * as $4 from "./routes/about.tsx";
-import * as $5 from "./routes/api/cart/index.ts";
-import * as $6 from "./routes/api/cart/pay.ts";
-import * as $7 from "./routes/api/inventory/[id].ts";
-import * as $8 from "./routes/cart.tsx";
-import * as $9 from "./routes/category/[slug].tsx";
-import * as $10 from "./routes/index.tsx";
-import * as $11 from "./routes/login.tsx";
-import * as $12 from "./routes/products/[slug].tsx";
-import * as $13 from "./routes/products/index.tsx";
-import * as $14 from "./routes/profile.tsx";
-import * as $15 from "./routes/register.tsx";
-import * as $16 from "./routes/search.tsx";
-import * as $$0 from "./islands/BuyButton.tsx";
-import * as $$1 from "./islands/CartProduct.tsx";
-import * as $$2 from "./islands/Filters.tsx";
-import * as $$3 from "./islands/Inventory.tsx";
-import * as $$4 from "./islands/Navigation.tsx";
-import * as $$5 from "./islands/SearchForm.tsx";
+import * as $_404 from "./routes/_404.tsx";
+import * as $_500 from "./routes/_500.tsx";
+import * as $_app from "./routes/_app.tsx";
+import * as $_middleware from "./routes/_middleware.ts";
+import * as $about from "./routes/about.tsx";
+import * as $api_cart_index from "./routes/api/cart/index.ts";
+import * as $api_cart_pay from "./routes/api/cart/pay.ts";
+import * as $api_inventory_id_ from "./routes/api/inventory/[id].ts";
+import * as $cart from "./routes/cart.tsx";
+import * as $category_slug_ from "./routes/category/[slug].tsx";
+import * as $index from "./routes/index.tsx";
+import * as $login from "./routes/login.tsx";
+import * as $products_slug_ from "./routes/products/[slug].tsx";
+import * as $products_index from "./routes/products/index.tsx";
+import * as $profile from "./routes/profile.tsx";
+import * as $register from "./routes/register.tsx";
+import * as $search from "./routes/search.tsx";
+import * as $BuyButton from "./islands/BuyButton.tsx";
+import * as $CartProduct from "./islands/CartProduct.tsx";
+import * as $Filters from "./islands/Filters.tsx";
+import * as $Inventory from "./islands/Inventory.tsx";
+import * as $Navigation from "./islands/Navigation.tsx";
+import * as $SearchForm from "./islands/SearchForm.tsx";
+import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
-    "./routes/_404.tsx": $0,
-    "./routes/_500.tsx": $1,
-    "./routes/_app.tsx": $2,
-    "./routes/_middleware.ts": $3,
-    "./routes/about.tsx": $4,
-    "./routes/api/cart/index.ts": $5,
-    "./routes/api/cart/pay.ts": $6,
-    "./routes/api/inventory/[id].ts": $7,
-    "./routes/cart.tsx": $8,
-    "./routes/category/[slug].tsx": $9,
-    "./routes/index.tsx": $10,
-    "./routes/login.tsx": $11,
-    "./routes/products/[slug].tsx": $12,
-    "./routes/products/index.tsx": $13,
-    "./routes/profile.tsx": $14,
-    "./routes/register.tsx": $15,
-    "./routes/search.tsx": $16,
+    "./routes/_404.tsx": $_404,
+    "./routes/_500.tsx": $_500,
+    "./routes/_app.tsx": $_app,
+    "./routes/_middleware.ts": $_middleware,
+    "./routes/about.tsx": $about,
+    "./routes/api/cart/index.ts": $api_cart_index,
+    "./routes/api/cart/pay.ts": $api_cart_pay,
+    "./routes/api/inventory/[id].ts": $api_inventory_id_,
+    "./routes/cart.tsx": $cart,
+    "./routes/category/[slug].tsx": $category_slug_,
+    "./routes/index.tsx": $index,
+    "./routes/login.tsx": $login,
+    "./routes/products/[slug].tsx": $products_slug_,
+    "./routes/products/index.tsx": $products_index,
+    "./routes/profile.tsx": $profile,
+    "./routes/register.tsx": $register,
+    "./routes/search.tsx": $search,
   },
   islands: {
-    "./islands/BuyButton.tsx": $$0,
-    "./islands/CartProduct.tsx": $$1,
-    "./islands/Filters.tsx": $$2,
-    "./islands/Inventory.tsx": $$3,
-    "./islands/Navigation.tsx": $$4,
-    "./islands/SearchForm.tsx": $$5,
+    "./islands/BuyButton.tsx": $BuyButton,
+    "./islands/CartProduct.tsx": $CartProduct,
+    "./islands/Filters.tsx": $Filters,
+    "./islands/Inventory.tsx": $Inventory,
+    "./islands/Navigation.tsx": $Navigation,
+    "./islands/SearchForm.tsx": $SearchForm,
   },
   baseUrl: import.meta.url,
-};
+} satisfies Manifest;
 
 export default manifest;
