@@ -17,7 +17,7 @@ export default function Footer() {
             </h2>
             <ul class="text-gray-600">
               <li class="mb-4">
-                <a href="#" class="hover:underline">
+                <a href="https://turquoze.com" class="hover:underline">
                   Turquoze
                 </a>
               </li>
@@ -48,7 +48,7 @@ export default function Footer() {
       <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
         <span class="text-sm text-gray-500 sm:text-center">
-          © 2022{" "}
+          © {new Date().getFullYear()}{"  "}
           <a href="#" class="hover:underline">
             Turquoze™
           </a>. All Rights Reserved.
