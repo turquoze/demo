@@ -9,7 +9,11 @@ export const handler: Handlers<unknown, { cartId: string }> = {
   async GET(_req: Request, ctx) {
     try {
       const cart = await GetCart(ctx.state.cartId);
-      return new Response(JSON.stringify(cart));
+      return new Response(JSON.stringify(cart), {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
     } catch {
       return new Response(
         JSON.stringify({
@@ -17,6 +21,9 @@ export const handler: Handlers<unknown, { cartId: string }> = {
         }),
         {
           status: 500,
+          headers: {
+            "Content-Type": "application/json"
+          }
         },
       );
     }
@@ -25,7 +32,11 @@ export const handler: Handlers<unknown, { cartId: string }> = {
     try {
       const body: { id: string } = await req.json();
       await AddToCart(ctx.state.cartId, body.id);
-      return new Response(JSON.stringify({}));
+      return new Response(JSON.stringify({}), {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
     } catch {
       return new Response(
         JSON.stringify({
@@ -33,6 +44,9 @@ export const handler: Handlers<unknown, { cartId: string }> = {
         }),
         {
           status: 500,
+          headers: {
+            "Content-Type": "application/json"
+          }
         },
       );
     }
@@ -41,7 +55,11 @@ export const handler: Handlers<unknown, { cartId: string }> = {
     try {
       const body: { id: string } = await req.json();
       await RemoveFromCart(ctx.state.cartId, body.id);
-      return new Response(JSON.stringify({}));
+      return new Response(JSON.stringify({}), {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
     } catch {
       return new Response(
         JSON.stringify({
@@ -49,6 +67,9 @@ export const handler: Handlers<unknown, { cartId: string }> = {
         }),
         {
           status: 500,
+          headers: {
+            "Content-Type": "application/json"
+          }
         },
       );
     }

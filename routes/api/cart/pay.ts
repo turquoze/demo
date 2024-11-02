@@ -7,6 +7,7 @@ export const handler: Handlers<unknown, { cartId: string }> = {
     try {
       const body = await FinalizeCart(ctx.state.cartId);
       const headers = new Headers();
+      headers.append("Content-Type", "application/json");
       deleteCookie(headers, "cart", {
         path: "/",
       });
@@ -19,6 +20,9 @@ export const handler: Handlers<unknown, { cartId: string }> = {
         }),
         {
           status: 500,
+          headers: {
+            "Content-Type": "application/json"
+          }
         },
       );
     }

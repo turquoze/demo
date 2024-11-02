@@ -8,7 +8,11 @@ export const handler: Handlers<unknown, { id: string }> = {
       const inventories = await GetInventoryByProductId(id);
 
       if (inventories == undefined) {
-        return new Response(JSON.stringify([]));
+        return new Response(JSON.stringify([]), {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
       }
 
       const responseData = inventories.map((inventory) => {
@@ -20,7 +24,11 @@ export const handler: Handlers<unknown, { id: string }> = {
         };
       });
 
-      return new Response(JSON.stringify(responseData));
+      return new Response(JSON.stringify(responseData), {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
     } catch {
       return new Response(
         JSON.stringify({
@@ -28,6 +36,9 @@ export const handler: Handlers<unknown, { id: string }> = {
         }),
         {
           status: 500,
+          headers: {
+            "Content-Type": "application/json"
+          }
         },
       );
     }
