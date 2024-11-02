@@ -21,8 +21,8 @@ export const handler: Handlers<unknown, { cartId: string }> = {
         {
           status: 500,
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         },
       );
     }

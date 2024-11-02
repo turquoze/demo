@@ -11,8 +11,8 @@ export const handler: Handlers<unknown, { cartId: string }> = {
       const cart = await GetCart(ctx.state.cartId);
       return new Response(JSON.stringify(cart), {
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       });
     } catch {
       return new Response(
@@ -22,8 +22,8 @@ export const handler: Handlers<unknown, { cartId: string }> = {
         {
           status: 500,
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         },
       );
     }
@@ -34,8 +34,8 @@ export const handler: Handlers<unknown, { cartId: string }> = {
       await AddToCart(ctx.state.cartId, body.id);
       return new Response(JSON.stringify({}), {
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       });
     } catch {
       return new Response(
@@ -45,8 +45,8 @@ export const handler: Handlers<unknown, { cartId: string }> = {
         {
           status: 500,
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         },
       );
     }
@@ -57,8 +57,8 @@ export const handler: Handlers<unknown, { cartId: string }> = {
       await RemoveFromCart(ctx.state.cartId, body.id);
       return new Response(JSON.stringify({}), {
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       });
     } catch {
       return new Response(
@@ -68,8 +68,8 @@ export const handler: Handlers<unknown, { cartId: string }> = {
         {
           status: 500,
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         },
       );
     }

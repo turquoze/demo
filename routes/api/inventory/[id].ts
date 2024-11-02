@@ -10,8 +10,8 @@ export const handler: Handlers<unknown, { id: string }> = {
       if (inventories == undefined) {
         return new Response(JSON.stringify([]), {
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         });
       }
 
@@ -26,8 +26,8 @@ export const handler: Handlers<unknown, { id: string }> = {
 
       return new Response(JSON.stringify(responseData), {
         headers: {
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       });
     } catch {
       return new Response(
@@ -37,8 +37,8 @@ export const handler: Handlers<unknown, { id: string }> = {
         {
           status: 500,
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         },
       );
     }
