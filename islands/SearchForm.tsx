@@ -137,14 +137,12 @@ export default function SearchForm(props: SearchProps) {
     url.searchParams.set("q", value);
     window.history.replaceState({}, document.title, url);
 
-    if (value.length > 2) {
-      const localController = new AbortController();
-      searchDebounce(
-        localController,
-        search(undefined, undefined, localController),
-        150,
-      );
-    }
+    const localController = new AbortController();
+    searchDebounce(
+      localController,
+      search(undefined, undefined, localController),
+      150,
+    );
   }
 
   return (

@@ -25,7 +25,7 @@ import * as $Filters from "./islands/Filters.tsx";
 import * as $Inventory from "./islands/Inventory.tsx";
 import * as $Navigation from "./islands/Navigation.tsx";
 import * as $SearchForm from "./islands/SearchForm.tsx";
-import { type Manifest } from "$fresh/server.ts";
+import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
