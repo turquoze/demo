@@ -53,7 +53,7 @@ export default function ProductPage(props: PageProps<Product | null>) {
             }]}
           />
           <div class="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8">
-            <div class="sm:rounded-lg sm:overflow-hidden">
+            <div class="sm:rounded-lg sm:overflow-hidden min-h-[600px]">
               {props.data.images != null && props.data.images.length > 0
                 ? (
                   <img
